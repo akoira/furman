@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="board.statistics" language="groovy" pageWidth="595" pageHeight="842" columnWidth="580"
+              leftMargin="10" rightMargin="5" topMargin="5" bottomMargin="5"
+              resourceBundle="by/dak/cutting/statistics/report/resources/StatisticsReport">
+    <property name="ireport.zoom" value="1.7715610000000017"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+    <style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+    <style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+    <style name="Detail" fontName="Arial" fontSize="12"/>
+    <parameter name="START" class="java.util.Date"/>
+    <parameter name="END" class="java.util.Date"/>
+    <queryString>
+        <![CDATA[select ft.ID as ft_id, ft.NAME as ft_name, fc.ID as fc_id, fc.NAME as fc_name, st.red, st.area, ft.unit, m.NAME as MNAME from
+(
+select ft.ID as ft_id,fc.ID as fc_id, count(s.ID) as red, sum(s.WIDTH * s.USED_LENGTH + (s.LENGTH - s.USED_LENGTH)*s.WIDTH) as area
+        from SEGMENT s inner join FURNITURE f on  f.ID = s.BOARD_ID
+        inner join FURNITURE_TYPE ft on ft.ID = f.FURNITURE_TYPE_ID
+        inner join FURNITURE_CODE fc on fc.ID = f.FURNITURE_CODE_ID
+        inner join STRIPS st on s.FK_STRIPS_ID = st.ID
+        inner join ORDER_ITEM oi on oi.ID = st.ORDER_ITEM_ID
+        inner join FURN_ORDER fo on oi.ORDER_ID = fo.ID
+        where s.FK_STRIPS_ID is not null and
+        fo.READY_DATE >= $P{START} and
+        fo.READY_DATE <= $P{END} and
+        fo.STATUS in ('production','made','shipped','archive')
+        group by ft.ID, fc.ID
+) st
+inner join FURNITURE_TYPE ft on ft.ID = st.ft_id
+inner join FURNITURE_CODE fc on fc.ID = st.fc_id
+inner join MANUFACTURER m on fc.MANUFACTURER_ID = m.ID
+order by ft.NAME, fc.NAME]]>
+    </queryString>
+    <field name="FT_ID" class="java.lang.Long"/>
+    <field name="FT_NAME" class="java.lang.String"/>
+    <field name="FC_ID" class="java.lang.Long"/>
+    <field name="FC_NAME" class="java.lang.String"/>
+    <field name="RED" class="java.lang.Integer"/>
+    <field name="AREA" class="java.math.BigDecimal"/>
+    <field name="UNIT" class="java.lang.String"/>
+    <field name="MNAME" class="java.lang.String"/>
+    <group name="FT_NAME">
+        <groupExpression><![CDATA[$F{FT_NAME}]]></groupExpression>
+        <groupHeader>
+            <band height="16">
+                <textField>
+                    <reportElement style="SubTitle" x="46" y="0" width="506" height="14" forecolor="#333333"/>
+                    <textElement>
+                        <font size="10" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$F{FT_NAME}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="6"/>
+        </groupFooter>
+    </group>
+    <title>
+        <band splitType="Stretch"/>
+    </title>
+    <pageHeader>
+        <band height="23" splitType="Stretch">
+            <line>
+                <reportElement x="0" y="20" width="555" height="1"/>
+            </line>
+            <textField>
+                <reportElement x="84" y="0" width="163" height="20"/>
+                <textElement>
+                    <font fontName="Arial" size="14" isBold="true" isItalic="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA["Листовой материал c "]]></textFieldExpression>
+            </textField>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="269" y="0" width="100" height="20"/>
+                <textElement>
+                    <font fontName="Arial" size="14" isBold="true" isItalic="true"/>
+                </textElement>
+                <textFieldExpression class="java.util.Date"><![CDATA[$P{START}]]></textFieldExpression>
+            </textField>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="389" y="0" width="100" height="20"/>
+                <textElement>
+                    <font fontName="Arial" size="14" isBold="true" isItalic="true"/>
+                </textElement>
+                <textFieldExpression class="java.util.Date"><![CDATA[$P{END}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="369" y="0" width="14" height="20"/>
+                <textElement>
+                    <font fontName="Arial" size="14" isBold="true" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[-]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="15" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="2" y="12" width="555" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement style="Column header" x="36" y="0" width="262" height="12"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <text><![CDATA[Текстура	]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="376" y="0" width="84" height="12"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <text><![CDATA[Кол-во]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="460" y="0" width="92" height="12"/>
+                <textElement>
+                    <font size="10"/>
+                </textElement>
+                <text><![CDATA[Ед. изм.]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="16" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+            <textField>
+                <reportElement style="Detail" x="36" y="0" width="262" height="15"/>
+                <textElement>
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{FC_NAME}]]></textFieldExpression>
+            </textField>
+            <textField pattern="###0.00">
+                <reportElement style="Detail" x="376" y="0" width="84" height="15"/>
+                <textElement>
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.Double"><![CDATA[$F{AREA}/1000000d]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement style="Detail" x="460" y="0" width="92" height="15"/>
+                <textElement>
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{UNIT} == null ? "" : str($F{UNIT})]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="298" y="0" width="78" height="15"/>
+                <textElement>
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{MNAME}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="6" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="14" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-9" x="298" y="2" width="257" height="12"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER} + " из "]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report" isBlankWhenNull="false">
+                <reportElement key="textField-10" x="557" y="2" width="15" height="12"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[" "+$V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band splitType="Stretch"/>
+    </summary>
+</jasperReport>

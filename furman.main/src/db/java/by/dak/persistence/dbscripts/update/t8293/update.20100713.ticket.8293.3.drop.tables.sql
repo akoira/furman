@@ -1,0 +1,12 @@
+drop table BORDER_DEF CASCADE;
+drop table BOARD_DEF CASCADE;
+drop table TEXTURE CASCADE;
+drop table SERVICE CASCADE;
+drop table FURNITURE_LINK CASCADE;
+drop table ADDITIONAL CASCADE;
+drop table BOARD CASCADE;
+drop table BORDER CASCADE;
+
+
+
+

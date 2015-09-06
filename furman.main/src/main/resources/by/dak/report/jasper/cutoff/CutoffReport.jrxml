@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20">
+    <parameter name="orderNumber" class="java.lang.String"/>
+    <parameter name="customer" class="java.lang.String"/>
+    <parameter name="deadline" class="java.lang.String"/>
+    <field name="image1" class="java.awt.Image"/>
+    <field name="image2" class="java.awt.Image"/>
+    <background>
+        <band/>
+    </background>
+    <title>
+        <band/>
+    </title>
+    <pageHeader>
+        <band height="36">
+            <textField isBlankWhenNull="false">
+                <reportElement x="36" y="16" width="100" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="false" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{orderNumber}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="241" y="15" width="110" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="false" isItalic="true" isUnderline="false"
+                          isStrikeThrough="false" pdfFontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{customer}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="15" width="35" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{orderNumLabel}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="188" y="15" width="53" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isUnderline="false"
+                          isStrikeThrough="false" pdfFontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{customerLabel}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="418" y="16" width="75" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" isPdfEmbedded="false"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{deadline}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement x="493" y="16" width="61" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="false" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{deadline}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="351" y="0" width="105" height="16"/>
+                <textElement verticalAlignment="Top">
+                    <font fontName="Arial" size="9" isItalic="true" isStrikeThrough="false" pdfFontName="Arial"
+                          isPdfEmbedded="false"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{title}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="457" y="0" width="36" height="16"/>
+                <textElement textAlignment="Right" verticalAlignment="Top">
+                    <font fontName="Arial" size="9" isItalic="true" isStrikeThrough="false" pdfFontName="Arial"
+                          isPdfEmbedded="false"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{page}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report" isBlankWhenNull="false">
+                <reportElement x="530" y="0" width="24" height="16"/>
+                <textElement>
+                    <font fontName="Arial" size="9" isItalic="true" isStrikeThrough="false" pdfFontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Page">
+                <reportElement x="493" y="0" width="18" height="16"/>
+                <textElement verticalAlignment="Top">
+                    <font fontName="Arial" size="9" isItalic="true" isStrikeThrough="false" pdfFontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="511" y="0" width="19" height="16"/>
+                <textElement verticalAlignment="Top">
+                    <font fontName="Arial" size="9" isItalic="true" isStrikeThrough="false" pdfFontName="Arial"
+                          isPdfEmbedded="false"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{from}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band/>
+    </columnHeader>
+    <detail>
+        <band height="250">
+            <image hAlign="Center" vAlign="Middle">
+                <reportElement x="1" y="1" width="278" height="249"/>
+                <imageExpression class="java.awt.Image"><![CDATA[$F{image1}]]></imageExpression>
+            </image>
+            <image hAlign="Center" vAlign="Middle" isUsingCache="false">
+                <reportElement x="279" y="1" width="275" height="249"/>
+                <imageExpression class="java.awt.Image"><![CDATA[$F{image2}]]></imageExpression>
+            </image>
+        </band>
+    </detail>
+    <columnFooter>
+        <band/>
+    </columnFooter>
+    <pageFooter>
+        <band/>
+    </pageFooter>
+    <summary>
+        <band/>
+    </summary>
+</jasperReport>

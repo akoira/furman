@@ -1,0 +1,1 @@
+ALTER TABLE TEXTURE ALTER COLUMN CODE varchar(255) not null;

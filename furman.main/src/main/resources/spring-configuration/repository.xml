@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+                    http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd"
+		default-autowire="byName">
+
+	<!--<bean id="repositoryService" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+	<!--<property name="proxyInterfaces" value="by.dak.repository.IRepositoryService"/>-->
+	<!--<property name="target">-->
+	<!--<bean class="by.dak.repository.FileRepositoryService">-->
+	<!--<property name="baseDir" value="${repository.baseDir}"/>-->
+	<!--</bean>-->
+	<!--</property>-->
+	<!--</bean>-->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="by/dak/repository/mongo.properties"/>
+	</bean>
+
+	<mongo:mongo host="${mango.db.host}" port="${mango.db.port}"/>
+	<mongo:db-factory id="mongoDbFactory" dbname="${mango.db.name}"/>
+	<mongo:mapping-converter id="converter"/>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+	</bean>
+
+	<bean id="mongoFSTemplate" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
+		<constructor-arg name="dbFactory" ref="mongoDbFactory"/>
+		<constructor-arg name="converter" ref="converter"/>
+	</bean>
+
+	<bean id="repositoryService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces" value="by.dak.repository.IRepositoryService"/>
+		<property name="target">
+			<bean class="by.dak.repository.MongoRepositoryService">
+				<property name="gridFsOperations" ref="mongoFSTemplate"/>
+				<property name="mongoOperations" ref="mongoTemplate"/>
+			</bean>
+		</property>
+	</bean>
+</beans>

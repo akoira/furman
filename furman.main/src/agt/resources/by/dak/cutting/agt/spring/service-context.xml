@@ -1,0 +1,39 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byName">
+
+    <bean id="agtTypeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.agt.facade.AGTTypeFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.agt.facade.AGTTypeFacadeImpl">
+                <property name="dao" ref="agtTypeDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="agtColorFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.agt.facade.AGTColorFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.agt.facade.AGTColorFacadeImpl">
+                <property name="dao" ref="agtColorDao"/>
+            </bean>
+        </property>
+    </bean>
+
+
+    <bean id="agtFacadeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.agt.facade.AGTFacadeFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.agt.facade.AGTFacadeFacadeImpl">
+                <property name="dao" ref="agtFacadeDao"/>
+                <property name="calculator">
+                    <bean class="by.dak.cutting.agt.AGTFacadeCalculator">
+                        <property name="profileOffset" value="50"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+</beans>

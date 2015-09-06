@@ -1,0 +1,6 @@
+<aspectj>
+    <aspects>
+        <aspect name="by.dak.cutting.doors.profile.draw.RestrictedAreaDragAspect"/>
+    </aspects>
+</aspectj>
+

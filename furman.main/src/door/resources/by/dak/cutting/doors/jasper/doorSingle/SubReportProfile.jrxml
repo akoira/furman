@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="CommonReportMaterialSubreport" pageWidth="558" pageHeight="595" columnWidth="538" leftMargin="0"
+              rightMargin="20" topMargin="0" bottomMargin="0">
+    <property name="ireport.scriptlethandling" value="0"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+    <parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+        <defaultValueExpression>
+            <![CDATA["D:\\projects\\cutting\\src\\by\\dak\\cutting\\doors\\jasper\\doorSingle\\"]]></defaultValueExpression>
+    </parameter>
+    <parameter name="orderNumber" class="java.lang.String"/>
+    <parameter name="customer" class="java.lang.String"/>
+    <parameter name="custom" class="java.lang.Long" isForPrompting="false"/>
+    <parameter name="subreportFilling" class="net.sf.jasperreports.engine.JasperReport"/>
+    <parameter name="subreportDatasourceFilling" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <field name="type" class="java.lang.String"/>
+    <field name="count" class="java.lang.Long"/>
+    <background>
+        <band height="1" isSplitAllowed="false"/>
+    </background>
+    <title>
+        <band/>
+    </title>
+    <pageHeader>
+        <band/>
+    </pageHeader>
+    <columnHeader>
+        <band height="24">
+            <line>
+                <reportElement key="line-11" x="-1" y="12" width="285" height="1"/>
+                <graphicElement fill="Solid"/>
+            </line>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-13" x="-1" y="-1" width="77" height="15"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{profiles}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-14" x="0" y="12" width="215" height="12" backcolor="#CCFFCC">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="9" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{type}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-15" x="216" y="12" width="68" height="12" backcolor="#CCFFCC">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="9" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{count}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line-12" x="-1" y="23" width="285" height="1"/>
+            </line>
+            <line>
+                <reportElement key="line-15" x="215" y="14" width="1" height="9"/>
+            </line>
+            <line>
+                <reportElement key="line-26" x="-1" y="13" width="1" height="10"/>
+            </line>
+            <line>
+                <reportElement key="line-26" x="283" y="13" width="1" height="10"/>
+            </line>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="11">
+            <textField isBlankWhenNull="true">
+                <reportElement key="textField-19" isPrintRepeatedValues="false" x="0" y="0" width="215" height="11"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="9" isBold="false" isItalic="false" isUnderline="false"
+                          pdfFontName="Helvetica-BoldOblique" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{type}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-20" x="216" y="0" width="69" height="11"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Helvetica-BoldOblique"
+                          pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.Long"><![CDATA[$F{count}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line-19" x="0" y="10" width="284" height="1"/>
+            </line>
+            <line>
+                <reportElement key="line-23" x="215" y="0" width="1" height="10"/>
+            </line>
+            <line>
+                <reportElement x="-1" y="-1" width="1" height="11"/>
+            </line>
+            <line>
+                <reportElement key="line-26" x="283" y="0" width="1" height="10"/>
+            </line>
+        </band>
+    </detail>
+    <columnFooter>
+        <band/>
+    </columnFooter>
+    <pageFooter>
+        <band/>
+    </pageFooter>
+    <summary>
+        <band height="51">
+            <subreport isUsingCache="false" runToBottom="false">
+                <reportElement key="subreport-1" x="0" y="0" width="283" height="50"/>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <dataSourceExpression><![CDATA[$P{subreportDatasourceFilling}]]></dataSourceExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{subreportFilling}]]></subreportExpression>
+            </subreport>
+        </band>
+    </summary>
+</jasperReport>

@@ -1,0 +1,2 @@
+ALTER TABLE `public`.`common_data` 
+ADD UNIQUE INDEX `CD_UNIQ_RECORD` (`ORDER_ID` ASC, `NAME` ASC, `SERVICE` ASC) ;

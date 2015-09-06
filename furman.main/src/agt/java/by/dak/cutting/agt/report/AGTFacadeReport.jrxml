@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+			  name="AGTFacadeReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="570"
+			  leftMargin="20" rightMargin="5" topMargin="5" bottomMargin="5"
+			  resourceBundle="by/dak/cutting/agt/report/resources/AGTFacadeReport">
+	<property name="ireport.zoom" value="2.0490403660952174"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#000000" backcolor="#FFFFFF" markup="none" fontName="Arial" fontSize="10"
+		   isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="true" isItalic="true">
+		<box leftPadding="5" rightPadding="5"/>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="8">
+		<box leftPadding="5" rightPadding="5"/>
+	</style>
+	<parameter name="ORDER_ID" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+	 ORDER_ITEM.ID AS ORDER_ITEM_ID,
+     ORDER_DETAIL.NUMBER AS ORDER_DETAIL_NUMBER,
+     ORDER_DETAIL.NAME AS ORDER_DETAIL_NAME,
+     ORDER_DETAIL.AMOUNT AS ORDER_DETAIL_AMOUNT,
+     ORDER_DETAIL.SIZE AS ORDER_DETAIL_SIZE,
+     ORDER_DETAIL.SIDE AS ORDER_DETAIL_SIDE,
+     ORDER_ITEM.NAME AS ORDER_ITEM_NAME,
+     ORDER_ITEM.NUMBER AS ORDER_ITEM_NUMBER,
+     ORDER_ITEM.AMOUNT AS ORDER_ITEM_AMOUNT,
+     ORDER_ITEM.LENGTH AS ORDER_ITEM_LENGTH,
+     ORDER_ITEM.WIDTH AS ORDER_ITEM_WIDTH,
+     FURNITURE_CODE.CODE AS FURNITURE_CODE_CODE,
+     FURNITURE_CODE.NAME AS FURNITURE_CODE_NAME,
+     FURNITURE_TYPE.UNIT AS FURNITURE_TYPE_UNIT,
+     FURNITURE_TYPE.NAME AS FURNITURE_TYPE_NAME,
+     MANUFACTURER.NAME AS MANUFACTURER_NAME,
+     ORDER_ITEM.ID AS ORDER_ITEM_ID,
+     ORDER_DETAIL.LENGTH AS ORDER_DETAIL_LENGTH,
+     ORDER_DETAIL.WIDTH AS ORDER_DETAIL_WIDTH,
+     CUSTOMER.NAME AS CUSTOMER_NAME,
+     FURN_ORDER.READY_DATE AS FURN_ORDER_READY_DATE,
+     FURN_ORDER.ORDER_NUMBER AS FURN_ORDER_ORDER_NUMBER,
+     DAILY_SHEET.DATE AS DAILY_SHEET_DATE,
+     FURN_ORDER.ID AS FURN_ORDER_ID,
+     ORDER_ITEM.DISCRIMINATOR AS ORDER_ITEM_DISCRIMINATOR
+FROM
+     PUBLIC.ORDER_ITEM ORDER_ITEM INNER JOIN PUBLIC.ORDER_DETAIL ORDER_DETAIL ON ORDER_ITEM.ID = ORDER_DETAIL.ORDER_ITEM_ID
+     INNER JOIN PUBLIC.FURNITURE_CODE FURNITURE_CODE ON ORDER_DETAIL.FURNITURE_CODE_ID = FURNITURE_CODE.ID
+     INNER JOIN PUBLIC.FURNITURE_TYPE FURNITURE_TYPE ON ORDER_DETAIL.FURNITURE_TYPE_ID = FURNITURE_TYPE.ID
+     INNER JOIN PUBLIC.MANUFACTURER MANUFACTURER ON FURNITURE_CODE.MANUFACTURER_ID = MANUFACTURER.ID
+     INNER JOIN PUBLIC.FURN_ORDER FURN_ORDER ON ORDER_ITEM.ORDER_ID = FURN_ORDER.ID
+     INNER JOIN PUBLIC.CUSTOMER CUSTOMER ON FURN_ORDER.FK_CUSTOMER_ID = CUSTOMER.ID
+     INNER JOIN PUBLIC.DAILY_SHEET DAILY_SHEET ON FURN_ORDER.FK_CREATED_DAILY_SHEET_ID = DAILY_SHEET.ID
+WHERE
+     FURN_ORDER.ID = $P{ORDER_ID}
+     AND
+     ORDER_ITEM.DISCRIMINATOR = 'AGTFacade'
+ORDER BY
+     ORDER_ITEM.ID ASC,
+     ORDER_ITEM.NUMBER ASC,
+     FURNITURE_TYPE.NAME ASC,
+     FURNITURE_CODE.NAME ASC,
+     ORDER_DETAIL.SIZE ASC]]>
+	</queryString>
+	<field name="ORDER_ITEM_ID" class="java.lang.Long"/>
+	<field name="ORDER_DETAIL_NUMBER" class="java.lang.Long"/>
+	<field name="ORDER_DETAIL_NAME" class="java.lang.String"/>
+	<field name="ORDER_DETAIL_AMOUNT" class="java.lang.Long"/>
+	<field name="ORDER_DETAIL_SIZE" class="java.lang.Double"/>
+	<field name="ORDER_DETAIL_SIDE" class="java.lang.String"/>
+	<field name="ORDER_ITEM_NAME" class="java.lang.String"/>
+	<field name="ORDER_ITEM_NUMBER" class="java.lang.Long"/>
+	<field name="ORDER_ITEM_AMOUNT" class="java.lang.Long"/>
+	<field name="ORDER_ITEM_LENGTH" class="java.lang.Double"/>
+	<field name="ORDER_ITEM_WIDTH" class="java.lang.Double"/>
+	<field name="FURNITURE_CODE_CODE" class="java.lang.String"/>
+	<field name="FURNITURE_CODE_NAME" class="java.lang.String"/>
+	<field name="FURNITURE_TYPE_UNIT" class="java.lang.String"/>
+	<field name="FURNITURE_TYPE_NAME" class="java.lang.String"/>
+	<field name="MANUFACTURER_NAME" class="java.lang.String"/>
+	<field name="ORDER_DETAIL_LENGTH" class="java.lang.Long"/>
+	<field name="ORDER_DETAIL_WIDTH" class="java.lang.Long"/>
+	<field name="CUSTOMER_NAME" class="java.lang.String"/>
+	<field name="FURN_ORDER_READY_DATE" class="java.sql.Date"/>
+	<field name="FURN_ORDER_ORDER_NUMBER" class="java.lang.Long"/>
+	<field name="DAILY_SHEET_DATE" class="java.sql.Date"/>
+	<field name="FURN_ORDER_ID" class="java.lang.Long"/>
+	<field name="ORDER_ITEM_DISCRIMINATOR" class="java.lang.String"/>
+	<variable name="ORDER_ID" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal(918300)]]></variableExpression>
+	</variable>
+	<group name="ORDER_ITEM_ID">
+		<groupExpression><![CDATA[$F{ORDER_ITEM_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement style="SubTitle" x="0" y="0" width="506" height="14" forecolor="#333333"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{ORDER_ITEM_NUMBER} + ". " + $F{ORDER_ITEM_NAME} + " "
++ " " + $F{ORDER_ITEM_LENGTH}.longValue()
++ "x" + $F{ORDER_ITEM_WIDTH}.longValue()
++ " - " + $F{ORDER_ITEM_AMOUNT} + "шт."]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="14" width="555" height="1"/>
+				</line>
+				<textField>
+					<reportElement style="Column header" x="10" y="15" width="111" height="13"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$R{type}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="121" y="15" width="142" height="13"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$R{code}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="313" y="15" width="52" height="13"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$R{unit}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="263" y="15" width="50" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$R{size}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="365" y="15" width="49" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$R{amount}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="414" y="15" width="102" height="13"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$R{side}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="516" y="15" width="40" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$R{total}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="36" y="29" width="519" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="1"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="14" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-9" x="296" y="0" width="257" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[$R{title}+"  "+$R{page}+" "+$V{PAGE_NUMBER}+" "+$R{from}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-10" x="555" y="0" width="15" height="12"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="" style="Title" x="12" y="18" width="35" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false"
+						  pdfFontName="Arial" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{order}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-11" style="Title" x="193" y="18" width="53" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true" pdfFontName="Arial"
+						  pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{customer}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-15" style="Title" x="484" y="18" width="86" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" isItalic="true" pdfFontName="Arial"
+						  pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[$F{FURN_ORDER_READY_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-12" style="Title" x="414" y="18" width="70" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true" pdfFontName="Arial"
+						  pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{readyDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-14" style="Title" x="246" y="18" width="110" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" isItalic="true" pdfFontName="Arial"
+						  pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CUSTOMER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Title" x="47" y="18" width="84" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[new DecimalFormat("#00").format($F{DAILY_SHEET_DATE}.getMonth() +  1) + "-" + new DecimalFormat("#0000").format($F{FURN_ORDER_ORDER_NUMBER})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="38" width="555" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement style="Detail" x="10" y="0" width="111" height="12"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FURNITURE_TYPE_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" stretchType="RelativeToBandHeight" x="121" y="0" width="142" height="12"/>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[$F{FURNITURE_CODE_NAME}+"-"+$F{FURNITURE_CODE_CODE}+" "+ $F{MANUFACTURER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="313" y="0" width="52" height="12"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[$F{FURNITURE_TYPE_UNIT} == null ? "" : str($F{FURNITURE_TYPE_UNIT})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="365" y="0" width="49" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{ORDER_DETAIL_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="414" y="0" width="102" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[$F{ORDER_DETAIL_SIDE} == null ? "" :str($F{ORDER_DETAIL_SIDE})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="263" y="0" width="50" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String">
+					<![CDATA[$F{ORDER_DETAIL_SIZE} == null ? $F{ORDER_DETAIL_LENGTH}+"x"+$F{ORDER_DETAIL_WIDTH} : ($F{FURNITURE_TYPE_UNIT} == "piece" ? "" : $F{ORDER_DETAIL_SIZE})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="516" y="0" width="40" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long">
+					<![CDATA[$F{ORDER_DETAIL_AMOUNT} * $F{ORDER_ITEM_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="36" y="11" width="520" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

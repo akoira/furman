@@ -1,0 +1,53 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byName">
+    <bean id="Segment2DSPPlasticDetailProcess" class="by.dak.plastic.Expressions">
+        <property name="expressions">
+            <list>
+                <value>result.Name = 'ДСП для пластика ' + number</value>
+                <value>result.Number = number</value>
+                <value>result.Amount = 1</value>
+                <value>result.Length = segment.Width + 20</value>
+                <value>result.Width = segment.usedLength + 20</value>
+                <value>result.BoardDef = boardDef</value>
+                <value>result.Texture = texture</value>
+                <!--<value>result.BoardDef = T(by.dak.persistence.FacadeContext).getBoardDefFacade().findDefaultBoardDef()</value>-->
+                <!--<value>result.Texture = T(by.dak.persistence.FacadeContext).getTextureFacade().findTextureByCode(110)</value>-->
+                <value>result.Primary = true</value>
+                <value>result.OrderItem = orderItem</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="Segment2PlasticDetailProcess" class="by.dak.plastic.Expressions">
+        <property name="expressions">
+            <list>
+                <value>result.Name = 'Пластик ' + number</value>
+                <value>result.Number = number</value>
+                <value>result.Amount = 1</value>
+                <value>result.Length = segment.Width + 20</value>
+                <value>result.Width = segment.usedLength + 20</value>
+                <value>result.BoardDef = boardDef</value>
+                <value>result.Texture = texture</value>
+                <!--<value>result.BoardDef = T(by.dak.persistence.FacadeContext).getBoardDefFacade().findDefaultBoardDef()</value>-->
+                <!--<value>result.Texture = T(by.dak.persistence.FacadeContext).getTextureFacade().findTextureByCode(110)</value>-->
+                <value>result.Primary = true</value>
+                <value>result.OrderItem = orderItem</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="CuttingModel2DSPPlasticDetailsProcess" class="by.dak.plastic.Expressions">
+        <property name="expressions">
+            <list>
+                <value>
+                    T(by.dak.persistence.FacadeContext).getDSPPlasticDetailFacade().getPlasticBoardDefIds().contains(boardDef.Id)
+                </value>
+            </list>
+        </property>
+    </bean>
+
+
+</beans>

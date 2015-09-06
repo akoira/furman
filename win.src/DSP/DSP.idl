@@ -1,0 +1,38 @@
+// DSP.idl : IDL source for DSP
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (DSP.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(277DA9A4-8DE6-4D1D-87ED-7A71B941F3C1),
+	dual,
+	nonextensible,
+	helpstring("IApp Interface"),
+	pointer_default(unique)
+]
+interface IApp : IDispatch{
+	[id(1), helpstring("method CreateDWG")] HRESULT CreateDWG([in] BSTR FullPath, [in] DOUBLE MinX, [in] DOUBLE MinY, [in] DOUBLE MaxX, [in] DOUBLE MaxY);
+	[id(2), helpstring("method GetData")] HRESULT GetData([in] BSTR DWGFullPath, [out] DOUBLE* LineLength, [out] DOUBLE* CurveLength, [out] DOUBLE* Square, [out] LONG* RegionCount);
+};
+[
+	uuid(1BD17DB2-53D9-4FFE-A9CE-E917B4F7FB23),
+	version(1.0),
+	helpstring("DSP 1.0 Type Library")
+]
+library DSPLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(34B61572-D28C-4696-8AC9-CD38A6E006C1),
+		helpstring("App Class")
+	]
+	coclass App
+	{
+		[default] interface IApp;
+	};
+};

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="template.report" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape"
+              columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+    <property name="ireport.zoom" value="1.4641000000000022"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <import value="by.dak.persistence.*"/>
+    <style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+    <style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+    <style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+    <style name="Detail" fontName="Arial" fontSize="12"/>
+    <parameter name="START_CATEGORY" class="java.math.BigDecimal"/>
+    <parameter name="END_CATEGORY" class="java.math.BigDecimal"/>
+    <queryString>
+        <![CDATA[SELECT
+     FURN_ORDER.COST AS FURN_ORDER_COST,
+     FURN_ORDER.DESCRIPTION AS FURN_ORDER_DESCRIPTION,
+     FURN_ORDER.DISCRIMINATOR AS FURN_ORDER_DISCRIMINATOR,
+     FURN_ORDER.CATEGORY_ID AS FURN_ORDER_CATEGORY_ID,
+     FURN_ORDER.SALE_FACTOR AS FURN_ORDER_SALE_FACTOR,
+     FURN_ORDER.DIALER_COST AS FURN_ORDER_DIALER_COST,
+     FURN_ORDER.SALE_PRICE AS FURN_ORDER_SALE_PRICE,
+     FURN_ORDER.NAME AS FURN_ORDER_NAME,
+     FURN_ORDER.FILE_UUID AS FURN_ORDER_FILE_UUID,
+     CATEGORY.NAME AS CATEGORY_NAME,
+     CATEGORY.DESCRIPTION AS CATEGORY_DESCRIPTION
+FROM
+     PUBLIC.CATEGORY CATEGORY INNER JOIN PUBLIC.FURN_ORDER FURN_ORDER ON CATEGORY.ID = FURN_ORDER.CATEGORY_ID
+WHERE
+CATEGORY.ID >= $P{START_CATEGORY}
+AND
+CATEGORY.ID <= $P{END_CATEGORY}
+ORDER BY
+ FURN_ORDER.NAME]]>
+    </queryString>
+    <field name="FURN_ORDER_COST" class="java.lang.Double"/>
+    <field name="FURN_ORDER_DESCRIPTION" class="java.lang.String"/>
+    <field name="FURN_ORDER_DISCRIMINATOR" class="java.lang.String"/>
+    <field name="FURN_ORDER_CATEGORY_ID" class="java.lang.Long"/>
+    <field name="FURN_ORDER_SALE_FACTOR" class="java.lang.Double"/>
+    <field name="FURN_ORDER_DIALER_COST" class="java.lang.Double"/>
+    <field name="FURN_ORDER_SALE_PRICE" class="java.lang.Double"/>
+    <field name="FURN_ORDER_NAME" class="java.lang.String"/>
+    <field name="FURN_ORDER_FILE_UUID" class="java.lang.String"/>
+    <field name="CATEGORY_NAME" class="java.lang.String"/>
+    <field name="CATEGORY_DESCRIPTION" class="java.lang.String"/>
+    <group name="FURN_ORDER_CATEGORY_ID">
+        <groupExpression><![CDATA[$F{FURN_ORDER_CATEGORY_ID}]]></groupExpression>
+        <groupHeader>
+            <band height="18">
+                <textField>
+                    <reportElement style="SubTitle" x="49" y="0" width="506" height="16" forecolor="#333333"/>
+                    <textElement>
+                        <font size="12" isBold="false" isItalic="true" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251"
+                              isPdfEmbedded="true"/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$F{CATEGORY_NAME}]]></textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="6"/>
+        </groupFooter>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="35" splitType="Stretch">
+            <staticText>
+                <reportElement x="47" y="0" width="385" height="20"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="16" isBold="false" isItalic="true" pdfFontName="ARICYR.TTF"
+                          pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Цены на изделия -  ]]></text>
+            </staticText>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement style="Column header" x="432" y="0" width="408" height="20" forecolor="#000000"/>
+                <textElement>
+                    <font fontName="Arial" size="16" isBold="false" isItalic="true" pdfFontName="ARICYR.TTF"
+                          pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <pageHeader>
+        <band splitType="Stretch"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="17" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement style="Column header" x="133" y="2" width="124" height="12" forecolor="#000000"/>
+                <textElement verticalAlignment="Middle" markup="html">
+                    <font size="10" isBold="false" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Название]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="262" y="2" width="273" height="12" forecolor="#000000"/>
+                <textElement>
+                    <font size="10" isBold="false" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Описание]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="714" y="2" width="79" height="12" forecolor="#000000"/>
+                <textElement textAlignment="Right">
+                    <font size="10" isBold="false" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Цена продажи]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="137" splitType="Stretch">
+            <textField>
+                <reportElement style="Detail" x="133" y="6" width="124" height="128"/>
+                <textElement>
+                    <font size="10" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{FURN_ORDER_NAME}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement style="Detail" x="262" y="6" width="442" height="128"/>
+                <textElement verticalAlignment="Top" markup="html">
+                    <font size="8" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{FURN_ORDER_DESCRIPTION}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement style="Detail" x="714" y="6" width="79" height="15"/>
+                <textElement textAlignment="Right">
+                    <font size="10" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.Double">
+                    <![CDATA[$F{FURN_ORDER_SALE_PRICE}]]></textFieldExpression>
+            </textField>
+            <image>
+                <reportElement x="0" y="6" width="128" height="128"/>
+                <imageExpression class="java.io.File">
+                    <![CDATA[FacadeContext.getReportJCRFacade().load($F{FURN_ORDER_FILE_UUID})]]></imageExpression>
+            </image>
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="0" width="802" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="9" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="14" splitType="Stretch">
+            <textField>
+                <reportElement style="Column header" x="569" y="0" width="190" height="11"/>
+                <textElement textAlignment="Right">
+                    <font size="8" isBold="false" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA["Страница "+$V{PAGE_NUMBER}+" из"]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement style="Column header" x="759" y="0" width="40" height="11"/>
+                <textElement>
+                    <font size="8" isBold="false" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement style="Column header" x="0" y="0" width="197" height="11"/>
+                <textElement>
+                    <font size="8" isBold="false" pdfFontName="ARICYR.TTF" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band splitType="Stretch"/>
+    </summary>
+</jasperReport>

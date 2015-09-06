@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="CommonReport" pageWidth="595" pageHeight="842" columnWidth="525" leftMargin="50" rightMargin="20"
+              topMargin="20" bottomMargin="20">
+    <property name="ireport.scriptlethandling" value="0"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+    <parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+        <defaultValueExpression>
+            <![CDATA["D:\\projects\\cutting\\src\\by\\dak\\cutting\\doors\\jasper\\doorSingle\\"]]></defaultValueExpression>
+    </parameter>
+    <parameter name="customer" class="java.lang.String"/>
+    <parameter name="deadline" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="orderNumber" class="java.lang.String" isForPrompting="false"/>
+    <field name="number" class="java.lang.Long"/>
+    <field name="width" class="java.lang.Long"/>
+    <field name="height" class="java.lang.Long"/>
+    <field name="profile" class="java.lang.String"/>
+    <field name="color" class="java.lang.String"/>
+    <field name="image" class="java.awt.Image"/>
+    <field name="subreportProfile" class="net.sf.jasperreports.engine.JasperReport"/>
+    <field name="subreportDatasourceProfile" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <field name="subreportProfileMap" class="java.util.Map"/>
+    <background>
+        <band height="18" isSplitAllowed="false">
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-9" x="244" y="0" width="257" height="12"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{title}+"  "+$R{page}+" "+$V{PAGE_NUMBER}+" "+$R{from}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report" isBlankWhenNull="false">
+                <reportElement key="textField-10" x="501" y="0" width="17" height="12"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[" "+$V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </background>
+    <title>
+        <band height="53">
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-7" x="0" y="12" width="35" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{custom}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-11" x="148" y="12" width="53" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" pdfFontName="Arial"
+                          pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{customer}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-12" x="387" y="12" width="70" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" pdfFontName="Arial"
+                          pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{deadline}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-14" x="201" y="12" width="110" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isItalic="true" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{customer}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-15" x="457" y="12" width="61" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isItalic="true" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{deadline}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="35" y="12" width="84" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" isItalic="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{orderNumber}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="31" width="518" height="1"/>
+            </line>
+        </band>
+    </title>
+    <pageHeader>
+        <band/>
+    </pageHeader>
+    <columnHeader>
+        <band height="18"/>
+    </columnHeader>
+    <detail>
+        <band height="358">
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField" x="223" y="0" width="112" height="12" backcolor="#CCFFCC">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial" size="9" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{number}]]></textFieldExpression>
+            </textField>
+            <image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+                <reportElement x="0" y="0" width="223" height="352"/>
+                <imageExpression class="java.awt.Image"><![CDATA[$F{image}]]></imageExpression>
+            </image>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField" x="223" y="11" width="112" height="12" backcolor="#CCFFCC">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial" size="9" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{width} + " x " + $R{height}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField" x="223" y="22" width="112" height="12" backcolor="#CCFFCC">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial" size="9" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{profile} + " / " + $R{color}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="342" y="0" width="159" height="12"/>
+                <textElement>
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression class="java.lang.Long"><![CDATA[$F{number}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="342" y="11" width="159" height="12"/>
+                <textElement>
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{width} + " x " + $F{height}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="342" y="22" width="159" height="12"/>
+                <textElement>
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{profile} + " / " + $F{color}]]></textFieldExpression>
+            </textField>
+            <subreport isUsingCache="false" runToBottom="false">
+                <reportElement key="subreport-1" x="226" y="34" width="292" height="309"/>
+                <parametersMapExpression><![CDATA[$F{subreportProfileMap}]]></parametersMapExpression>
+                <dataSourceExpression><![CDATA[$F{subreportDatasourceProfile}]]></dataSourceExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$F{subreportProfile}]]></subreportExpression>
+            </subreport>
+            <line>
+                <reportElement x="0" y="355" width="525" height="1"/>
+            </line>
+        </band>
+    </detail>
+    <summary>
+        <band height="3"/>
+    </summary>
+</jasperReport>

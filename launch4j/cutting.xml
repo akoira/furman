@@ -1,0 +1,24 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>D:\projects\cutting\netbeans\dist\obfuscated\cutting.jar</jar>
+  <outfile>D:\projects\cutting\netbeans\dist\obfuscated\cutting.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon></icon>
+  <jre>
+    <path>C:\Program Files\Java\jre6\</path>
+    <minVersion></minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <initialHeapPercent>50</initialHeapPercent>
+    <maxHeapPercent>90</maxHeapPercent>
+  </jre>
+</launch4jConfig>

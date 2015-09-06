@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byName">
+
+    <bean id="templateOrderDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.template.dao.TemplateOrderDao"/>
+        <property name="target">
+            <bean class="by.dak.template.dao.TemplateOrderDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="templateFacadeDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.template.dao.ITemplateFacadeDao"/>
+        <property name="target">
+            <bean class="by.dak.template.dao.TemplateFacadeDao" parent="commonDAO"/>
+        </property>
+    </bean>
+
+
+    <bean id="templateOrderFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.template.facade.TemplateOrderFacade"/>
+        <property name="target">
+            <bean class="by.dak.template.facade.TemplateOrderFacadeImpl">
+                <property name="dao" ref="templateOrderDao"/>
+                <property name="templateNumber" value="XX-XXXX"/>
+            </bean>
+        </property>
+    </bean>
+
+
+    <bean id="templateFacadeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.template.facade.ITemplateFacadeFacade"/>
+        <property name="target">
+            <bean class="by.dak.template.facade.TemplateFacadeFacade">
+                <property name="dao" ref="templateFacadeDao"/>
+            </bean>
+        </property>
+    </bean>
+
+</beans>

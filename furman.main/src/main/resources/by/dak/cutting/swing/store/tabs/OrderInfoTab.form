@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="name" pref="59" max="32767" attributes="1"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace pref="11" max="32767" attributes="1"/>
+                                  <Component id="number" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="customer" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="customerValue" pref="559" max="32767" attributes="2"/>
+                          <Component id="nameValue" alignment="0" pref="559" max="32767" attributes="2"/>
+                          <Component id="numberValue" alignment="0" pref="559" max="32767" attributes="2"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="date" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="dateValue" pref="559" max="32767" attributes="2"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="designer" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="designerValue" pref="559" max="32767" attributes="2"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                              <Component id="cost" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="ready" max="32767" attributes="1"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="readyValue" alignment="1" pref="559" max="32767" attributes="2"/>
+                          <Component id="costValue" alignment="0" pref="559" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lastOrderNumberInfoPanel" pref="622" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" max="-2" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="name" max="32767" attributes="1"/>
+                  <Component id="numberValue" alignment="0" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="nameValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="number" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="customerValue" max="32767" attributes="1"/>
+                  <Component id="customer" alignment="0" pref="22" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="date" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="dateValue" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="readyValue" min="-2" max="-2" attributes="1"/>
+                  <Component id="ready" min="-2" pref="20" max="-2" attributes="1"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="cost" alignment="3" min="-2" pref="19" max="-2" attributes="1"/>
+                  <Component id="costValue" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="designerValue" max="32767" attributes="1"/>
+                  <Component id="designer" alignment="0" pref="23" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="lastOrderNumberInfoPanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="name">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" resourceKey="name.text"/>
+        <Property name="name" type="java.lang.String" value="name" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.order.LastOrderNumberInfoPanel" name="lastOrderNumberInfoPanel">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="lastOrderNumberInfoPanel" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="number">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" resourceKey="number.text"/>
+        <Property name="name" type="java.lang.String" value="number" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="customer">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" resourceKey="customer.text"/>
+        <Property name="name" type="java.lang.String" value="customer" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="date">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" resourceKey="date.text"/>
+        <Property name="name" type="java.lang.String" value="date" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="ready">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" resourceKey="ready.text"/>
+        <Property name="name" type="java.lang.String" value="ready" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="cost">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" resourceKey="cost.text"/>
+        <Property name="name" type="java.lang.String" value="cost" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="designer">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" resourceKey="designer.text"/>
+        <Property name="name" type="java.lang.String" value="designer" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.OrderNumberField" name="numberValue">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="numberValue" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="nameValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="nameValue.text"/>
+        <Property name="name" type="java.lang.String" value="nameValue" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.ItemSelector" name="customerValue">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="customerValue" noResource="true"/>
+        <Property name="newAction" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+          <action class="by.dak.cutting.swing.store.tabs.OrderInfoTab" id="showNewCustomerDialog" methodName="showNewCustomerDialog"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.ItemSelector" name="designerValue">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="designerValue" noResource="true"/>
+        <Property name="newAction" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+          <action class="by.dak.cutting.swing.store.tabs.OrderInfoTab" id="showNewDesignerDialog" methodName="showNewDesignerDialog"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="readyValue">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="readyValue" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="dateValue">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" resourceKey="dateValue.text"/>
+        <Property name="name" type="java.lang.String" value="dateValue" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="costValue">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="costValue.text"/>
+        <Property name="name" type="java.lang.String" value="costValue" noResource="true"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

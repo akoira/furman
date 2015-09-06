@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="labelAddress" linkSize="1" alignment="0" max="32767" attributes="1"/>
+                              <Component id="labelName" linkSize="1" alignment="0" max="32767" attributes="1"/>
+                          </Group>
+                          <Component id="labelPhoneNumber" linkSize="1" alignment="0" pref="68" max="32767" attributes="1"/>
+                          <Component id="labelEmailAddress" linkSize="1" alignment="0" pref="68" max="32767" attributes="1"/>
+                          <Component id="labelFaxNumber" linkSize="1" alignment="0" min="-2" max="-2" attributes="1"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="fieldName" alignment="0" pref="308" max="32767" attributes="0"/>
+                          <Component id="fieldAddress" alignment="0" pref="308" max="32767" attributes="0"/>
+                          <Component id="fieldPhoneNumber" alignment="0" pref="308" max="32767" attributes="0"/>
+                          <Component id="fieldFaxNumber" alignment="0" pref="308" max="32767" attributes="0"/>
+                          <Component id="fieldEmailAddress" alignment="0" pref="308" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel1" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="fieldPhoneNumber1" pref="308" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelName" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelAddress" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelPhoneNumber" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldPhoneNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fieldPhoneNumber1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelEmailAddress" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="fieldEmailAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="labelFaxNumber" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="fieldFaxNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="labelName">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelName.text"/>
+        <Property name="name" type="java.lang.String" value="labelName" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelAddress">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelAddress.text"/>
+        <Property name="name" type="java.lang.String" value="labelAddress" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelPhoneNumber">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelPhoneNumber.text"/>
+        <Property name="name" type="java.lang.String" value="labelPhoneNumber" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelFaxNumber">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelFaxNumber.text"/>
+        <Property name="name" type="java.lang.String" value="labelFaxNumber" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelEmailAddress">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelEmailAddress.text"/>
+        <Property name="name" type="java.lang.String" value="labelEmailAddress" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
+        <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldName">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldName.text"/>
+        <Property name="name" type="java.lang.String" value="fieldName" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldAddress">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldAddress.text"/>
+        <Property name="name" type="java.lang.String" value="fieldAddress" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldPhoneNumber">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldPhoneNumber.text"/>
+        <Property name="name" type="java.lang.String" value="fieldPhoneNumber" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldPhoneNumber1">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldPhoneNumber1.text"/>
+        <Property name="name" type="java.lang.String" value="fieldPhoneNumber1" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldFaxNumber">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldFaxNumber.text"/>
+        <Property name="name" type="java.lang.String" value="fieldFaxNumber" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldEmailAddress">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldEmailAddress.text"/>
+        <Property name="name" type="java.lang.String" value="fieldEmailAddress" noResource="true"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

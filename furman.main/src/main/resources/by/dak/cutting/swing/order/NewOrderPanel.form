@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="name" type="java.lang.String" value="NewOrderPanel" noResource="true"/>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="labelDate" max="32767" attributes="1"/>
+                  <Component id="labelCustomer" alignment="0" max="32767" attributes="1"/>
+                  <Component id="lableDesigner" alignment="0" max="32767" attributes="1"/>
+                  <Component id="labelName" alignment="0" max="32767" attributes="1"/>
+                  <Component id="labelNumber" alignment="0" pref="74" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="fieldName" alignment="1" pref="426" max="32767" attributes="0"/>
+                  <Component id="selectorDesigner" alignment="1" pref="426" max="32767" attributes="0"/>
+                  <Component id="selectCustomer" alignment="1" pref="426" max="32767" attributes="0"/>
+                  <Component id="fieldDate" alignment="0" pref="426" max="32767" attributes="0"/>
+                  <Component id="fieldNumber" alignment="1" pref="426" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fieldNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fieldName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lableDesigner" min="-2" max="-2" attributes="0"/>
+                  <Component id="selectorDesigner" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="labelCustomer" min="-2" max="-2" attributes="0"/>
+                  <Component id="selectCustomer" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="fieldDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelDate" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="labelNumber">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="labelNumber" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldNumber">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="fieldNumber" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelName">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="labelName" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="fieldName">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="fieldName" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lableDesigner">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="lableDesigner" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.ItemSelector" name="selectorDesigner">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="selectorDesigner" noResource="true"/>
+        <Property name="newAction" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+          <action class="by.dak.cutting.swing.order.NewOrderPanel" id="showNewDesignerDialog" methodName="showNewDesignerDialog"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelDate">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="labelDate" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="fieldDate">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format subtype="0" type="1"/>
+        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="fieldDate" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelCustomer">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="name" type="java.lang.String" value="labelCustomer" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.ItemSelector" name="selectCustomer">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="selectCustomer" noResource="true"/>
+        <Property name="newAction" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+          <action class="by.dak.cutting.swing.order.NewOrderPanel" id="showNewCustomerDialog" methodName="showNewCustomerDialog"/>
+        </Property>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

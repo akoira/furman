@@ -1,0 +1,116 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byName">
+
+    <bean id="detailMigrationFactory" class="by.dak.buffer.entity.migrator.DetailMigrationFactory">
+        <property name="configuration">
+            <map>
+                <entry key="Additional" value="by.dak.buffer.entity.migrator.detail.AdditionalMigrator"/>
+                <entry key="FurnitureLink" value="by.dak.buffer.entity.migrator.detail.FurnitureLinkMigrator"/>
+                <entry key="OrderFurniture" value="by.dak.buffer.entity.migrator.detail.OrderFurnitureMigrator"/>
+                <entry key="ZButtLink" value="by.dak.buffer.entity.migrator.detail.ZButtLinkMigrator"/>
+                <entry key="DSPPlasticDetail" value="by.dak.buffer.entity.migrator.detail.DSPPlasticDetailMigrator"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="furnitureCodeMigrationFactory"
+          class="by.dak.buffer.entity.migrator.detail.furniture.FurnitureCodeMigrationFactory">
+        <property name="configuration">
+            <map>
+                <entry key="AGTColor" value="by.dak.buffer.entity.migrator.detail.furniture.code.AGTColorMigrator"/>
+                <entry key="FurnitureCode"
+                       value="by.dak.buffer.entity.migrator.detail.furniture.code.FurnitureCodeMigrator"/>
+                <entry key="Service" value="by.dak.buffer.entity.migrator.detail.furniture.code.ServiceMigrator"/>
+                <entry key="TextureEntity"
+                       value="by.dak.buffer.entity.migrator.detail.furniture.code.TextureEntityMigrator"/>
+                <entry key="ZProfileColor"
+                       value="by.dak.buffer.entity.migrator.detail.furniture.code.ZProfileColorMigrator"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="furnitureTypeMigrationFactory"
+          class="by.dak.buffer.entity.migrator.detail.furniture.FurnitureTypeMigrationFactory">
+        <property name="configuration">
+            <map>
+                <entry key="AGTType" value="by.dak.buffer.entity.migrator.detail.furniture.type.AGTTypeMigrator"/>
+                <entry key="BoardDef" value="by.dak.buffer.entity.migrator.detail.furniture.type.BoardDefMigrator"/>
+                <entry key="BorderDefEntity"
+                       value="by.dak.buffer.entity.migrator.detail.furniture.type.BorderDefEntityMigrator"/>
+                <entry key="FurnitureType"
+                       value="by.dak.buffer.entity.migrator.detail.furniture.type.FurnitureTypeMigrator"/>
+                <entry key="ZProfileType"
+                       value="by.dak.buffer.entity.migrator.detail.furniture.type.ZProfileTypeMigrator"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="itemMigrationFactory" class="by.dak.buffer.entity.migrator.ItemMigrationFactory">
+        <property name="configuration">
+            <map>
+                <entry key="OrderItem" value="by.dak.buffer.entity.migrator.item.OrderItemMigrator"/>
+                <entry key="AGTFacade" value="by.dak.buffer.entity.migrator.item.AGTFacadeMigrator"/>
+                <entry key="ZFacade" value="by.dak.buffer.entity.migrator.item.ZFacadeMigrator"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="tempOrderFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.facade.TempOrderFacade"/>
+        <property name="target">
+            <bean class="by.dak.buffer.facade.impl.TempOrderFacadeImpl">
+                <property name="dao" ref="tempOrderDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="tempOrderItemFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.facade.TempOrderItemFacade"/>
+        <property name="target">
+            <bean class="by.dak.buffer.facade.impl.TempOrderItemFacadeImpl">
+                <property name="dao" ref="tempOrderItemDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="tempOrderDetailFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.facade.TempOrderDetailFacade"/>
+        <property name="target">
+            <bean class="by.dak.buffer.facade.impl.TempOrderDetailFacadeImpl">
+                <property name="dao" ref="tempOrderDetailDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="dilerOrderFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.facade.DilerOrderFacade"/>
+        <property name="target">
+            <bean class="by.dak.buffer.facade.impl.DilerOrderFacadeImpl">
+                <property name="dao" ref="dilerOrderDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="dilerOrderItemFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.facade.DilerOrderItemFacade"/>
+        <property name="target">
+            <bean class="by.dak.buffer.facade.impl.DilerOrderItemFacadeImpl">
+                <property name="dao" ref="dilerOrderItemDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="dilerOrderDetailFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.facade.DilerOrderDetailFacade"/>
+        <property name="target">
+            <bean class="by.dak.buffer.facade.impl.DilerOrderDetailFacadeImpl">
+                <property name="dao" ref="dilerOrderDetailDao"/>
+            </bean>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,370 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+
+    <bean id="commonDAO" class="by.dak.persistence.dao.impl.GenericDaoImpl" singleton="false">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="dailysheetDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.DailysheetDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.DailysheetDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="borderDefDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.BorderDefDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.BorderDefDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="designerDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.DesignerDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.DesignerDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="employeeDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.EmployeeDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.EmployeeDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="customerDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.CustomerDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.CustomerDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="departmentDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.DepartmentDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.DepartmentDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="boardDefDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.BoardDefDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.BoardDefDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+    <bean id="orderDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.OrderDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.OrderDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+    <bean id="shiftDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.ShiftDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.ShiftDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+    <bean id="textureDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.TextureDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.TextureDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="boardDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.BoardDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.BoardDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="borderDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.BorderDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.BorderDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="manufacturerDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.ManufacturerDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.ManufacturerDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="providerDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.ProviderDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.ProviderDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="orderItemDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.OrderItemDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.OrderItemDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="cutterDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.CutterDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.CutterDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="orderFurnitureDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.OrderFurnitureDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.OrderFurnitureDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="striptsDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.cutting.dao.StripsDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.cutting.dao.impl.StripsDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="priceDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.PriceDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.PriceDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="serviceDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.ServiceDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.ServiceDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="deliveryDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.DeliveryDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.DeliveryDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <!-- new for DoorMechDef start -->
+
+    <bean id="doorMechDefDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.mech.db.DoorMechDefDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.mech.db.DoorMechDefDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="doorColorDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.mech.db.DoorColorDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.mech.db.DoorColorDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="doorComponentDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.mech.db.DoorComponentDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.mech.db.DoorComponentDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="doorMechTypeDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.mech.db.DoorMechTypeDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.mech.db.DoorMechTypeDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <!-- new DoorMechDef end -->
+
+    <!--new Profile start -->
+    <bean id="profileCompDefDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.profile.dao.ProfileCompDefDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.profile.dao.ProfileCompDefDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="profileCompDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.profile.dao.ProfileCompDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.profile.dao.ProfileCompDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="profileDefDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.profile.dao.ProfileDefDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.profile.dao.ProfileDefDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="furnitureCodeDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.FurnitureCodeDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.FurnitureCodeDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="furnitureTypeDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.FurnitureTypeDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.FurnitureTypeDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="furnitureDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.FurnitureDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.FurnitureDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="storageElementLinkDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.StorageElementLinkDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.StorageElementLinkDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="furnitureLinkDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.FurnitureLinkDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.FurnitureLinkDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="orderGroupDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.ordergroup.dao.OrderGroupDao"/>
+        <property name="target">
+            <bean class="by.dak.ordergroup.dao.OrderGroupDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="currencyDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.currency.persistence.dao.CurrencyDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.currency.persistence.dao.impl.CurrencyDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="additionalDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.additional.dao.AdditionalDao"/>
+        <property name="target">
+            <bean class="by.dak.additional.dao.AdditionalDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="zProfileTypeDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.zfacade.dao.ZProfileTypeDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.zfacade.dao.ZProfileTypeDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="zProfileColorDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.zfacade.dao.ZProfileColorDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.zfacade.dao.ZProfileColorDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="zFacadeDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.zfacade.dao.ZFacadeDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.zfacade.dao.ZFacadeDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="orderDetailDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.OrderDetailDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.OrderDetailDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="furnitureTypeLinkDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.afacade.dao.FurnitureTypeLinkDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.afacade.dao.FurnitureTypeLinkDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="furnitureCodeLinkDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.afacade.dao.FurnitureCodeLinkDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.afacade.dao.FurnitureCodeLinkDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="furnitureLink2FurnitureLinkDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.FurnitureLink2FurnitureLinkDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.FurnitureLink2FurnitureLinkDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="commonDataDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.report.jasper.common.dao.CommonDataDao"/>
+        <property name="target">
+            <bean class="by.dak.report.jasper.common.dao.CommonDataDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="categoryDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.category.dao.CategoryDao"/>
+        <property name="target">
+            <bean class="by.dak.category.dao.CategoryDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="linearStripsDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.linear.dao.LinearStripsDao"/>
+        <property name="target">
+            <bean class="by.dak.cutting.linear.dao.impl.LinearStripsDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="dspPlasticDetailDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.plastic.dao.DSPPlasticDetailDao"/>
+        <property name="target">
+            <bean class="by.dak.plastic.dao.DSPPlasticDetailDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="dspPlasticStripsDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.plastic.strips.dao.DSPPlasticStripsDao"/>
+        <property name="target">
+            <bean class="by.dak.plastic.strips.dao.DSPPlasticStripsDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+
+    <!--new Profile end -->
+
+    <!--<bean id="a1Dao" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+    <!--<property name="proxyInterfaces" value="by.dak.cutting.swing.dictionaries.A1Dao"/>-->
+    <!--<property name="target">-->
+    <!--<bean class="by.dak.cutting.swing.dictionaries.A1DaoImpl" parent="commonDAO"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="a2Dao" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+    <!--<property name="proxyInterfaces" value="by.dak.cutting.swing.dictionaries.A2Dao"/>-->
+    <!--<property name="target">-->
+    <!--<bean class="by.dak.cutting.swing.dictionaries.A2DaoImpl" parent="commonDAO"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="bDao" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+    <!--<property name="proxyInterfaces" value="by.dak.cutting.swing.dictionaries.BDao"/>-->
+    <!--<property name="target">-->
+    <!--<bean class="by.dak.cutting.swing.dictionaries.BDaoImpl" parent="commonDAO"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+</beans>

@@ -1,0 +1,29 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+  dependencies {
+  }
+}
+
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'maven'
+
+  sourceCompatibility = 1.7
+  targetCompatibility = 1.7
+
+  tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+  }
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "2.6"
+}

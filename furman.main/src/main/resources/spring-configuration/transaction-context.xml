@@ -1,0 +1,44 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+    <aop:aspectj-autoproxy/>
+    <aop:config>
+        <aop:pointcut id="webappPointcuts" expression="execution(* by.dak.cutting..*FacadeImpl.*(..) )" />
+        <aop:pointcut id="errorPointcuts" expression="execution(* *(..) )"/>
+        <aop:advisor advice-ref="transactionAdvice" pointcut-ref="webappPointcuts"/>
+    </aop:config>
+
+
+    <tx:advice id="errorAdvice">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="find*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="findOrCreate*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="load*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="create*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="process*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="attach*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="release*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="init*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="cancel*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="get*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="copy*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+        </tx:attributes>
+    </tx:advice>
+</beans>

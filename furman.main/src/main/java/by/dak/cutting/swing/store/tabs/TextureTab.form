@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <Properties>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[364, 204]"/>
+    </Property>
+  </Properties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="labelNameRus" linkSize="8" alignment="1" pref="131" max="32767" attributes="1"/>
+                  <Component id="labelManufacturer" linkSize="8" alignment="1" pref="131" max="32767" attributes="1"/>
+                  <Component id="labelRotatable" linkSize="8" alignment="1" pref="131" max="32767" attributes="1"/>
+                  <Component id="labelGroupIdentifier" linkSize="8" alignment="1" pref="131" max="32767" attributes="1"/>
+                  <Component id="labelCode" linkSize="8" alignment="0" pref="131" max="32767" attributes="1"/>
+                  <Component id="labelSurface" linkSize="8" alignment="0" pref="131" max="32767" attributes="1"/>
+                  <Component id="labelNameEng" linkSize="8" alignment="0" pref="131" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="fieldGroupIdentifier" pref="267" max="32767" attributes="0"/>
+                  <Component id="fCode" pref="267" max="32767" attributes="0"/>
+                  <Component id="surface" pref="267" max="32767" attributes="0"/>
+                  <Component id="fieldNameEng" pref="267" max="32767" attributes="0"/>
+                  <Component id="fieldNameRus" pref="267" max="32767" attributes="2"/>
+                  <Component id="checkBoxRotatable" linkSize="9" alignment="0" pref="267" max="32767" attributes="1"/>
+                  <Component id="selectorManuf" linkSize="9" alignment="0" pref="267" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelNameRus" linkSize="2" alignment="3" pref="22" max="32767" attributes="1"/>
+                  <Component id="fieldNameRus" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelNameEng" linkSize="2" alignment="3" pref="22" max="32767" attributes="1"/>
+                  <Component id="fieldNameEng" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelSurface" linkSize="2" alignment="3" min="-2" max="-2" attributes="1"/>
+                  <Component id="surface" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelCode" linkSize="2" alignment="3" min="-2" pref="19" max="-2" attributes="1"/>
+                  <Component id="fCode" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="labelGroupIdentifier" linkSize="2" alignment="3" min="-2" max="-2" attributes="1"/>
+                  <Component id="fieldGroupIdentifier" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="labelRotatable" linkSize="2" pref="22" max="32767" attributes="1"/>
+                  <Component id="checkBoxRotatable" linkSize="2" alignment="0" min="-2" max="-2" attributes="1"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="labelManufacturer" linkSize="2" pref="22" max="32767" attributes="1"/>
+                  <Component id="selectorManuf" linkSize="2" alignment="0" min="-2" max="-2" attributes="1"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JCheckBox" name="checkBoxRotatable">
+      <Properties>
+        <Property name="horizontalTextPosition" type="int" value="2"/>
+        <Property name="name" type="java.lang.String" value="checkBoxRotatable" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.ItemSelector" name="selectorManuf">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="selectorManuf" noResource="true"/>
+        <Property name="newAction" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+          <action class="by.dak.cutting.swing.store.NewTexturePanel" id="showManufacturersDialog" methodName="showManufacturersDialog"/>
+        </Property>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNameRus">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelNameRus.text"/>
+        <Property name="name" type="java.lang.String" value="labelNameRus" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelCode">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelCode.text"/>
+        <Property name="name" type="java.lang.String" value="labelCode" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelGroupIdentifier">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelGroupIdentifier.text"/>
+        <Property name="name" type="java.lang.String" value="labelGroupIdentifier" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelNameEng">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelNameEng.text"/>
+        <Property name="name" type="java.lang.String" value="labelNameEng" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelSurface">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelSurface.text"/>
+        <Property name="name" type="java.lang.String" value="labelSurface" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelRotatable">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelRotatable.text"/>
+        <Property name="name" type="java.lang.String" value="labelRotatable" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelManufacturer">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" resourceKey="labelManufacturer.text"/>
+        <Property name="name" type="java.lang.String" value="labelManufacturer" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldNameRus">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldNameRus.text"/>
+        <Property name="name" type="java.lang.String" value="fieldNameRus" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldNameEng">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldNameEng.text"/>
+        <Property name="name" type="java.lang.String" value="fieldNameEng" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="surface">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="surface.text"/>
+        <Property name="name" type="java.lang.String" value="surface" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fCode">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fCode.text"/>
+        <Property name="name" type="java.lang.String" value="fCode" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="by.dak.cutting.swing.component.MaskTextField" name="fieldGroupIdentifier">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="fieldGroupIdentifier.text"/>
+        <Property name="name" type="java.lang.String" value="fieldGroupIdentifier" noResource="true"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

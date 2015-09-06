@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="board.def.price" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20">
+    <property name="ireport.zoom" value="2.049040366095213"/>
+    <property name="ireport.x" value="389"/>
+    <property name="ireport.y" value="0"/>
+    <style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+    <style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+    <style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+    <style name="Detail" fontName="Arial" fontSize="12"/>
+    <queryString>
+        <![CDATA[SELECT
+     FURNITURE_TYPE.NAME AS FURNITURE_TYPE_NAME,
+     FURNITURE_CODE.NAME AS FURNITURE_CODE_NAME,
+     FURNITURE_CODE.CODE AS FURNITURE_CODE_CODE,
+     MANUFACTURER.SHORT_NAME AS MANUFACTURER_SHORT_NAME,
+     PRICE.PRICE AS PRICE_PRICE,
+     PRICE.PRICE_DEALER AS PRICE_PRICE_DEALER,
+     PRICE.PRICE_SALE AS PRICE_PRICE_SALE,
+     PRICE.CURRENCY_TYPE as PRICE_CURRENCY_TYPE
+
+FROM
+     PUBLIC.PRICE PRICE INNER JOIN PUBLIC.FURNITURE_TYPE FURNITURE_TYPE ON PRICE.PRICEAWARE_ID = FURNITURE_TYPE.ID
+     INNER JOIN PUBLIC.FURNITURE_CODE FURNITURE_CODE ON PRICE.PRICED_ID = FURNITURE_CODE.ID
+     INNER JOIN PUBLIC.MANUFACTURER MANUFACTURER ON FURNITURE_CODE.MANUFACTURER_ID = MANUFACTURER.ID
+WHERE
+     FURNITURE_TYPE.DISCRIMINATOR = 'FurnitureType'
+     AND
+     FURNITURE_CODE.PRICED_TYPE = 'FurnitureCode'
+ORDER BY
+     FURNITURE_TYPE.NAME ASC,
+     MANUFACTURER.SHORT_NAME ASC,
+     FURNITURE_CODE.NAME ASC]]>
+    </queryString>
+    <field name="FURNITURE_TYPE_NAME" class="java.lang.String"/>
+    <field name="FURNITURE_CODE_NAME" class="java.lang.String"/>
+    <field name="FURNITURE_CODE_CODE" class="java.lang.String"/>
+    <field name="MANUFACTURER_SHORT_NAME" class="java.lang.String"/>
+    <field name="PRICE_PRICE" class="java.lang.Double"/>
+    <field name="PRICE_PRICE_DEALER" class="java.lang.Double"/>
+    <field name="PRICE_PRICE_SALE" class="java.lang.Double"/>
+    <field name="PRICE_CURRENCY_TYPE" class="java.lang.String"/>
+    <group name="FURNITURE_TYPE_NAME">
+        <groupExpression><![CDATA[$F{FURNITURE_TYPE_NAME}]]></groupExpression>
+        <groupHeader>
+            <band height="23">
+                <textField>
+                    <reportElement style="SubTitle" x="36" y="0" width="506" height="12" forecolor="#000000"/>
+                    <textElement>
+                        <font size="10" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[$F{FURNITURE_TYPE_NAME}]]></textFieldExpression>
+                </textField>
+                <staticText>
+                    <reportElement style="Column header" x="15" y="12" width="227" height="10" forecolor="#000000"/>
+                    <textElement>
+                        <font size="8"/>
+                    </textElement>
+                    <text><![CDATA[Цвет/Текстура]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement style="Column header" x="348" y="12" width="69" height="10" forecolor="#000000"/>
+                    <textElement>
+                        <font size="8"/>
+                    </textElement>
+                    <text><![CDATA[Производитель]]></text>
+                </staticText>
+                <line>
+                    <reportElement positionType="FixRelativeToBottom" x="0" y="22" width="552" height="1"/>
+                    <graphicElement>
+                        <pen lineWidth="0.5" lineColor="#999999"/>
+                    </graphicElement>
+                </line>
+                <line>
+                    <reportElement positionType="FixRelativeToBottom" x="3" y="11" width="552" height="1"/>
+                    <graphicElement>
+                        <pen lineWidth="0.5" lineColor="#999999"/>
+                    </graphicElement>
+                </line>
+                <staticText>
+                    <reportElement style="Column header" x="242" y="12" width="106" height="10" forecolor="#000000"/>
+                    <textElement>
+                        <font size="8"/>
+                    </textElement>
+                    <text><![CDATA[Код]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement style="Column header" x="417" y="12" width="135" height="10" forecolor="#000000"/>
+                    <textElement textAlignment="Right">
+                        <font size="7"/>
+                    </textElement>
+                    <text><![CDATA[Цена]]></text>
+                </staticText>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="2"/>
+        </groupFooter>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="26" splitType="Stretch">
+            <staticText>
+                <reportElement style="Title" x="0" y="0" width="552" height="24"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="20" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1251"
+                          isPdfEmbedded="false"/>
+                </textElement>
+                <text><![CDATA[Прайс на фурнитуру]]></text>
+            </staticText>
+        </band>
+    </title>
+    <pageHeader>
+        <band splitType="Stretch"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="11" splitType="Stretch"/>
+    </columnHeader>
+    <detail>
+        <band height="16" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+            <textField>
+                <reportElement style="Detail" x="348" y="1" width="69" height="10"/>
+                <textElement>
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{MANUFACTURER_SHORT_NAME}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement style="Detail" x="242" y="1" width="106" height="10"/>
+                <textElement>
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{FURNITURE_CODE_CODE}]]></textFieldExpression>
+            </textField>
+            <textField pattern="###0.00">
+                <reportElement style="Detail" x="417" y="1" width="135" height="10"/>
+                <textElement textAlignment="Right">
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE_DEALER},$F{PRICE_CURRENCY_TYPE}))]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement style="Detail" x="5" y="1" width="237" height="10"/>
+                <textElement>
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{FURNITURE_CODE_NAME}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="5" splitType="Stretch"/>
+    </columnFooter>
+    <pageFooter>
+        <band height="10" splitType="Stretch">
+            <textField>
+                <reportElement style="Column header" x="433" y="0" width="80" height="10"/>
+                <textElement textAlignment="Right">
+                    <font size="8" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement style="Column header" x="513" y="0" width="40" height="10"/>
+                <textElement>
+                    <font size="8" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement style="Column header" x="0" y="0" width="197" height="10"/>
+                <textElement>
+                    <font size="8" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="0" width="555" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+        </band>
+    </pageFooter>
+    <summary>
+        <band splitType="Stretch"/>
+    </summary>
+</jasperReport>

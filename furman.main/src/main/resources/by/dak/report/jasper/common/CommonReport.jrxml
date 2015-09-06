@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="CommonReport" pageWidth="595" pageHeight="842" columnWidth="525" leftMargin="50" rightMargin="20"
+              topMargin="20" bottomMargin="20">
+    <property name="ireport.scriptlethandling" value="0"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <property name="ireport.zoom" value="1.5"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+    <style name="zerocolor" isDefault="false" forecolor="#000000" backcolor="#FFFFFF" fontName="Arial" fontSize="10"
+           isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+        <conditionalStyle>
+            <conditionExpression><![CDATA[new Boolean ($F{price}.equals( new Double(0) ))]]></conditionExpression>
+            <style isDefault="false" style="zerocolor" forecolor="#FF0000" fontName="Arial" fontSize="10" isBold="true"
+                   isItalic="true" isUnderline="true" isStrikeThrough="true"/>
+        </conditionalStyle>
+    </style>
+    <parameter name="customer" class="java.lang.String"/>
+    <parameter name="deadline" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="orderNumber" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="commonCost" class="java.lang.Double"/>
+    <parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+        <defaultValueExpression>
+            <![CDATA["D:\\projects\\cutting\\src\\cutting\\src\\by\\dak\\report\\jasper\\common\\"]]></defaultValueExpression>
+    </parameter>
+    <parameter name="subreportService" class="net.sf.jasperreports.engine.JasperReport"/>
+    <parameter name="subreportDatasourceService" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <field name="service" class="java.lang.String"/>
+    <field name="name" class="java.lang.String"/>
+    <field name="count" class="java.lang.Double"/>
+    <field name="price" class="java.lang.Double"/>
+    <field name="last" class="java.lang.Boolean"/>
+    <field name="cost" class="java.lang.Double"/>
+    <group name="subs">
+        <groupExpression><![CDATA[$P{subreportService}]]></groupExpression>
+        <groupFooter>
+            <band height="2">
+                <subreport isUsingCache="false">
+                    <reportElement key="subreport-1" x="0" y="0" width="516" height="0"/>
+                    <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                    <dataSourceExpression><![CDATA[$P{subreportDatasourceService}]]></dataSourceExpression>
+                    <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                        <![CDATA[$P{subreportService}]]></subreportExpression>
+                </subreport>
+            </band>
+        </groupFooter>
+    </group>
+    <background>
+        <band height="18" splitType="Prevent">
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-9" x="244" y="0" width="257" height="12"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{title}+"  "+$R{page}+" "+$V{PAGE_NUMBER}+" "+$R{from}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report" isBlankWhenNull="false">
+                <reportElement key="textField-10" x="501" y="0" width="17" height="12"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Arial" size="8"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[" "+$V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </background>
+    <title>
+        <band height="35">
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-7" x="0" y="12" width="35" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{custom}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-11" x="148" y="12" width="53" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" pdfFontName="Arial"
+                          pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{customer}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-12" x="387" y="12" width="70" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" pdfFontName="Arial"
+                          pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{deadline}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-14" x="201" y="12" width="110" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isItalic="true" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{customer}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-15" x="457" y="12" width="61" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isItalic="true" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{deadline}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="35" y="12" width="84" height="20"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Arial" isItalic="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{orderNumber}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="31" width="518" height="1"/>
+            </line>
+        </band>
+    </title>
+    <summary>
+        <band height="21">
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField" x="206" y="0" width="178" height="15" backcolor="#CCFFCC">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false"
+                          pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{commonCost}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" pattern="#,##0.00 ">
+                <reportElement x="384" y="0" width="132" height="15"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.Double"><![CDATA[$P{commonCost}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="1" y="0" width="518" height="1"/>
+            </line>
+        </band>
+    </summary>
+</jasperReport>

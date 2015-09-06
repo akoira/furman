@@ -1,0 +1,46 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+
+    <bean id="dilerOrderDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.dao.DilerOrderDao"/>
+        <property name="target">
+            <bean class="by.dak.buffer.dao.impl.DilerOrderDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="dilerOrderItemDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.dao.DilerOrderItemDao"/>
+        <property name="target">
+            <bean class="by.dak.buffer.dao.impl.DilerOrderItemDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="dilerOrderDetailDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.dao.DilerOrderDetailDao"/>
+        <property name="target">
+            <bean class="by.dak.buffer.dao.impl.DilerOrderDetailDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="tempOrderDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.dao.TempOrderDao"/>
+        <property name="target">
+            <bean class="by.dak.buffer.dao.impl.TempOrderDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="tempOrderItemDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.dao.TempOrderItemDao"/>
+        <property name="target">
+            <bean class="by.dak.buffer.dao.impl.TempOrderItemDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+    <bean id="tempOrderDetailDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.buffer.dao.TempOrderDetailDao"/>
+        <property name="target">
+            <bean class="by.dak.buffer.dao.impl.TempOrderDetailDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
+</beans>

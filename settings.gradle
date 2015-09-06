@@ -1,0 +1,1 @@
+include 'furman.common', 'furman.main', 'furman.template.import', 'furman.repository', 'furman.upgrade'

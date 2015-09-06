@@ -1,0 +1,6 @@
+alter table FURNITURE add column SIZE DOUBLE default 0 not null;
+update  FURNITURE set size = amount;
+update  FURNITURE set amount = 1;
+
+ALTER TABLE FURNITURE_LINK ALTER COLUMN AMOUNT RENAME TO SIZE;
+ALTER TABLE FURNITURE_LINK ALTER SIZE DOUBLE not null;

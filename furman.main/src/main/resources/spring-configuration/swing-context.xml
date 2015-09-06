@@ -1,0 +1,35 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+        default-autowire="byName">
+
+    <bean name="materialTypeNodeFactory" class="by.dak.cutting.def.swing.tree.MaterialTypeNodeFactory">
+        <property name="nodeClasses">
+            <map>
+                <entry key="board" value="by.dak.cutting.def.swing.tree.MaterialTypeNode"/>
+                <entry key="border" value="by.dak.cutting.def.swing.tree.MaterialTypeNode"/>
+                <entry key="furniture" value="by.dak.cutting.def.swing.tree.MaterialTypeNode"/>
+                <entry key="zprofile" value="by.dak.cutting.zfacade.swing.tree.ZProfileNode"/>
+                <entry key="agtprofile" value="by.dak.cutting.agt.swing.tree.AGTProfileNode"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean name="materialTypePanelFactory" class="by.dak.cutting.swing.dictionaries.material.MaterialTypePanelFactory">
+        <property name="panelClasses">
+            <map>
+                <entry key="board" value="by.dak.cutting.swing.store.modules.BoardDefPanel"/>
+                <entry key="border" value="by.dak.cutting.swing.store.modules.MBorderDefPanel"/>
+                <entry key="furniture" value="by.dak.cutting.swing.store.modules.FurnitureTypePanel"/>
+                <entry key="zprofile" value="by.dak.cutting.zfacade.swing.tree.ZProfileTypePanel"/>
+                <entry key="agtprofile" value="by.dak.cutting.agt.swing.tree.AGTTypePanel"/>
+            </map>
+        </property>
+    </bean>
+</beans>

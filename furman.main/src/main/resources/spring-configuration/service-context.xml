@@ -1,0 +1,534 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byName">
+
+    <bean id="dailysheetFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.DailysheetFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.DailysheetFacadeImpl">
+                <property name="dao" ref="dailysheetDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="designerFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.DesignerFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.DesignerFacadeImpl">
+                <property name="dao" ref="designerDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="employeeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.EmployeeFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.EmployeeFacadeImpl">
+                <property name="dao" ref="employeeDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="borderDefFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.BorderDefFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.BorderDefFacadeImpl">
+                <property name="dao" ref="borderDefDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="customerFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.CustomerFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.CustomerFacadeImpl">
+                <property name="dao" ref="customerDao"/>
+                <property name="customerName" value="Директор"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="departmentFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.DepartmentFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.DepartmentFacadeImpl">
+                <property name="dao" ref="departmentDao"/>
+            </bean>
+        </property>
+
+
+    </bean>
+
+    <bean id="boardDefFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.BoardDefFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.BoardDefFacadeImpl">
+                <property name="dao" ref="boardDefDao"/>
+                <property name="defaultName" value="ДСП 18"/>
+            </bean>
+        </property>
+
+    </bean>
+    <bean id="orderFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.OrderFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.OrderFacadeImpl">
+                <property name="dao" ref="orderDao"/>
+            </bean>
+        </property>
+
+    </bean>
+    <bean id="shiftFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.ShiftFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.ShiftFacadeImpl">
+                <property name="dao" ref="shiftDao"/>
+            </bean>
+        </property>
+
+    </bean>
+    <bean id="textureFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.TextureFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.TextureFacadeImpl">
+                <property name="dao" ref="textureDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="manufacturerFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.ManufacturerFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.ManufacturerFacadeImpl">
+                <property name="dao" ref="manufacturerDao"/>
+                <property name="defaultName" value="Модерн Хаус"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="providerFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.ProviderFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.ProviderFacadeImpl">
+                <property name="dao" ref="providerDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="boardFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.BoardFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.BoardFacadeImpl">
+                <property name="dao" ref="boardDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="borderFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.BorderFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.BorderFacadeImpl">
+                <property name="dao" ref="borderDao"/>
+                <property name="curveGluingAdditionalLength" value="150"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="cutterFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.CutterFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.CutterFacadeImpl">
+                <property name="dao" ref="cutterDao"/>
+                <property name="defaultName" value="Cutter-5-7"/>
+                <property name="defaultLinearName" value="Cutter-1-0-0-0-0"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="orderItemFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.OrderItemFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.OrderItemFacadeImpl">
+                <property name="dao" ref="orderItemDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="orderFurnitureFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.OrderFurnitureFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.OrderFurnitureFacadeImpl">
+                <property name="dao" ref="orderFurnitureDao"/>
+            </bean>
+        </property>
+    </bean>
+
+
+    <bean id="stripsFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.cut.facade.StripsFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.cut.facade.impl.StripsFacadeImpl">
+                <property name="dao" ref="striptsDao"/>
+                <property name="orderBoardDetailFacade" ref="orderFurnitureFacade"/>
+                <property name="cutSettingsCreatorClass" value="by.dak.cutting.swing.cut.CutSettingsCreator"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="deliveryFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.DeliveryFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.DeliveryFacadeImpl">
+                <property name="dao" ref="deliveryDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="priceFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.PriceFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.PriceFacadeImpl">
+                <property name="dao" ref="priceDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="serviceFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.ServiceFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.ServiceFacadeImpl">
+                <property name="dao" ref="serviceDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="reportFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.repository.IReportFacade"/>
+        <property name="target">
+            <bean class="by.dak.repository.ReportFacade">
+                <property name="repositoryService" ref="repositoryService"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- new for DoorMechDef start -->
+    <bean id="doorMechDefFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.mech.db.DoorMechDefFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.mech.db.DoorMechDefFacadeImpl">
+                <property name="dao" ref="doorMechDefDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="doorColorFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.mech.db.DoorColorFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.mech.db.DoorColorFacadeImpl">
+                <property name="dao" ref="doorColorDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="doorComponentFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.mech.db.DoorComponentFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.mech.db.DoorComponentFacadeImpl">
+                <property name="dao" ref="doorComponentDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="doorMechTypeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.mech.db.DoorMechTypeFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.mech.db.DoorMechTypeFacadeImpl">
+                <property name="dao" ref="doorMechTypeDao"/>
+            </bean>
+        </property>
+
+    </bean>
+    <!-- new DoorMechDef end -->
+
+    <!--new Profile start -->
+    <bean id="profileCompDefFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.profile.facade.ProfileCompDefFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.profile.facade.ProfileCompDefFacadeImpl">
+                <property name="dao" ref="profileCompDefDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="profileCompFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.profile.facade.ProfileCompFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.profile.facade.ProfileCompFacadeImpl">
+                <property name="dao" ref="profileCompDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="profileDefFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.doors.profile.facade.ProfileDefFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.doors.profile.facade.ProfileDefFacadeImpl">
+                <property name="dao" ref="profileDefDao"/>
+            </bean>
+        </property>
+
+    </bean>
+    <!--new Profile end -->
+
+
+    <bean id="furnitureCodeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.FurnitureCodeFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.FurnitureCodeFacadeImpl">
+                <property name="dao" ref="furnitureCodeDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="furnitureTypeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.FurnitureTypeFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.FurnitureTypeFacadeImpl">
+                <property name="dao" ref="furnitureTypeDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="furnitureFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.FurnitureFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.FurnitureFacadeImpl">
+                <property name="dao" ref="furnitureDao"/>
+                <property name="furnitureLink2FurnitureLinker" ref="furnitureLink2FurnitureLinker"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="storageElementLinkFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.StorageElementLinkFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.StorageElementLinkFacadeImpl">
+                <property name="dao" ref="storageElementLinkDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="furnitureLinkFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.FurnitureLinkFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.FurnitureLinkFacadeImpl">
+                <property name="dao" ref="furnitureLinkDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="orderGroupFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.ordergroup.facade.OrderGroupFacade"/>
+        <property name="target">
+            <bean class="by.dak.ordergroup.facade.OrderGroupFacadeImpl">
+                <property name="dao" ref="orderGroupDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="currencyFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.currency.facade.CurrencyFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.currency.facade.impl.CurrencyFacadeImpl">
+                <property name="dao" ref="currencyDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="additionalFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.additional.facade.AdditionalFacade"/>
+        <property name="target">
+            <bean class="by.dak.additional.facade.AdditionalFacadeImpl">
+                <property name="dao" ref="additionalDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="zProfileTypeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.zfacade.facade.ZProfileTypeFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.zfacade.facade.ZProfileTypeFacadeImpl">
+                <property name="dao" ref="zProfileTypeDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="zProfileColorFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.zfacade.facade.ZProfileColorFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.zfacade.facade.ZProfileColorFacadeImpl">
+                <property name="dao" ref="zProfileColorDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+
+    <bean id="zFacadeFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.zfacade.facade.ZFacadeFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.zfacade.facade.ZFacadeFacadeImpl">
+                <property name="dao" ref="zFacadeDao"/>
+                <property name="calculator">
+                    <bean class="by.dak.cutting.zfacade.ZFacadeCalculator">
+                        <property name="profileOffset" value="50"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="orderDetailFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.OrderDetailFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.OrderDetailFacadeImpl">
+                <property name="dao" ref="orderDetailDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+
+    <bean id="furnitureTypeLinkFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.afacade.facade.FurnitureTypeLinkFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.afacade.facade.FurnitureTypeLinkFacadeImpl">
+                <property name="dao" ref="furnitureTypeLinkDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="furnitureCodeLinkFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.afacade.facade.FurnitureCodeLinkFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.afacade.facade.FurnitureCodeLinkFacadeImpl">
+                <property name="dao" ref="furnitureCodeLinkDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+
+    <bean id="furnitureLink2FurnitureLinkFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.FurnitureLink2FurnitureLinkFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.FurnitureLink2FurnitureLinkFacadeImpl">
+                <property name="dao" ref="furnitureLink2FurnitureLinkDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="furnitureLink2FurnitureLinker" class="by.dak.cutting.facade.impl.helper.FurnitureLink2FurnitureLinker"/>
+
+
+    <bean id="commonDataFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.report.jasper.common.facade.CommonDataFacade"/>
+        <property name="target">
+            <bean class="by.dak.report.jasper.common.facade.CommonDataFacadeImpl">
+                <property name="dao" ref="commonDataDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="categoryFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.category.facade.CategoryFacade"/>
+        <property name="target">
+            <bean class="by.dak.category.facade.CategoryFacadeImpl">
+                <property name="dao" ref="categoryDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="materialTypeHelper" class="by.dak.cutting.facade.MaterialTypeHelper"/>
+
+    <bean id="autocadFacade" class="by.dak.autocad.AutocadFacade"/>
+
+    <bean id="linearStripsFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.linear.facade.LinearStripsFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.linear.facade.impl.LinearStripsFacadeImpl">
+                <property name="dao" ref="linearStripsDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="dspPlasticDetailFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.plastic.facade.DSPPlasticDetailFacade"/>
+        <property name="target">
+            <bean class="by.dak.plastic.facade.DSPPlasticDetailFacadeImpl">
+                <property name="dao" ref="dspPlasticDetailDao"/>
+                <property name="plasticBoardDefIds">
+                    <list>
+                        <value>114737700</value>
+                        <value>114737950</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="dspPlasticStripsFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.plastic.strips.facade.DSPPlasticStripsFacade"/>
+        <property name="target">
+            <bean class="by.dak.plastic.strips.facade.DSPPlasticStripsFacadeImpl">
+                <property name="dao" ref="dspPlasticStripsDao"/>
+                <property name="orderBoardDetailFacade" ref="dspPlasticDetailFacade"/>
+                <property name="cutSettingsCreatorClass" value="by.dak.plastic.facade.DSPPlasticCutSettingsCreator"/>
+            </bean>
+        </property>
+
+    </bean>
+
+    <bean id="exceptionHandler" class="by.dak.cutting.DefaultExceptionHandler"/>
+
+    <bean id="mainFacade" class="by.dak.persistence.MainFacade"/>
+</beans>

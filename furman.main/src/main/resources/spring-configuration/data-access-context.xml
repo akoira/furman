@@ -1,0 +1,146 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="transactionSynchronization" value="1"/>
+		<property name="rollbackOnCommitFailure" value="true"/>
+		<property name="autodetectDataSource" value="false"/>
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="annotatedClasses">
+			<description>
+				List of packages with annotated classes
+			</description>
+			<list>
+				<value>by.dak.persistence.entities.BoardDef</value>
+				<value>by.dak.persistence.entities.BorderDefEntity</value>
+				<value>by.dak.persistence.entities.TextureEntity</value>
+				<value>by.dak.persistence.entities.Service</value>
+				<value>by.dak.persistence.entities.types.FurnitureCode</value>
+				<value>by.dak.persistence.entities.types.FurnitureType</value>
+				<value>by.dak.persistence.entities.Furniture</value>
+
+				<value>by.dak.persistence.entities.DesignerEntity</value>
+				<value>by.dak.persistence.entities.Dailysheet</value>
+				<value>by.dak.persistence.entities.Customer</value>
+				<value>by.dak.persistence.entities.DepartmentEntity</value>
+				<value>by.dak.persistence.entities.Employee</value>
+				<value>by.dak.persistence.entities.Board</value>
+				<value>by.dak.persistence.entities.Border</value>
+				<value>by.dak.persistence.entities.BoardDef</value>
+				<value>by.dak.persistence.entities.Manufacturer</value>
+				<value>by.dak.persistence.entities.Order</value>
+				<value>by.dak.persistence.entities.OrderFurniture</value>
+				<value>by.dak.persistence.entities.OrderItem</value>
+				<value>by.dak.persistence.entities.PriceEntity</value>
+				<value>by.dak.persistence.entities.Provider</value>
+				<value>by.dak.persistence.entities.ShiftEntity</value>
+				<value>by.dak.persistence.entities.Cutter</value>
+				<value>by.dak.persistence.entities.Delivery</value>
+				<value>by.dak.ordergroup.OrderGroup</value>
+				<value>by.dak.persistence.cutting.entities.StripsEntity</value>
+				<!-- new for DoorMechDef start -->
+
+				<!--<value>by.dak.cutting.doors.mech.DoorMechDef</value>-->
+				<!--<value>by.dak.cutting.doors.mech.DoorColor</value>-->
+				<!--<value>by.dak.cutting.doors.mech.DoorComponent</value>-->
+				<!--<value>by.dak.cutting.doors.mech.DoorMechType</value>-->
+
+				<!-- new DoorMechDef end -->
+
+				<!--new Profile start -->
+				<!--<value>by.dak.cutting.doors.profile.ProfileCompDef</value>-->
+				<!--<value>by.dak.cutting.doors.profile.ProfileComp</value>-->
+				<!--<value>by.dak.cutting.doors.profile.ProfileDef</value>-->
+				<!--new Profile end -->
+
+				<!--<value>by.dak.cutting.swing.dictionaries.A1</value>-->
+				<!--<value>by.dak.cutting.swing.dictionaries.A2</value>-->
+				<!--<value>by.dak.cutting.swing.dictionaries.B</value>-->
+				<value>by.dak.persistence.entities.StorageElementLink</value>
+				<value>by.dak.persistence.entities.FurnitureLink</value>
+				<value>by.dak.cutting.currency.persistence.entity.Currency</value>
+				<value>by.dak.additional.Additional</value>
+
+				<value>by.dak.cutting.afacade.FurnitureTypeLink</value>
+				<value>by.dak.cutting.afacade.FurnitureCodeLink</value>
+
+				<!--ZFacade-->
+				<value>by.dak.cutting.zfacade.ZFacade</value>
+				<value>by.dak.cutting.zfacade.ZProfileType</value>
+				<value>by.dak.cutting.zfacade.ZProfileColor</value>
+				<value>by.dak.cutting.zfacade.ZButtLink</value>
+
+				<!--AGTFacade-->
+				<value>by.dak.cutting.agt.AGTFacade</value>
+				<value>by.dak.cutting.agt.AGTType</value>
+				<value>by.dak.cutting.agt.AGTColor</value>
+
+				<value>by.dak.persistence.entities.AOrderDetail</value>
+				<value>by.dak.persistence.entities.FurnitureLink2FurnitureLink</value>
+
+				<value>by.dak.report.jasper.common.data.CommonData</value>
+				<value>by.dak.report.jasper.common.data.BorderCommonData</value>
+				<value>by.dak.report.jasper.common.data.FurnitureCommonData</value>
+
+				<!--Buffer-->
+				<value>by.dak.buffer.entity.DilerOrder</value>
+				<value>by.dak.buffer.entity.DilerOrderItem</value>
+				<value>by.dak.buffer.entity.DilerOrderDetail</value>
+				<!--<value>by.dak.buffer.entity.TempOrder</value>-->
+				<!--<value>by.dak.buffer.entity.TempOrderItem</value>-->
+				<!--<value>by.dak.buffer.entity.TempOrderDetail</value>-->
+
+				<value>by.dak.template.TemplateOrder</value>
+				<value>by.dak.category.Category</value>
+				<value>by.dak.template.TemplateFacade</value>
+
+
+				<value>by.dak.cutting.linear.entity.LinearStripsEntity</value>
+
+				<value>by.dak.plastic.DSPPlasticDetail</value>
+				<value>by.dak.plastic.strips.DSPPlasticStripsEntity</value>
+			</list>
+		</property>
+		<property name="dataSource" ref="dataSource"/>
+		<property name="hibernateProperties">
+			<props>
+				<!--<prop key="hibernate.cache.region.factory_class">-->
+				<!--net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory-->
+				<!--</prop>-->
+				<!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider-->
+				<!--</prop>-->
+				<!--<prop key="hibernate.cache.provider_configuration_file_resource_path">ehcache.xml</prop>-->
+				<!--<prop key="hibernate.cache.use_query_cache">true</prop>-->
+				<!--<prop key="hibernate.cache.query_cache_factory">org.hibernate.cache.StandardQueryCacheFactory</prop>-->
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+
+				<prop key="hibernate.jdbc.use_scrollable_resultset">false</prop>
+
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+
+				<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.use_sql_comments">${hibernate.use_sql_comments}</prop>
+				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+
+
+				<!--<prop key="hibernate.cache.use_second_level_cache">true</prop>-->
+				<!--<prop key="hibernate.cache.use_query_cache">true</prop>-->
+				<!--<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>-->
+				<!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>-->
+			</props>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

@@ -1,0 +1,13 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+        default-autowire="byName">
+    <import resource="/spring-configuration/application.xml"/>
+    <bean id="templateImportService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.furman.templateimport.service.ITemplateImportService"/>
+        <property name="target">
+            <bean class="by.dak.furman.templateimport.service.TemplateImportService"/>
+        </property>
+    </bean>
+</beans>

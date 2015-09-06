@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="3" author="akoyro">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="order_item" columnName="source_ID"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="order_item">
+            <column name="source_ID" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="order_item" baseColumnNames="source_ID" constraintName="sourceOrderItem"
+                                 referencedTableName="order_item"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="4" author="akoyro">
+        <sql>
+            update order_item set type = 'plastic' where name = 'plasticOrderItem'
+        </sql>
+    </changeSet>
+
+    <changeSet author="akoyro" id="5">
+        <createIndex indexName="idx_strips_discriminator"
+                     tableName="STRIPS">
+            <column name="DISCRIMINATOR" type="varchar(255)"/>
+        </createIndex>
+        <createIndex indexName="idx_FURN_ORDER_discriminator"
+                     tableName="FURN_ORDER">
+            <column name="DISCRIMINATOR" type="varchar(255)"/>
+        </createIndex>
+        <createIndex indexName="idx_ORDER_DETAIL_discriminator"
+                     tableName="ORDER_DETAIL">
+            <column name="DISCRIMINATOR" type="varchar(255)"/>
+        </createIndex>
+
+        <createIndex indexName="idx_FURNITURE_discriminator"
+                     tableName="FURNITURE">
+            <column name="DISCRIMINATOR" type="varchar(255)"/>
+        </createIndex>
+        <createIndex indexName="idx_ORDER_ITEM_discriminator"
+                     tableName="ORDER_ITEM">
+            <column name="DISCRIMINATOR" type="varchar(255)"/>
+        </createIndex>
+        <createIndex indexName="idx_FURNITURE_TYPE_discriminator"
+                     tableName="FURNITURE_TYPE">
+            <column name="DISCRIMINATOR" type="varchar(255)"/>
+        </createIndex>
+        <createIndex indexName="idx_FURNITURE_CODE_discriminator"
+                     tableName="FURNITURE_CODE">
+            <column name="PRICED_TYPE" type="varchar(255)"/>
+        </createIndex>
+        <createIndex indexName="idx_COMMON_DATA_discriminator"
+                     tableName="COMMON_DATA">
+            <column name="DISCRIMINATOR" type="varchar(255)"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

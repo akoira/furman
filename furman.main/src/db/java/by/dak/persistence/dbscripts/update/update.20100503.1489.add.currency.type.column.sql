@@ -1,0 +1,1 @@
+alter table PRICE add CURRENCY_TYPE VARCHAR(255) DEFAULT 'USD' not null;

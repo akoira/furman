@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="report1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20">
+    <property name="ireport.zoom" value="2.0"/>
+    <property name="ireport.x" value="487"/>
+    <property name="ireport.y" value="0"/>
+    <queryString>
+        <![CDATA[SELECT
+     BORDER_DEF."NAME" AS BORDER_DEF_NAME,
+     BORDER."LENGTH" AS BORDER_LENGTH,
+     BORDER."AMOUNT" AS BORDER_AMOUNT,
+     TEXTURE."NAME" AS TEXTURE_NAME,
+     TEXTURE."CODE" AS TEXTURE_CODE,
+     MANUFACTURER."NAME" AS MANUFACTURER_NAME,
+     FURN_ORDER."ORDER_NUMBER" AS FURN_ORDER_ORDER_NUMBER,
+     FURN_ORDER."READY_DATE" AS FURN_ORDER_READY_DATE
+FROM
+     "PUBLIC"."BORDER_DEF" BORDER_DEF INNER JOIN "PUBLIC"."BORDER" BORDER ON BORDER_DEF."ID" = BORDER."BORDER_DEF_ID"
+     INNER JOIN "PUBLIC"."TEXTURE" TEXTURE ON BORDER."TEXTURE_ID" = TEXTURE."ID"
+     INNER JOIN "PUBLIC"."FURN_ORDER" FURN_ORDER ON BORDER."ORDER_ID" = FURN_ORDER."ID"
+     INNER JOIN "PUBLIC"."MANUFACTURER" MANUFACTURER ON TEXTURE."MANUFACTURER_ID" = MANUFACTURER."ID"
+WHERE
+     BORDER.STATUS = 'order'
+ AND ORDER_ID IS NOT NULL
+ AND AMOUNT > 0
+ORDER BY
+     BORDER_DEF."NAME" ASC,
+     TEXTURE."NAME" ASC,
+     FURN_ORDER."READY_DATE" ASC,
+     FURN_ORDER."ORDER_NUMBER" ASC
+]]>
+    </queryString>
+    <field name="BORDER_DEF_NAME" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="BORDER_LENGTH" class="java.lang.Double">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="BORDER_AMOUNT" class="java.lang.Long">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="TEXTURE_NAME" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="TEXTURE_CODE" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="MANUFACTURER_NAME" class="java.lang.String">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="FURN_ORDER_ORDER_NUMBER" class="java.lang.Long">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <field name="FURN_ORDER_READY_DATE" class="java.sql.Date">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+    <group name="BOARD_DEF_NAME">
+        <groupExpression><![CDATA[$F{BORDER_DEF_NAME}]]></groupExpression>
+        <groupHeader>
+            <band height="18">
+                <textField>
+                    <reportElement mode="Opaque" x="0" y="1" width="555" height="17" forecolor="#000000"
+                                   backcolor="#FFFFFF"/>
+                    <textElement>
+                        <font fontName="Arial" size="10" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$F{BORDER_DEF_NAME}]]></textFieldExpression>
+                </textField>
+                <line>
+                    <reportElement x="-20" y="17" width="575" height="1" forecolor="#666666"/>
+                </line>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band/>
+        </groupFooter>
+    </group>
+    <background>
+        <band/>
+    </background>
+    <title>
+        <band height="27">
+            <frame>
+                <reportElement mode="Opaque" x="-20" y="-20" width="595" height="46" backcolor="#FFFFFF"/>
+                <staticText>
+                    <reportElement x="20" y="20" width="234" height="23" forecolor="#333333"/>
+                    <textElement>
+                        <font size="16" isBold="true"/>
+                    </textElement>
+                    <text><![CDATA[Заказать]]></text>
+                </staticText>
+            </frame>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="13"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="21">
+            <line>
+                <reportElement x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+            </line>
+            <staticText>
+                <reportElement mode="Opaque" x="0" y="0" width="92" height="20" forecolor="#000000"
+                               backcolor="#FFFFFF"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Текстура/Цвет]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="455" y="0" width="60" height="20" forecolor="#000000"
+                               backcolor="#FFFFFF"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Длинна]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="515" y="0" width="40" height="20" forecolor="#000000"
+                               backcolor="#FFFFFF"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Кол-во]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="92" y="0" width="38" height="20" forecolor="#000000"
+                               backcolor="#FFFFFF"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Коде]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="140" y="0" width="163" height="20" forecolor="#000000"
+                               backcolor="#FFFFFF"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Производитель]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="392" y="0" width="63" height="20" forecolor="#000000"
+                               backcolor="#FFFFFF"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Дата г-ти]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Opaque" x="329" y="0" width="63" height="20" forecolor="#000000"
+                               backcolor="#FFFFFF"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Заказ]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20">
+            <textField isStretchWithOverflow="true" pattern="###0.00">
+                <reportElement x="455" y="1" width="60" height="19"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="10"/>
+                </textElement>
+                <textFieldExpression class="java.lang.Double"><![CDATA[$F{BORDER_LENGTH}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
+            </line>
+            <textField isStretchWithOverflow="true">
+                <reportElement x="0" y="0" width="92" height="19"/>
+                <textElement>
+                    <font fontName="Arial" size="10"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{TEXTURE_NAME}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement x="140" y="0" width="163" height="19"/>
+                <textElement>
+                    <font fontName="Arial" size="10"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{MANUFACTURER_NAME}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement x="92" y="0" width="38" height="19"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="10"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{TEXTURE_CODE}]]></textFieldExpression>
+            </textField>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="392" y="1" width="63" height="19"/>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.util.Date"><![CDATA[$F{FURN_ORDER_READY_DATE}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true">
+                <reportElement x="515" y="1" width="40" height="18"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" size="10"/>
+                </textElement>
+                <textFieldExpression class="java.lang.Long"><![CDATA[$F{BORDER_AMOUNT}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="330" y="1" width="62" height="18"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.Long">
+                    <![CDATA[$F{FURN_ORDER_ORDER_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band/>
+    </columnFooter>
+    <pageFooter>
+        <band height="17">
+            <textField>
+                <reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6"/>
+                <textElement textAlignment="Right"/>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+                <textElement/>
+                <textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement x="0" y="4" width="100" height="13"/>
+                <textElement/>
+                <textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band/>
+    </summary>
+</jasperReport>

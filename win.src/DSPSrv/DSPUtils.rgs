@@ -1,0 +1,26 @@
+HKCR
+{
+	DSPSrv.DSPUtils.1 = s 'DSPUtils Class'
+	{
+		CLSID = s '{DF21EDB7-70E0-44F2-A978-B64355BBB277}'
+	}
+	DSPSrv.DSPUtils = s 'DSPUtils Class'
+	{
+		CLSID = s '{DF21EDB7-70E0-44F2-A978-B64355BBB277}'
+		CurVer = s 'DSPSrv.DSPUtils.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DF21EDB7-70E0-44F2-A978-B64355BBB277} = s 'DSPUtils Class'
+		{
+			ProgID = s 'DSPSrv.DSPUtils.1'
+			VersionIndependentProgID = s 'DSPSrv.DSPUtils'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{C06E7394-E0CF-4DD3-B6E3-3E93AD0373E5}'
+		}
+	}
+}

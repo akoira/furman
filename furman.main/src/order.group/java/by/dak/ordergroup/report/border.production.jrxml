@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="border.def.price" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20"
+              rightMargin="20" topMargin="20" bottomMargin="20">
+    <property name="ireport.zoom" value="1.5"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+    <style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+    <style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+    <style name="Detail" fontName="Arial" fontSize="12"/>
+    <parameter name="ORDER_GROUP_ID" class="java.lang.Long"/>
+    <parameter name="PRODUCTION_DATE" class="java.util.Date"/>
+    <parameter name="ORDERS" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[SELECT
+     BORDER_DEF.NAME AS BORDER_DEF_NAME,
+     BORDER_DEF.UNIT AS UNIT,
+     TEXTURE.NAME AS TEXTURE_NAME,
+     TEXTURE.CODE AS TEXTURE_CODE,
+     MANUFACTURER.SHORT_NAME AS MANUFACTURER_SHORT_NAME,
+     sum(FURNITURE.LENGTH * FURNITURE.AMOUNT)  AS LENGTH
+FROM
+    FURNITURE FURNITURE
+     INNER JOIN PUBLIC.FURNITURE_CODE TEXTURE ON FURNITURE.FURNITURE_CODE_ID = TEXTURE.ID
+     INNER JOIN PUBLIC.FURNITURE_TYPE BORDER_DEF ON FURNITURE.FURNITURE_TYPE_ID = BORDER_DEF.ID
+     INNER JOIN PUBLIC.MANUFACTURER MANUFACTURER ON TEXTURE.MANUFACTURER_ID = MANUFACTURER.ID
+     INNER JOIN PUBLIC.FURN_ORDER FURN_ORDER ON FURN_ORDER.ID = FURNITURE.ORDER_ID
+WHERE
+     FURNITURE.DISCRIMINATOR = 'Border' and
+     FURNITURE.ORDER_ID is not null and
+     FURN_ORDER.ORDER_GROUP_ID = $P{ORDER_GROUP_ID}
+GROUP BY
+     BORDER_DEF.NAME,
+     MANUFACTURER.SHORT_NAME,
+     TEXTURE.NAME,
+     TEXTURE.CODE,
+     BORDER_DEF.UNIT
+ORDER BY
+     BORDER_DEF.NAME ASC,
+     MANUFACTURER.SHORT_NAME ASC,
+     TEXTURE.NAME ASC]]>
+    </queryString>
+    <field name="BORDER_DEF_NAME" class="java.lang.String"/>
+    <field name="UNIT" class="java.lang.String"/>
+    <field name="TEXTURE_NAME" class="java.lang.String"/>
+    <field name="TEXTURE_CODE" class="java.lang.String"/>
+    <field name="MANUFACTURER_SHORT_NAME" class="java.lang.String"/>
+    <field name="LENGTH" class="java.lang.Double"/>
+    <group name="BORDER_DEF_NAME">
+        <groupExpression><![CDATA[$F{BORDER_DEF_NAME}]]></groupExpression>
+        <groupHeader>
+            <band height="33">
+                <textField>
+                    <reportElement style="SubTitle" x="3" y="18" width="539" height="14" forecolor="#000000"/>
+                    <textElement>
+                        <font size="10" isBold="true"/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$F{BORDER_DEF_NAME}]]></textFieldExpression>
+                </textField>
+                <staticText>
+                    <reportElement style="Column header" x="32" y="3" width="401" height="15" forecolor="#000000"/>
+                    <textElement>
+                        <font size="10" isItalic="true"/>
+                    </textElement>
+                    <text><![CDATA[Цвет/Текстура]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement style="Column header" x="433" y="3" width="63" height="15" forecolor="#000000"/>
+                    <textElement>
+                        <font size="10" isItalic="true"/>
+                    </textElement>
+                    <text><![CDATA[Ед. изм.]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement style="Column header" x="496" y="3" width="56" height="15" forecolor="#000000"/>
+                    <textElement textAlignment="Right">
+                        <font size="10" isItalic="true"/>
+                    </textElement>
+                    <text><![CDATA[Длинна]]></text>
+                </staticText>
+                <line>
+                    <reportElement positionType="FixRelativeToBottom" x="3" y="32" width="552" height="1"/>
+                    <graphicElement>
+                        <pen lineWidth="0.5" lineColor="#999999"/>
+                    </graphicElement>
+                </line>
+                <line>
+                    <reportElement positionType="FixRelativeToBottom" x="3" y="17" width="552" height="1"/>
+                    <graphicElement>
+                        <pen lineWidth="0.5" lineColor="#999999"/>
+                    </graphicElement>
+                </line>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="8"/>
+        </groupFooter>
+    </group>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="22" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="320" height="20"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial" isBold="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA["Заказ на склад для оклеечных материалов на "]]></textFieldExpression>
+            </textField>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement x="320" y="0" width="222" height="20"/>
+                <textElement>
+                    <font fontName="Arial" isBold="true"/>
+                </textElement>
+                <textFieldExpression class="java.util.Date"><![CDATA[$P{PRODUCTION_DATE}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <pageHeader>
+        <band splitType="Stretch"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="11" splitType="Stretch"/>
+    </columnHeader>
+    <detail>
+        <band height="15" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="3" y="14" width="555" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+            <textField>
+                <reportElement style="Detail" x="32" y="0" width="401" height="14"/>
+                <textElement>
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{TEXTURE_NAME}+" "+$F{TEXTURE_CODE}+"("+$F{MANUFACTURER_SHORT_NAME}+")"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement style="Detail" x="433" y="0" width="63" height="14"/>
+                <textElement>
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA["м.п."]]></textFieldExpression>
+            </textField>
+            <textField pattern="###0.00">
+                <reportElement style="Detail" x="496" y="0" width="56" height="14"/>
+                <textElement textAlignment="Right">
+                    <font size="9"/>
+                </textElement>
+                <textFieldExpression class="java.lang.Double"><![CDATA[$F{LENGTH}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="10" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="20" splitType="Stretch">
+            <textField>
+                <reportElement style="Column header" x="433" y="0" width="80" height="20"/>
+                <textElement textAlignment="Right">
+                    <font size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement style="Column header" x="513" y="0" width="40" height="20"/>
+                <textElement>
+                    <font size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField pattern="EEEEE dd MMMMM yyyy">
+                <reportElement style="Column header" x="0" y="0" width="197" height="20"/>
+                <textElement>
+                    <font size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="12" splitType="Stretch">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement stretchType="RelativeToBandHeight" x="3" y="0" width="549" height="11"/>
+                <textElement markup="html">
+                    <font fontName="Arial" size="9"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA["Заказы: "+$P{ORDERS}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+</jasperReport>

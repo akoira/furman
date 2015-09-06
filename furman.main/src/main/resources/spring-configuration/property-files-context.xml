@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<description>
+			Loading all properties files from the classpath/spring-properties
+		</description>
+		<property name="placeholderPrefix" value="${"/>
+		<property name="placeholderSuffix" value="}"/>
+		<property name="searchSystemEnvironment" value="true"/>
+		<property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations">
+			<list>
+				<value>classpath:/spring-properties/data-source.properties</value>
+				<value>classpath:/spring-properties/mongo.properties</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

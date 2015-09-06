@@ -1,0 +1,11 @@
+alter table DOOR_COLOR add column DOOR_MECH_DEF_ID bigint null
+
+alter table DOOR_COLOR add constraint DOOR_COLOR_MECH foreign key (DOOR_MECH_DEF_ID) references DOOR_MECH_DEF;
+
+alter table DOOR_COMPONENT add column DOOR_MECH_DEF_ID bigint null
+
+alter table DOOR_COMPONENT add constraint DOOR_COMPONENT_MECH foreign key (DOOR_MECH_DEF_ID) references DOOR_MECH_DEF;
+
+alter table DOOR_MECH_TYPE add column DOOR_MECH_DEF_ID bigint null
+
+alter table DOOR_MECH_TYPE add constraint DOOR_MECH_TYPE_MECH foreign key (DOOR_MECH_DEF_ID) references DOOR_MECH_DEF;

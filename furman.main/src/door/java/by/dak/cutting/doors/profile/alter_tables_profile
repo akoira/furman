@@ -1,0 +1,7 @@
+alter table PROFILE_COMP_DEF add PROFILE_DEF_ID bigint not null;
+alter table PROFILE_COMP_DEF add constraint PROF_COMP_DEF_PROF_DEF foreign key (PROFILE_DEF_ID) references PROFILE_DEF;
+
+alter table PROFILE_COMP add PROFILE_COMP_DEF_ID bigint not null;
+alter table PROFILE_COMP add constraint COMP_PROFILE_COMP_DEF foreign key (PROFILE_COMP_DEF_ID) references PROFILE_COMP_DEF;
+
+alter table PROFILE_COMP_DEF add PROFILE_POSITION VARCHAR(255) DEFAULT 'top' not null;

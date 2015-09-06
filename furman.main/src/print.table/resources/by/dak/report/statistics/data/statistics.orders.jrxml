@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="statistics.orders" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+              resourceBundle="by/dak/report/statistics/data/statisticOrdersReport">
+    <property name="ireport.zoom" value="3.0"/>
+    <property name="ireport.x" value="397"/>
+    <property name="ireport.y" value="0"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <field name="name" class="java.lang.String">
+        <fieldDescription><![CDATA[name]]></fieldDescription>
+    </field>
+    <field name="number" class="java.lang.String">
+        <fieldDescription><![CDATA[number]]></fieldDescription>
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="33" splitType="Stretch">
+            <textField>
+                <reportElement x="209" y="0" width="152" height="32"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" size="14" isBold="true" isItalic="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{title}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="32" width="555" height="1"/>
+            </line>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="9" splitType="Stretch"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="16" splitType="Stretch">
+            <textField>
+                <reportElement x="282" y="1" width="146" height="14"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" isBold="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="149" y="1" width="132" height="14"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" isBold="true"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{number}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="280" y="1" width="1" height="14"/>
+            </line>
+            <line>
+                <reportElement x="148" y="1" width="1" height="14"/>
+            </line>
+            <line>
+                <reportElement x="148" y="15" width="280" height="1"/>
+            </line>
+            <line>
+                <reportElement x="148" y="0" width="280" height="1"/>
+            </line>
+            <line>
+                <reportElement x="428" y="0" width="1" height="15"/>
+            </line>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="15" splitType="Stretch">
+            <textField>
+                <reportElement x="282" y="0" width="146" height="14"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial" isBold="false"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="149" y="0" width="131" height="14"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{number}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="148" y="0" width="1" height="15"/>
+            </line>
+            <line>
+                <reportElement x="149" y="14" width="279" height="1"/>
+            </line>
+            <line>
+                <reportElement x="280" y="0" width="1" height="14"/>
+            </line>
+            <line>
+                <reportElement x="428" y="0" width="1" height="15"/>
+            </line>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="7" splitType="Stretch"/>
+    </columnFooter>
+    <pageFooter>
+        <band height="14" splitType="Stretch">
+            <textField>
+                <reportElement x="262" y="0" width="202" height="14"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{page}+" "+$V{PAGE_NUMBER}+" "+$R{from}]]></textFieldExpression>
+            </textField>
+            <textField evaluationTime="Report">
+                <reportElement x="475" y="0" width="40" height="14"/>
+                <textElement>
+                    <font fontName="Arial"/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="5" splitType="Stretch"/>
+    </summary>
+</jasperReport>

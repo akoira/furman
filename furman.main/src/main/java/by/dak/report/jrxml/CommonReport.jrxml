@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="CommonReport"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="normal"
+		isDefault="true"
+		pdfFontName="c:\tahoma.ttf"
+		pdfEncoding="Cp1251"
+	>
+	</style>
+
+
+	<field name="title" class="java.lang.String"/>
+	<field name="cutting" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="pathToSubreport" class="java.lang.String"/>
+	<field name="directGlueing" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="price" class="java.lang.String"/>
+	<field name="count" class="java.lang.String"/>
+	<field name="property" class="java.lang.String"/>
+	<field name="curveGlueing" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="composition" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="driling" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="milling" class="net.sf.jasperreports.engine.JRDataSource"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="40"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="535"
+						height="29"
+						key="textField-1"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="18"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{title}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="30"
+						width="535"
+						height="10"
+						backcolor="#000000"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						style="normal"
+						x="0"
+						y="0"
+						width="421"
+						height="0"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="20"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="600"  isSplitAllowed="true" >
+				<elementGroup><!--  Start: 165 !-->
+				<subreport  isUsingCache="true">
+					<reportElement
+						style="normal"
+						mode="Opaque"
+						x="220"
+						y="30"
+						width="310"
+						height="10"
+						key="subreport-1"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<dataSourceExpression><![CDATA[$F{cutting}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$F{pathToSubreport}+"Cutting.jasper"]]></subreportExpression>
+				</subreport>
+				</elementGroup><!-- End 165 !-->
+				<elementGroup><!--  Start: 166 !-->
+				<subreport  isUsingCache="true">
+					<reportElement
+						style="normal"
+						mode="Opaque"
+						x="220"
+						y="50"
+						width="310"
+						height="10"
+						key="subreport-2"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<dataSourceExpression><![CDATA[$F{directGlueing}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$F{pathToSubreport}+"DirectGlueing.jasper"]]></subreportExpression>
+				</subreport>
+				</elementGroup><!-- End 166 !-->
+				<elementGroup><!--  Start: 170 !-->
+				<elementGroup><!--  Start: 170.169 !-->
+				<elementGroup><!--  Start: 169.168 !-->
+				<elementGroup><!--  Start: 168.167 !-->
+				<elementGroup><!--  Start: 167.166 !-->
+				<elementGroup><!--  Start: 166.165 !-->
+				<rectangle>
+					<reportElement
+						style="normal"
+						x="10"
+						y="0"
+						width="30"
+						height="600"
+						key="rectangle-1"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<graphicElement stretchType="RelativeToTallestObject"/>
+				</rectangle>
+				</elementGroup><!-- End 170.169.168.167.166.165 !-->
+				</elementGroup><!-- End 170.169.168.167.166 !-->
+				</elementGroup><!-- End 170.169.168.167 !-->
+				</elementGroup><!-- End 170.169.168 !-->
+				</elementGroup><!-- End 170.169 !-->
+				</elementGroup><!-- End 170 !-->
+				<elementGroup><!--  Start: 167 !-->
+				<subreport  isUsingCache="true">
+					<reportElement
+						style="normal"
+						mode="Opaque"
+						x="220"
+						y="70"
+						width="310"
+						height="10"
+						key="subreport-3"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<dataSourceExpression><![CDATA[$F{curveGlueing}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$F{pathToSubreport}+"CurveGlueing.jasper"]]></subreportExpression>
+				</subreport>
+				</elementGroup><!-- End 167 !-->
+				<elementGroup><!--  Start: 170 !-->
+				<elementGroup><!--  Start: 170.99 !-->
+				<subreport  isUsingCache="true">
+					<reportElement
+						style="normal"
+						mode="Opaque"
+						x="220"
+						y="130"
+						width="310"
+						height="10"
+						key="subreport-4"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<dataSourceExpression><![CDATA[$F{composition}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$F{pathToSubreport}+"Composition.jasper"]]></subreportExpression>
+				</subreport>
+				</elementGroup><!-- End 170.99 !-->
+				</elementGroup><!-- End 170 !-->
+				<elementGroup><!--  Start: 169 !-->
+				<subreport  isUsingCache="true">
+					<reportElement
+						style="normal"
+						mode="Opaque"
+						x="220"
+						y="110"
+						width="310"
+						height="10"
+						key="subreport-5"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<dataSourceExpression><![CDATA[$F{driling}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$F{pathToSubreport}+"Driling.jasper"]]></subreportExpression>
+				</subreport>
+				</elementGroup><!-- End 169 !-->
+				<elementGroup><!--  Start: 168 !-->
+				<subreport  isUsingCache="true">
+					<reportElement
+						style="normal"
+						mode="Opaque"
+						x="220"
+						y="90"
+						width="310"
+						height="10"
+						key="subreport-6"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"
+						isPrintRepeatedValues="false"/>
+					<dataSourceExpression><![CDATA[$F{milling}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA[$F{pathToSubreport}+"Milling.jasper"]]></subreportExpression>
+				</subreport>
+				</elementGroup><!-- End 168 !-->
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="20"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

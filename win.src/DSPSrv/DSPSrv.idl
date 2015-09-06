@@ -1,0 +1,39 @@
+// (C) Copyright 2002-2007 by Autodesk, Inc. 
+
+// DSPSrv.idl : IDL source
+//
+// This file will be processed by the MIDL tool to
+// produce the type library (IMDSPSrv.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(964B42C3-6F9C-4301-9664-2C960595ECF6),
+	dual,
+	nonextensible,
+	helpstring("IDSPUtils Interface"),
+	pointer_default(unique)
+]
+interface IDSPUtils : IDispatch{
+	[id(1), helpstring("method GetData")] HRESULT GetData([in] BSTR DWGFullPath, [out] DOUBLE* LineLength, [out] DOUBLE* CurveLength, [out] DOUBLE* Square, [out] LONG* RegionCount);
+};
+[
+	uuid(C06E7394-E0CF-4DD3-B6E3-3E93AD0373E5),
+	version(1.0),
+	helpstring("IMDSPSrv 1.0 Type Library")
+]
+library IMDSPSrvLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	[
+		uuid(DF21EDB7-70E0-44F2-A978-B64355BBB277),
+		helpstring("DSPUtils Class")
+	]
+	coclass DSPUtils
+	{
+		[default] interface IDSPUtils;
+	};
+};

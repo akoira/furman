@@ -1,0 +1,26 @@
+HKCR
+{
+	DSP.App.1 = s 'App Class'
+	{
+		CLSID = s '{34B61572-D28C-4696-8AC9-CD38A6E006C1}'
+	}
+	DSP.App = s 'App Class'
+	{
+		CLSID = s '{34B61572-D28C-4696-8AC9-CD38A6E006C1}'
+		CurVer = s 'DSP.App.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {34B61572-D28C-4696-8AC9-CD38A6E006C1} = s 'App Class'
+		{
+			ProgID = s 'DSP.App.1'
+			VersionIndependentProgID = s 'DSP.App'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{1BD17DB2-53D9-4FFE-A9CE-E917B4F7FB23}'
+		}
+	}
+}
