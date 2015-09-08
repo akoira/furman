@@ -40,7 +40,7 @@ public class BorderDefEntity extends PriceAware
     private Long height;
 
     @Column(name = "THICKNESS", nullable = false)
-    private Long thickness;
+    private Double thickness;
 
     /**
      * @return the height
@@ -61,7 +61,7 @@ public class BorderDefEntity extends PriceAware
     /**
      * @return the thickness
      */
-    public Long getThickness()
+    public Double getThickness()
     {
         return thickness;
     }
@@ -69,7 +69,7 @@ public class BorderDefEntity extends PriceAware
     /**
      * @param thickness the thickness to set
      */
-    public void setThickness(Long thickness)
+    public void setThickness(Double thickness)
     {
         this.thickness = thickness;
     }
