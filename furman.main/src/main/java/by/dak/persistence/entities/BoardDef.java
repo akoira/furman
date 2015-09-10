@@ -50,7 +50,7 @@ public class BoardDef extends PriceAware
     }
 
     @Column(name = "THICKNESS", nullable = false)
-    private Long thickness;
+    private Double thickness;
 
     @OneToOne
     @JoinColumn(name = "SIMPLE_ID_1", nullable = true)
@@ -73,12 +73,12 @@ public class BoardDef extends PriceAware
     @Column(name = "OFFSET_WIDTH", nullable = false)
     private Double reservedWidth = 0.0;
 
-    public void setThickness(Long thickness)
+    public void setThickness(Double thickness)
     {
         this.thickness = thickness;
     }
 
-    public Long getThickness()
+    public Double getThickness()
     {
         return thickness;
     }
