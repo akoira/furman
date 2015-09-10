@@ -31,7 +31,7 @@ public class BoardDefDaoImpl extends GenericDaoImpl<BoardDef> implements BoardDe
 	/**
 	 * used in tests only
 	 */
-	public BoardDef createBoardDefinition(String name, Long height) {
+	public BoardDef createBoardDefinition(String name, Double height) {
 		// TODO move bean creation out of facade and dao
 		BoardDef definition = new BoardDef();
 		definition.setName(name);

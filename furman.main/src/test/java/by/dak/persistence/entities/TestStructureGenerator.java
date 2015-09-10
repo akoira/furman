@@ -162,7 +162,7 @@ public class TestStructureGenerator
         entity.setDefaultLength(Constants.DEFAULT_SHEET_LENGTH);
         entity.setDefaultWidth(Constants.DEFAULT_SHEET_WIDTH);
         entity.setName("BoardDef" + RandomUtils.nextInt());
-        entity.setThickness(18L);
+        entity.setThickness(18.0);
         return write(FacadeContext.getBoardDefFacade(), entity);
 //        return (BoardDef) write(FacadeContext.getBoardDefFacade(),
 //

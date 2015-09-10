@@ -19,7 +19,7 @@ public interface BoardDefDao extends GenericDao<BoardDef>
 
     List<BoardDef> findBoardDefinitionsWithFilter(final SearchFilter filter);
 
-    BoardDef createBoardDefinition(String name, Long thickness);
+    BoardDef createBoardDefinition(String name, Double thickness);
 
     void deleteBoardDefinition(BoardDef boardDefinition);
 
