@@ -97,7 +97,7 @@ public abstract class PersistenceEntity {
 
 	}
 
-	public synchronized void removePropertyChangeListener(
+	public void removePropertyChangeListener(
 			String propertyName,
 			PropertyChangeListener listener) {
 		support.removePropertyChangeListener(propertyName, listener);

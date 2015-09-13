@@ -1,184 +1,185 @@
 dependencies {
-  compile project(':furman.common')
-  compile project(':furman.repository')
-  compile project(':furman.upgrade')
+    compile project(':furman.common')
+    compile project(':furman.repository')
+    compile project(':furman.upgrade')
 
-  //compile files('../lib/appframework-1.03/appframework-1.0.3.jar')
-  compile files('../lib/appframework-1.03/swing-worker.jar')
-  compile files('../lib/asm/asm-all-3.3.1.jar')
-  compile files('../lib/aspectj-1.5.4/aspectjrt-1.5.4.jar')
-  compile files('../lib/aspectj-1.5.4/aspectjweaver-1.5.4.jar')
-  compile files('../lib/aspectj-1.6.5/aspectjrt.jar')
-  compile files('../lib/aspectj-1.6.5/aspectjtools.jar')
-  compile files('../lib/aspectj-1.6.5/aspectjweaver.jar')
-  compile files('../lib/aspectj-1.6.5/org.aspectj.matcher.jar')
+    //compile files('../lib/appframework-1.03/appframework-1.0.3.jar')
+    compile files('../lib/appframework-1.03/swing-worker.jar')
+    compile files('../lib/asm/asm-all-3.3.1.jar')
+    compile files('../lib/aspectj-1.5.4/aspectjrt-1.5.4.jar')
+    compile files('../lib/aspectj-1.5.4/aspectjweaver-1.5.4.jar')
+    compile files('../lib/aspectj-1.6.5/aspectjrt.jar')
+    compile files('../lib/aspectj-1.6.5/aspectjtools.jar')
+    compile files('../lib/aspectj-1.6.5/aspectjweaver.jar')
+    compile files('../lib/aspectj-1.6.5/org.aspectj.matcher.jar')
 
-  compile 'org.jdesktop:beansbinding:1.2.1'
-  compile files('../lib/cutting/AbsoluteLayout.jar')
-  compile files('../lib/cutting/javacsv.jar')
-  compile files('../lib/ehcache/ehcache-core-2.4.2.jar')
-  compile files('../lib/eventbus-1.2/EventBus-1.2.jar')
+    compile 'org.jdesktop:beansbinding:1.2.1'
+    compile files('../lib/cutting/AbsoluteLayout.jar')
+    compile files('../lib/cutting/javacsv.jar')
+    compile files('../lib/ehcache/ehcache-core-2.4.2.jar')
+    compile files('../lib/eventbus-1.2/EventBus-1.2.jar')
 
-  compile files('../lib/hsqldb/hsqldb.jar')
-  compile files('../lib/hsqldb/sqltool.jar')
-  compile files('../lib/infonode/idw-gpl.jar')
-  compile files('../lib/infonode/ilf-gpl.jar')
-  compile files('../lib/infonode/itp-gpl.jar')
-  compile files('../lib/itext-2.1.0/iText-2.1.0.jar')
-  compile files('../lib/jacob/jacob.jar')
-  //compile files('../lib/jacob-1.18-M1/jacob.jar')
+    compile files('../lib/hsqldb/hsqldb.jar')
+    compile files('../lib/hsqldb/sqltool.jar')
+    compile files('../lib/infonode/idw-gpl.jar')
+    compile files('../lib/infonode/ilf-gpl.jar')
+    compile files('../lib/infonode/itp-gpl.jar')
+    compile files('../lib/itext-2.1.0/iText-2.1.0.jar')
+    compile files('../lib/jacob/jacob.jar')
+    //compile files('../lib/jacob-1.18-M1/jacob.jar')
 
-  compile files('../lib/jcalendar-1.3.2/jcalendar-1.3.2.jar')
-  compile files('../lib/jcalendar-1.3.2/looks-2.0.1.jar')
-  compile files('../lib/jcr-1.0/jcr-1.0.jar')
+    compile files('../lib/jcalendar-1.3.2/jcalendar-1.3.2.jar')
+    compile files('../lib/jcalendar-1.3.2/looks-2.0.1.jar')
+    compile files('../lib/jcr-1.0/jcr-1.0.jar')
 
 
-  compile files('../lib/jgoodies/looks-2.3.1.jar')
+    compile files('../lib/jgoodies/looks-2.3.1.jar')
 
-  compile 'com.jgoodies:jgoodies-animation:1.4.2'
-  compile 'com.jgoodies:jgoodies-validation:2.4.2'
-  compile 'com.jgoodies:jgoodies-forms:1.6.0'
-  compile 'com.jgoodies:jgoodies-binding:2.7.0'
+    compile 'com.jgoodies:jgoodies-animation:1.4.2'
+    compile 'com.jgoodies:jgoodies-validation:2.4.2'
+    compile 'com.jgoodies:jgoodies-forms:1.6.0'
+    compile 'com.jgoodies:jgoodies-binding:2.7.0'
 
-  compile files('../lib/jhotdraw/jhotdraw.jar')
+    compile files('../lib/jhotdraw/jhotdraw.jar')
 
-  compile files('../lib/junit/junit-4.8.2.jar')
-  compile files('../lib/launch4j/launch4j.jar')
-  compile 'javax.activation:activation:1.1.1'
+    compile files('../lib/launch4j/launch4j.jar')
+    compile 'javax.activation:activation:1.1.1'
 
-  compile files('../lib/license3j/bcpg-jdk15-143.jar')
-  compile files('../lib/license3j/bcprov-jdk15-143.jar')
-  compile files('../lib/license3j/jms-1.1.jar')
-  compile files('../lib/license3j/jmxri-1.2.1.jar')
-  compile files('../lib/license3j/jmxtools-1.2.1.jar')
-  compile files('../lib/license3j/license3j-1.0.3.jar')
-  compile files('../lib/license3j/log4j-1.2.15.jar')
-  compile files('../lib/license3j/mail-1.4.jar')
-  compile files('../lib/proguard/proguard.jar')
+    compile files('../lib/license3j/bcpg-jdk15-143.jar')
+    compile files('../lib/license3j/bcprov-jdk15-143.jar')
+    compile files('../lib/license3j/jms-1.1.jar')
+    compile files('../lib/license3j/jmxri-1.2.1.jar')
+    compile files('../lib/license3j/jmxtools-1.2.1.jar')
+    compile files('../lib/license3j/license3j-1.0.3.jar')
+    compile files('../lib/license3j/log4j-1.2.15.jar')
+    compile files('../lib/license3j/mail-1.4.jar')
+    compile files('../lib/proguard/proguard.jar')
 
-  compile files('../lib/sqlworkbench/sqlworkbench.jar')
+    compile files('../lib/sqlworkbench/sqlworkbench.jar')
 
-  compile 'org.swinglabs.swingx:swingx-all:1.6.5-1'
-  compile 'org.swinglabs:swing-layout:1.0.3'
+    compile 'org.swinglabs.swingx:swingx-all:1.6.5-1'
+    compile 'org.swinglabs:swing-layout:1.0.3'
 
-  compile files('../lib/swingx_v0203/swingx_v0203.jar')
-  compile files('../lib/tablefilter-swing-3.1.2.jar')
-  compile files('../lib/wizard-1.0/wizard.jar')
-  compile files('../lib/xstream-1.3.1/xstream-1.3.1.jar')
+    compile files('../lib/swingx_v0203/swingx_v0203.jar')
+    compile files('../lib/tablefilter-swing-3.1.2.jar')
+    compile files('../lib/wizard-1.0/wizard.jar')
+    compile files('../lib/xstream-1.3.1/xstream-1.3.1.jar')
 
-  compile 'org.hibernate:hibernate-core:4.2.6.Final'
+    compile 'org.hibernate:hibernate-core:4.2.6.Final'
 
-  compile 'org.springframework:spring-context:4.0.1.RELEASE'
-  compile 'org.springframework.data:spring-data-jpa:1.4.3.RELEASE'
-  compile 'org.springframework.data:spring-data-mongodb:1.3.3.RELEASE'
+    compile 'org.springframework:spring-context:4.0.1.RELEASE'
+    compile 'org.springframework.data:spring-data-jpa:1.4.3.RELEASE'
+    compile 'org.springframework.data:spring-data-mongodb:1.3.3.RELEASE'
 
-  compile 'commons-dbcp:commons-dbcp:1.4'
-  compile 'commons-dbcp:commons-dbcp:1.4'
-  compile 'commons-io:commons-io:2.4'
-  compile 'org.apache.commons:commons-lang3:3.1'
-  compile 'commons-beanutils:commons-beanutils:1.8.3'
-  compile 'commons-logging:commons-logging:1.1.3'
-  compile 'commons-beanutils:commons-beanutils:1.8.3'
-  compile 'commons-collections:commons-collections:3.2.1'
-  compile 'commons-daemon:commons-daemon:1.0.15'
-  compile 'commons-digester:commons-digester:2.1'
-  compile 'org.apache.commons:commons-exec:1.1'
-  compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-dbcp:commons-dbcp:1.4'
+    compile 'commons-dbcp:commons-dbcp:1.4'
+    compile 'commons-io:commons-io:2.4'
+    compile 'org.apache.commons:commons-lang3:3.1'
+    compile 'commons-beanutils:commons-beanutils:1.8.3'
+    compile 'commons-logging:commons-logging:1.1.3'
+    compile 'commons-beanutils:commons-beanutils:1.8.3'
+    compile 'commons-collections:commons-collections:3.2.1'
+    compile 'commons-daemon:commons-daemon:1.0.15'
+    compile 'commons-digester:commons-digester:2.1'
+    compile 'org.apache.commons:commons-exec:1.1'
+    compile 'commons-lang:commons-lang:2.6'
 
-  compile 'com.jidesoft:jide-oss:3.5.3'
+    compile 'com.jidesoft:jide-oss:3.5.3'
 
-  compile files('../lib/java3d/j3dcore.jar')
-  compile files('../lib/java3d/j3dutils.jar')
-  compile files('../lib/java3d/vecmath.jar')
+    compile files('../lib/java3d/j3dcore.jar')
+    compile files('../lib/java3d/j3dutils.jar')
+    compile files('../lib/java3d/vecmath.jar')
 
 //	compile 'java3d:j3d-core:1.3.1'
 //	compile 'java3d:j3d-core-utils:1.3.1'
 //	compile 'java3d:vecmath:1.3.1'
 
 
-  compile 'org.apache.logging.log4j:log4j-api:2.0-beta8'
-  compile 'org.apache.logging.log4j:log4j-core:2.0-beta8'
-  compile 'org.apache.logging.log4j:log4j-1.2-api:2.0-beta8'
+    compile 'org.apache.logging.log4j:log4j-api:2.0-beta8'
+    compile 'org.apache.logging.log4j:log4j-core:2.0-beta8'
+    compile 'org.apache.logging.log4j:log4j-1.2-api:2.0-beta8'
 
-  compile 'com.jidesoft:jide-oss:3.5.3'
+    compile 'com.jidesoft:jide-oss:3.5.3'
 
-  compile 'com.miglayout:miglayout-swing:4.2'
+    compile 'com.miglayout:miglayout-swing:4.2'
 
-  compile 'com.lowagie:itext:2.1.7'
-  compile ('net.sf.jasperreports:jasperreports:5.2.0'){
-      exclude group: 'com.lowagie', module: 'itext'
-  }
-  compile 'org.codehaus.groovy:groovy-all:2.1.7'
-  compile 'mysql:mysql-connector-java:5.1.36'
+    compile 'com.lowagie:itext:2.1.7'
+    compile('net.sf.jasperreports:jasperreports:5.2.0') {
+        exclude group: 'com.lowagie', module: 'itext'
+    }
+    compile 'org.codehaus.groovy:groovy-all:2.1.7'
+    compile 'mysql:mysql-connector-java:5.1.36'
+
+    compile "junit:junit:4.+"
 }
 
 jar {
-  manifest {
-    def manifestClasspath = configurations.runtime.collect { it.getName() }.join(' ')
-    attributes 'Class-Path': manifestClasspath
-    attributes 'Main-Class': 'by.dak.cutting.CuttingApp'
-  }
+    manifest {
+        def manifestClasspath = configurations.runtime.collect { it.getName() }.join(' ')
+        attributes 'Class-Path': manifestClasspath
+        attributes 'Main-Class': 'by.dak.cutting.CuttingApp'
+    }
 }
 
 sourceSets.main.java.srcDirs =
         ["src/main/java",
-                "src/3d/java",
-                "src/3rd/java",
-                "src/afacade/java",
-                "src/agt/java",
-                "src/autocad/java",
-                "src/buffer/java",
-                "src/category/java",
-                "src/common/java",
-                "src/cutting/java",
-                "src/db/java",
-                "src/delivery/java",
-                "src/design/java",
-                "src/door/java",
-                "src/fonts/java",
-                "src/launch/java",
-                "src/license/java",
-                "src/main/java",
-                "src/order/java",
-                "src/order.group/java",
-                "src/plastic/java",
-                "src/print.table/java",
-                "src/process/java",
-                "src/profile/java",
-                "src/report/java",
-                "src/store/java",
-                "src/template/java",
-                "src/zfacade/java"
+         "src/3d/java",
+         "src/3rd/java",
+         "src/afacade/java",
+         "src/agt/java",
+         "src/autocad/java",
+         "src/buffer/java",
+         "src/category/java",
+         "src/common/java",
+         "src/cutting/java",
+         "src/db/java",
+         "src/delivery/java",
+         "src/design/java",
+         "src/door/java",
+         "src/fonts/java",
+         "src/launch/java",
+         "src/license/java",
+         "src/main/java",
+         "src/order/java",
+         "src/order.group/java",
+         "src/plastic/java",
+         "src/print.table/java",
+         "src/process/java",
+         "src/profile/java",
+         "src/report/java",
+         "src/store/java",
+         "src/template/java",
+         "src/zfacade/java"
         ]
 sourceSets.main.resources.srcDirs =
         ["src/main/resources",
-                "src/3d/resources",
-                "src/3rd/resources",
-                "src/afacade/resources",
-                "src/agt/resources",
-                "src/autocad/resources",
-                "src/buffer/resources",
-                "src/category/resources",
-                "src/common/resources",
-                "src/cutting/resources",
-                "src/db/resources",
-                "src/delivery/resources",
-                "src/design/resources",
-                "src/door/resources",
-                "src/fonts/resources",
-                "src/launch/resources",
-                "src/license/resources",
-                "src/main/resources",
-                "src/order/resources",
-                "src/order.group/resources",
-                "src/plastic/resources",
-                "src/print.table/resources",
-                "src/process/resources",
-                "src/profile/resources",
-                "src/report/resources",
-                "src/store/resources",
-                "src/template/resources",
-                "src/zfacade/resources"
+         "src/3d/resources",
+         "src/3rd/resources",
+         "src/afacade/resources",
+         "src/agt/resources",
+         "src/autocad/resources",
+         "src/buffer/resources",
+         "src/category/resources",
+         "src/common/resources",
+         "src/cutting/resources",
+         "src/db/resources",
+         "src/delivery/resources",
+         "src/design/resources",
+         "src/door/resources",
+         "src/fonts/resources",
+         "src/launch/resources",
+         "src/license/resources",
+         "src/main/resources",
+         "src/order/resources",
+         "src/order.group/resources",
+         "src/plastic/resources",
+         "src/print.table/resources",
+         "src/process/resources",
+         "src/profile/resources",
+         "src/report/resources",
+         "src/store/resources",
+         "src/template/resources",
+         "src/zfacade/resources"
         ]
 
 apply plugin: 'application'
