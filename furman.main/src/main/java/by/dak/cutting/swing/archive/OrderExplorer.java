@@ -1,5 +1,6 @@
 package by.dak.cutting.swing.archive;
 
+import by.dak.cutting.CuttingApp;
 import by.dak.cutting.swing.archive.tree.RootNode;
 import by.dak.swing.explorer.AExplorerPanel;
 
@@ -18,7 +19,8 @@ public class OrderExplorer extends AExplorerPanel
 
     public OrderExplorer()
     {
-        OrderStatusManager orderStatusManager = new OrderStatusManager(this);
+        OrderStatusManager orderStatusManager = OrderStatusManager.valueOf(this,
+                CuttingApp.getApplication().getExceptionHandler());
         final DefaultTreeModel defaultTreeModel = new DefaultTreeModel(new RootNode(orderStatusManager));
         getTreePanel().getTree().setModel(defaultTreeModel);
         getTreePanel().getTree().setRootVisible(true);

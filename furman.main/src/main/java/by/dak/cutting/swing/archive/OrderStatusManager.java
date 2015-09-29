@@ -1,5 +1,6 @@
 package by.dak.cutting.swing.archive;
 
+import by.dak.common.swing.ExceptionHandler;
 import by.dak.cutting.SearchFilter;
 import by.dak.cutting.linear.LinearCuttingModel;
 import by.dak.cutting.linear.entity.LinearStripsEntity;
@@ -35,11 +36,7 @@ public class OrderStatusManager
 
     private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private BindingListener bindingListener;
-
-    public OrderStatusManager(JComponent relatedComponent)
-    {
-        this.relatedComponent = relatedComponent;
-    }
+    private ExceptionHandler exceptionHandler;
 
     /**
      * Список order status доступных после установки этого статуса
@@ -176,6 +173,12 @@ public class OrderStatusManager
                     }
                 }
 
+                @Override
+                public void syncFailed(Binding binding, Binding.SyncFailure failure) {
+                    if (failure.getType() == Binding.SyncFailureType.CONVERSION_FAILED) {
+                        exceptionHandler.handle(OrderStatusManager.class, failure.getConversionException());
+                    }
+                }
             };
         }
         return bindingListener;
@@ -250,6 +253,13 @@ public class OrderStatusManager
     public JComponent getRelatedComponent()
     {
         return relatedComponent;
+    }
+
+    public static OrderStatusManager valueOf(JComponent relatedComponent, ExceptionHandler exceptionHandler) {
+        OrderStatusManager orderStatusManager = new OrderStatusManager();
+        orderStatusManager.relatedComponent = relatedComponent;
+        orderStatusManager.exceptionHandler = exceptionHandler;
+        return orderStatusManager;
     }
 
 }

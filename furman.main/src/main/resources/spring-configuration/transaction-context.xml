@@ -18,7 +18,7 @@
 
     <tx:advice id="errorAdvice">
         <tx:attributes>
-            <tx:method name="*" propagation="REQUIRED"/>
+            <tx:method name="*" propagation="SUPPORTS"/>
         </tx:attributes>
     </tx:advice>
 
@@ -26,19 +26,19 @@
     <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="find*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
-            <tx:method name="findOrCreate*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="findOrCreate*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
             <tx:method name="load*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
-            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="create*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="process*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="attach*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="release*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="init*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="cancel*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="get*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
-            <tx:method name="copy*" propagation="REQUIRED" rollback-for="java.lang.Throwable"/>
+            <tx:method name="save*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="create*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="update*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="delete*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="process*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="attach*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="release*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="init*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="cancel*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="get*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
+            <tx:method name="copy*" propagation="SUPPORTS" rollback-for="java.lang.Throwable"/>
         </tx:attributes>
     </tx:advice>
 </beans>

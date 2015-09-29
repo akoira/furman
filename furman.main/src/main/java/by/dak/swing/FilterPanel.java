@@ -1,7 +1,7 @@
 package by.dak.swing;
 
 import by.dak.cutting.CuttingApp;
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.jdesktop.application.Action;
 
 /**
@@ -31,7 +31,7 @@ public class FilterPanel<V> extends AValueTab<V>
         {
             try
             {
-                BeanUtils.setProperty(getValue(), property, null);
+                PropertyUtils.setProperty(getValue(), property, null);
             }
             catch (Throwable e)
             {

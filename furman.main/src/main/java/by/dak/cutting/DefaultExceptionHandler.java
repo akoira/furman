@@ -1,11 +1,10 @@
 package by.dak.cutting;
 
 import by.dak.common.swing.ExceptionHandler;
+import org.apache.log4j.Logger;
 import org.aspectj.lang.annotation.AfterThrowing;
 
 import javax.swing.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,11 +15,12 @@ import java.util.logging.Logger;
  */
 public class DefaultExceptionHandler implements ExceptionHandler
 {
+    private static final Logger LOGGER = org.apache.log4j.Logger.getLogger(DefaultExceptionHandler.class);
     @Override
     @AfterThrowing(argNames = "e")
     public void handle(final Throwable e)
     {
-        Logger.getLogger(CuttingApp.getApplication().getClass().getName()).log(Level.SEVERE, null, e);
+        LOGGER.error(e.getMessage(), e);
         Runnable runnable = new Runnable()
         {
             public void run()
@@ -35,7 +35,7 @@ public class DefaultExceptionHandler implements ExceptionHandler
     @Override
     public void handle(Object o, final Throwable e)
     {
-        Logger.getLogger(o.getClass().getName()).log(Level.SEVERE, null, e);
+        LOGGER.error(e.getMessage(), e);
         Runnable runnable = new Runnable()
         {
             public void run()

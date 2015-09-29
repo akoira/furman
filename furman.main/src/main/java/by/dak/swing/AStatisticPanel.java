@@ -24,6 +24,7 @@ public abstract class AStatisticPanel<V> extends BaseTabPanel<V>
 
     public AStatisticPanel()
     {
+        panelFilter.setAnimated(false);
         if (!Beans.isDesignTime())
         {
             setLayout(new BorderLayout());
