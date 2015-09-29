@@ -9,8 +9,6 @@ import by.dak.cutting.cut.base.Element;
 import by.dak.cutting.cut.base.Utils;
 import by.dak.cutting.cut.gui.cuttingApp.DimensionItem;
 import by.dak.persistence.cutting.entities.AStripsEntity;
-import by.dak.persistence.entities.Cutter;
-import by.dak.report.jasper.ReportUtils;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -200,19 +198,6 @@ public class Strips
     public void setItems(ArrayList<Segment> items)
     {
         this.items = items;
-    }
-
-    /**
-     * Метод возвращает учитываемую длинну пропила (услуга Распил м.п.) в милиметрах.
-     */
-    public long getSawLength(Cutter cutter)
-    {
-        long result = 0;
-        for (Segment segment : items)
-        {
-            result += ReportUtils.calcSawSheetSegment(segment, cutter);
-        }
-        return result;
     }
 
     public void replaceSegment(int index, Segment segment)

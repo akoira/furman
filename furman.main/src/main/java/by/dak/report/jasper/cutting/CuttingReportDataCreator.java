@@ -4,7 +4,6 @@ import by.dak.cutting.cut.guillotine.Segment;
 import by.dak.persistence.FacadeContext;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.AOrderBoardDetail;
-import by.dak.persistence.entities.Cutter;
 import by.dak.report.jasper.*;
 import by.dak.report.jasper.cutting.data.CuttedReportData;
 import by.dak.report.jasper.cutting.data.CuttedSheetData;
@@ -107,7 +106,7 @@ public class CuttingReportDataCreator<D extends AOrderBoardDetail> extends Repor
         parameters.put(ORDER_NUMBER, FacadeContext.getOrderFacadeBy(order.getClass()).parseOrderNumber(order));
         parameters.put(CUSTOMER, order.getCustomer().getName());
         parameters.put(DEADLINE, ReportUtils.getReadyDateForReport(order.getReadyDate()));
-        parameters.put(METERAGE, calcMeterage(sheetData.getSheetSegment(), sheetData.getBoard().getBoardDef().getCutter()));
+        parameters.put(METERAGE, calcMeterage(sheetData));
         parameters.put(MATERIAL, materialCuttedData.getTextureFurniturePair().getBoardDef().getName());
         parameters.put(TEXTURE, ReportUtils.formatTexture(materialCuttedData.getTextureFurniturePair().getTexture()));
         parameters.put(CARD_NUMBER, cardNumber);
@@ -125,9 +124,10 @@ public class CuttingReportDataCreator<D extends AOrderBoardDetail> extends Repor
         return cardDetailsDatas;
     }
 
-    private String calcMeterage(Segment segment, Cutter cutter)
+    private String calcMeterage(CuttedSheetData sheetData)
     {
-        double value = ReportUtils.calcLinear(ReportUtils.calcSawSheetSegment(segment, cutter));
+        double value = GetSawLength.valueOf(sheetData).get();
+        value = ReportUtils.calcLinear(value);
         value = MathUtils.round(value, 2);
         return Double.toString(value);
     }

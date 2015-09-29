@@ -1,5 +1,6 @@
 package by.dak.report.jasper.common.data.converter;
 
+import by.dak.cutting.cut.guillotine.Strips;
 import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.cutting.swing.order.data.TextureBoardDefPair;
 import by.dak.persistence.FacadeContext;
@@ -7,6 +8,7 @@ import by.dak.persistence.entities.AOrderBoardDetail;
 import by.dak.persistence.entities.BoardDef;
 import by.dak.persistence.entities.PriceEntity;
 import by.dak.persistence.entities.predefined.ServiceType;
+import by.dak.report.jasper.GetSawLength;
 import by.dak.report.jasper.ReportUtils;
 import by.dak.report.jasper.common.data.CommonData;
 import by.dak.report.jasper.common.data.CommonDataType;
@@ -76,9 +78,10 @@ public abstract class ADirectSawCutConverter<D extends AOrderBoardDetail> implem
         // Stage 1: count sawcut for simple types
         for (TextureBoardDefPair pair : getCuttingModel().getPairs())
         {
-            if (getCuttingModel().getStrips(pair) != null)
+            Strips strips = getCuttingModel().getStrips(pair);
+            if (strips != null)
             {
-                double length = calcLinear(getCuttingModel().getStrips(pair).getSawLength(pair.getBoardDef().getCutter()));
+                double length = calcLinear(GetSawLength.valueOf(strips, pair.getBoardDef()).get());
                 updateDirectSawCut(pair.getBoardDef(), length);
             }
         }

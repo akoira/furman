@@ -79,30 +79,6 @@ public class ReportUtils
     }
 
 
-    public static long calcSawSheetSegment(Segment segment, Cutter cutter)
-    {
-        long result = segment.getSawLength();
-        if (cutter.getCutSizeBottom() > 0)
-        {
-            result += segment.getMaterialLength();
-        }
-
-        if (cutter.getCutSizeTop() > 0)
-        {
-            result += segment.getMaterialLength();
-        }
-        if (cutter.getCutSizeLeft() > 0)
-        {
-            result += segment.getMaterialWidth();
-        }
-        if (cutter.getCutSizeRight() > 0)
-        {
-            result += segment.getMaterialWidth();
-        }
-        return result;
-    }
-
-
     public static long calcPaidArea(Cutter cutter, Strips strips)
     {
         long usedArea = getUsedArea(cutter, strips);
