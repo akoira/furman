@@ -15,6 +15,8 @@ import java.util.logging.Logger;
  */
 public abstract class AEntity extends AObject implements IEntity
 {
+
+    public static final int COLOR_BLACK = 256;
     private boolean curve = false;
 
     public AEntity(Dispatch dispatch)
@@ -55,6 +57,11 @@ public abstract class AEntity extends AObject implements IEntity
         }
         return Linetype.ByLayer;
     }
+
+    public int getColor() {
+        return this.getProperty("Color").getInt();
+    }
+
 
 
     public String getHandle()

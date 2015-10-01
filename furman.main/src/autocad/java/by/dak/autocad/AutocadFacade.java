@@ -45,7 +45,7 @@ public class AutocadFacade {
 		for (int k = 0; k < count; k++) {
 			AEntity entity = block.Item(k);
 			if (entity instanceof ILength) {
-				if (entity.isCurve()) {
+				if (entity.isCurve() || entity.getColor() != 256) {
 					milling.setCurveLength(milling.getCurveLength() + ((ILength) entity).getLength());
 					if (entity.getLinetype() == Linetype.ACAD_ISO06W100) {
 						milling.setCurveGluingLength(milling.getCurveGluingLength() + ((ILength) entity).getLength());
@@ -195,8 +195,9 @@ public class AutocadFacade {
 					Milling milling = (Milling) XstreamHelper.getInstance().fromXML(orderFurniture.getMilling());
 					File file = FacadeContext.getRepositoryService().readTempFile(milling.getFileUuid());
 					File target = new File(exportDir, StringUtils.join(new String[]{order.getNumber().getStringValue(), orderFurniture.getName(), orderFurniture.getNumber().toString(), "dwg"}, '.'));
-					target.deleteOnExit();
 					FileUtils.moveFile(file, target);
+					target.deleteOnExit();
+					FileUtils.deleteQuietly(file);
 				}
 			}
 		} catch (Throwable e) {

@@ -1,6 +1,6 @@
 package by.dak.swing.image;
 
-import org.jdesktop.application.SessionStorage;
+import org.jdesktop.application.session.PropertySupport;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.io.File;
  * Date: 03.03.11
  * Time: 17:12
  */
-public class FileChooserProperty implements SessionStorage.Property
+public class FileChooserProperty implements PropertySupport
 {
     private void checkComponent(Component component)
     {

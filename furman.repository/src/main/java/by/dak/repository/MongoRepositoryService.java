@@ -19,136 +19,109 @@ import java.io.InputStream;
 import java.util.List;
 
 @Service
-public class MongoRepositoryService implements IRepositoryService
-{
+public class MongoRepositoryService implements IRepositoryService {
 
     private GridFsOperations gridFsOperations;
     private MongoOperations mongoOperations;
 
     @Override
-    public void store(BufferedImage image, String uuid)
-    {
+    public void store(BufferedImage image, String uuid) {
 
-        try
-        {
+        try {
             File file = File.createTempFile(uuid, uuid);
             ImageIO.write(image, "png", file);
             store(file, uuid);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public void store(File file, String uuid)
-    {
+    public void store(File file, String uuid) {
         FileInputStream stream = null;
-        try
-        {
+        try {
             stream = new FileInputStream(file);
             store(stream, uuid);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new IllegalArgumentException(e);
+        } finally {
+            IOUtils.closeQuietly(stream);
         }
     }
 
 
-    public void store(InputStream content, String uuid)
-    {
+    public void store(InputStream content, String uuid) {
+        delete(uuid);
         gridFsOperations.store(content, uuid);
     }
 
-    public InputStream read(String uuid)
-    {
-        try
-        {
+    public InputStream read(String uuid) {
+        try {
             GridFsResource gridFsResource = gridFsOperations.getResource(uuid);
             return gridFsResource.getInputStream();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
     }
 
     @Override
-    public void read(String uuid, File toFile)
-    {
+    public void read(String uuid, File toFile) {
         InputStream inputStream = read(uuid);
-        try
-        {
+        try {
             FileUtils.copyInputStreamToFile(inputStream, toFile);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new IllegalArgumentException(e);
-        }
-        finally
-        {
+        } finally {
             IOUtils.closeQuietly(inputStream);
         }
     }
 
     @Override
-    public File readTempFile(String uuid)
-    {
+    public File readTempFile(String uuid) {
         File file = new File(System.getProperty("java.io.tmpdir"), uuid);
         read(uuid, file);
         return file;
     }
 
 
-    public boolean exist(String uuid)
-    {
+    public boolean exist(String uuid) {
         List<GridFSDBFile> files = gridFsOperations.find(Query.query(Criteria.where("filename").is(uuid)));
         return !files.isEmpty();
 
     }
 
     @Override
-    public void delete(String uuid)
-    {
+    public void delete(String uuid) {
         gridFsOperations.delete(Query.query(Criteria.where("filename").is(uuid)));
     }
 
-    public GridFsOperations getGridFsOperations()
-    {
+    public GridFsOperations getGridFsOperations() {
         return gridFsOperations;
     }
 
-    public void setGridFsOperations(GridFsOperations gridFsOperations)
-    {
+    public void setGridFsOperations(GridFsOperations gridFsOperations) {
         this.gridFsOperations = gridFsOperations;
     }
 
-    public MongoOperations getMongoOperations()
-    {
+    public MongoOperations getMongoOperations() {
         return mongoOperations;
     }
 
-    public void setMongoOperations(MongoOperations mongoOperations)
-    {
+    public void setMongoOperations(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
     }
 
     @Override
-    public <O> void store(O object)
-    {
+    public <O> void store(O object) {
         mongoOperations.save(object);
     }
 
-    public <O> List<O> find(Query query, Class<O> objectClass)
-    {
+    public <O> List<O> find(Query query, Class<O> objectClass) {
         return mongoOperations.find(query, objectClass);
     }
 
 
     @Override
-    public <O> O read(Query query, Class<O> objectClass)
-    {
+    public <O> O read(Query query, Class<O> objectClass) {
         List<O> result = mongoOperations.find(query, objectClass);
         if (result.isEmpty())
             return null;

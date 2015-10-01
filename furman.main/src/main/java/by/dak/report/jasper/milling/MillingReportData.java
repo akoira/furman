@@ -38,6 +38,7 @@ public class MillingReportData
             {
                 value.material = ReportUtils.formatGlueingValue(milling.getBorderDef(), milling.getTexture());
             }
+            file.deleteOnExit();
         }
     }
 

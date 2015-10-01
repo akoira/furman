@@ -21,7 +21,7 @@ public class GetSawLength {
         long result = 0;
         for (Segment segment : segments) {
             result += segment.getSawLength();
-            if (isRest(segment)) {
+            if (!isRest(segment)) {
                 if (cutter.getCutSizeBottom() > 0) {
                     result += segment.getMaterialLength();
                 }

@@ -7,6 +7,8 @@ import by.dak.utils.CollectionUtils;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRSaver;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -21,82 +23,73 @@ import java.util.concurrent.Future;
  * @author dkoyro
  * @version 0.1 12.03.2009 11:08:15
  */
-public class ReportFacade implements IReportFacade<AOrder, JasperPrint>
-{
+public class ReportFacade implements IReportFacade<AOrder, JasperPrint> {
     private final static Log LOGGER = LogFactory.getLog(ReportFacade.class);
 
     private ExecutorService service = Executors.newCachedThreadPool();
     private IRepositoryService repositoryService;
 
 
-    public void saveReport(final AOrder order, final ReportType reportType, final JasperPrint report)
-    {
-        String uuid = createUUID(order, reportType);
-        getRepositoryService().delete(uuid);
+    public void saveReport(final AOrder order, final ReportType reportType, final JasperPrint report) {
+        File reportFile = null;
+        try {
+            String uuid = createUUID(order, reportType);
+            getRepositoryService().delete(uuid);
 
-        File reportFile = createTmpFile(report, uuid);
-        getRepositoryService().store(reportFile, uuid);
+            reportFile = createTmpFile(report, uuid);
+            getRepositoryService().store(reportFile, uuid);
+        } finally {
+            FileUtils.deleteQuietly(reportFile);
+        }
+
     }
 
-    private File createTmpFile(JasperPrint report, String uuid)
-    {
-        try
-        {
+    private File createTmpFile(JasperPrint report, String uuid) {
+        try {
             File file = File.createTempFile(uuid, uuid);
             JRSaver.saveObject(report, file);
             return file;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new IllegalArgumentException();
         }
     }
 
-    public JasperPrint loadReport(final AOrder order, final ReportType reportType)
-    {
-        try
-        {
+    public JasperPrint loadReport(final AOrder order, final ReportType reportType) {
+        InputStream inputStream = null;
+        try {
             String uuid = createUUID(order, reportType);
-            if (getRepositoryService().exist(uuid))
-            {
-                InputStream inputStream = getRepositoryService().read(uuid);
+            if (getRepositoryService().exist(uuid)) {
+                inputStream = getRepositoryService().read(uuid);
                 return (JasperPrint) JRLoader.loadObject(inputStream);
-            }
-            else
-            {
+            } else {
                 return null;
             }
-        }
-        catch (Throwable e)
-        {
+        } catch (Throwable e) {
             LOGGER.error(e.getMessage(), e);
             return null;
+        } finally {
+            IOUtils.closeQuietly(inputStream);
         }
+
     }
 
-    public void removeReport(final AOrder order, final ReportType reportType)
-    {
+    public void removeReport(final AOrder order, final ReportType reportType) {
         String uuid = createUUID(order, reportType);
         repositoryService.delete(uuid);
     }
 
-    private String createUUID(AOrder order, ReportType reportType)
-    {
+    private String createUUID(AOrder order, ReportType reportType) {
         return String.format("%s_%s", order.getId(), reportType.name());
     }
 
     @Override
-    public void removeAll(final AOrder order)
-    {
+    public void removeAll(final AOrder order) {
         ReportType[] reportTypes = ReportType.values();
         ArrayList<Future> futures = new ArrayList<Future>();
-        for (final ReportType reportType : reportTypes)
-        {
-            Runnable runnable = new Runnable()
-            {
+        for (final ReportType reportType : reportTypes) {
+            Runnable runnable = new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     removeReport(order, reportType);
                 }
             };
@@ -106,13 +99,11 @@ public class ReportFacade implements IReportFacade<AOrder, JasperPrint>
         FacadeContext.getCommonDataFacade().deleteAll(order);
     }
 
-    public IRepositoryService getRepositoryService()
-    {
+    public IRepositoryService getRepositoryService() {
         return repositoryService;
     }
 
-    public void setRepositoryService(IRepositoryService repositoryService)
-    {
+    public void setRepositoryService(IRepositoryService repositoryService) {
         this.repositoryService = repositoryService;
     }
 }

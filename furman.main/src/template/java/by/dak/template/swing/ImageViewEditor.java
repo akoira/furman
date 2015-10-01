@@ -117,7 +117,12 @@ public class ImageViewEditor extends ButtonEditor
                 catch (Throwable throwable)
                 {
                     CuttingApp.getApplication().getExceptionHandler().handle(throwable);
+                } finally {
+                    if (file != null) {
+                        file.deleteOnExit();
+                    }
                 }
+
             }
         }
     }

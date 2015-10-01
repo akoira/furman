@@ -5,7 +5,9 @@ import by.dak.cutting.swing.order.data.OrderDetailsDTO;
 import by.dak.cutting.swing.xml.XstreamHelper;
 import by.dak.persistence.FacadeContext;
 import com.jacob.com.Variant;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +19,11 @@ import java.io.FileInputStream;
  */
 public class SaveEventHandler extends AcadApplicationEventHandler
 {
+    private static final Logger logger = Logger.getLogger(SaveEventHandler.class);
+
     private OrderDetailsDTO orderDetails;
+    private File file;
+    private File imageFile;
 
     public SaveEventHandler(OrderDetailsDTO orderDetails)
     {
@@ -27,22 +33,26 @@ public class SaveEventHandler extends AcadApplicationEventHandler
     @Override
     public void EndSave(Variant[] arguments)
     {
-        File file = new File(FacadeContext.getAutocadFacade().getApplication().getActiveDocument().getFullName());
-        File imageFile = new File(file.getAbsolutePath() + ".jpg");
+        file = new File(FacadeContext.getAutocadFacade().getApplication().getActiveDocument().getFullName());
+        imageFile = new File(file.getAbsolutePath() + ".jpg");
+
         String imageFileName = imageFile.getName();
         Milling milling = FacadeContext.getAutocadFacade().getMilling();
         if (milling.getCurveLength() > 0)
         {
             milling.setFileUuid(file.getName());
             milling.setImageFileUuid(imageFileName);
+
+            FileInputStream fileInputStream = null;
+            FileInputStream imageFileInputStream = null;
             try
             {
 
-                FileInputStream fileInputStream = new FileInputStream(file);
+                fileInputStream = new FileInputStream(file);
                 FacadeContext.getRepositoryService().store(fileInputStream, milling.getFileUuid());
 
                 FacadeContext.getAutocadFacade().exportToJPEG(imageFile.getAbsolutePath());
-                FileInputStream imageFileInputStream = new FileInputStream(imageFile);
+                imageFileInputStream = new FileInputStream(imageFile);
                 FacadeContext.getRepositoryService().store(imageFileInputStream, milling.getImageFileUuid());
 
                 orderDetails.setMilling(XstreamHelper.getInstance().toXML(milling));
@@ -50,6 +60,9 @@ public class SaveEventHandler extends AcadApplicationEventHandler
             catch (Throwable e)
             {
                 throw new IllegalArgumentException(e);
+            } finally {
+                IOUtils.closeQuietly(fileInputStream);
+                IOUtils.closeQuietly(imageFileInputStream);
             }
         }
         else if (orderDetails.getMilling() != null)
@@ -59,13 +72,44 @@ public class SaveEventHandler extends AcadApplicationEventHandler
             FacadeContext.getRepositoryService().delete(milling.getImageFileUuid());
         }
 
-        FileUtils.deleteQuietly(file);
-        FileUtils.deleteQuietly(imageFile);
+        deleteTempFiles();
     }
+
+    private void deleteFile(File file) {
+        try {
+            if (!file.delete()) {
+                logger.error(String.format("Cannot delete file %s", file));
+            }
+        } catch (Exception e) {
+            logger.error(String.format("Cannot delete file %s", file), e);
+        }
+    }
+
 
     @Override
     public void BeginQuit(Variant[] arguments)
     {
+        deleteTempFiles();
+
         FacadeContext.getAutocadFacade().stopApplication();
+    }
+
+    private void deleteTempFiles() {
+        try {
+            if (file != null) {
+                deleteFile(file);
+                File backFile = new File(file.getParent(), FilenameUtils.getBaseName(file.getName()) + ".bak");
+                if (backFile.exists()) {
+                    deleteFile(backFile);
+                }
+            }
+
+
+            if (imageFile != null) {
+                deleteFile(imageFile);
+            }
+        } catch (Exception e) {
+            logger.error("", e);
+        }
     }
 }

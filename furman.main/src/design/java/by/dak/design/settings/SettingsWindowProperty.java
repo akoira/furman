@@ -3,7 +3,7 @@ package by.dak.design.settings;
 import by.dak.design.swing.SettingsPanel;
 import org.apache.commons.io.IOUtils;
 import org.jdesktop.application.Application;
-import org.jdesktop.application.SessionStorage;
+import org.jdesktop.application.session.PropertySupport;
 
 import java.awt.*;
 import java.io.InputStream;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * Time: 12:32
  * To change this template use File | Settings | File Templates.
  */
-public class SettingsWindowProperty implements SessionStorage.Property
+public class SettingsWindowProperty implements PropertySupport
 {
     private final static String FILE_SUFFIX = ".settings";
 

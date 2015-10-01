@@ -4,7 +4,7 @@ import net.infonode.docking.RootWindow;
 import net.infonode.docking.util.ViewMap;
 import org.apache.commons.io.IOUtils;
 import org.jdesktop.application.Application;
-import org.jdesktop.application.SessionStorage;
+import org.jdesktop.application.session.PropertySupport;
 
 import java.awt.*;
 import java.io.InputStream;
@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * Date: 12.09.11
  * Time: 16:14
  */
-public class RootWindowProperty implements SessionStorage.Property
+public class RootWindowProperty implements PropertySupport
 {
 
     private final static String FILE_SUFFIX = ".RootWindow.layout";
