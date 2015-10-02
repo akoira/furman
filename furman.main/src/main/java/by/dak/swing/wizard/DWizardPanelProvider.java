@@ -68,6 +68,7 @@ public abstract class DWizardPanelProvider<S extends WizardStep> extends WizardP
                 return super.allowNext(stepName, settings, wizard);
             }
         };
+        wizardPage.setName(step.name());
         wizardPage.setLayout(new BorderLayout());
         wizardPage.add(panel, BorderLayout.CENTER);
         return wizardPage;

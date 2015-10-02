@@ -5,7 +5,6 @@ import org.netbeans.spi.wizard.Wizard;
 import org.netbeans.spi.wizard.WizardObserver;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,8 +43,7 @@ public class WizardSessionController implements WizardObserver
         try
         {
             getSessionStorage().save(component, component.getName() + ".xml");
-        }
-        catch (IOException e)
+        } catch (Exception e)
         {
             Logger.getLogger(WizardSessionController.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -56,8 +54,7 @@ public class WizardSessionController implements WizardObserver
         try
         {
             getSessionStorage().restore(component, component.getName() + ".xml");
-        }
-        catch (IOException e)
+        } catch (Exception e)
         {
             Logger.getLogger(WizardSessionController.class.getName()).log(Level.SEVERE, null, e);
         }
