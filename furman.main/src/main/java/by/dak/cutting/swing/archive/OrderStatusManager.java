@@ -50,11 +50,15 @@ public class OrderStatusManager
         switch (currentStatus)
         {
             case miscalculation:
+            case webMiscalculation:
                 statuses.add(OrderStatus.miscalculation);
+                statuses.add(OrderStatus.webMiscalculation);
                 statuses.add(OrderStatus.design);
                 break;
             case design:
+            case webDesign:
                 statuses.add(OrderStatus.design);
+                statuses.add(OrderStatus.webDesign);
                 statuses.add(OrderStatus.production);
                 break;
             case production:
@@ -84,8 +88,10 @@ public class OrderStatusManager
         OrderStatus oldValue = order.getStatus();
         switch (orderStatus)
         {
+            case webMiscalculation:
             case miscalculation:
             case design:
+            case webDesign:
                 processOrderStatusDesign(order);
                 break;
             case production:

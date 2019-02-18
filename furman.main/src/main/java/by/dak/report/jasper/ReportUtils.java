@@ -16,7 +16,6 @@ import by.dak.report.jasper.common.data.CommonData;
 import by.dak.utils.convert.Converter;
 import by.dak.utils.convert.StringValueAnnotationProcessor;
 import by.dak.utils.convert.TimeUtils;
-import org.springframework.beans.propertyeditors.CurrencyEditor;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

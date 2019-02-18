@@ -17,35 +17,34 @@ import java.util.List;
  * @since 2.0.0
  */
 public class NewDayManager {
-	private static long DEFAULT_MANAGERS_DEPARTMENT_ID = 0;
+    private static long DEFAULT_MANAGERS_DEPARTMENT_ID = 0;
 
 	public NewDayManager() {
-		super();
-	}
+        super();
+    }
 
 	public Dailysheet checkDailysheet() {
-		Dailysheet dailysheet = FacadeContext.getDailysheetFacade().loadCurrentDailysheet();
-		// todo this will be replaced on creating Dailysheet WIzard.
+        Dailysheet dailysheet = FacadeContext.getDailysheetFacade().loadCurrentDailysheet();
 		if (dailysheet == null) {
-			dailysheet = new Dailysheet();
-			dailysheet.setDate(new java.sql.Date(System.currentTimeMillis()));
-			dailysheet.setEmployee(FacadeContext.getEmployee());
-			FacadeContext.getDailysheetFacade().save(dailysheet);
-		}
-		return dailysheet;
-	}
+            dailysheet = new Dailysheet();
+            dailysheet.setDate(new java.sql.Date(System.currentTimeMillis()));
+            dailysheet.setEmployee(FacadeContext.getEmployee());
+            FacadeContext.getDailysheetFacade().save(dailysheet);
+        }
+        return dailysheet;
+    }
 
 	public boolean checkCurrency(Dailysheet dailysheet) {
-		List<Currency> list = FacadeContext.getCurrencyFacade().loadAll(CurrencyFacadeImpl.getSearchFilterBy(dailysheet));
+        List<Currency> list = FacadeContext.getCurrencyFacade().loadAll(CurrencyFacadeImpl.getSearchFilterBy(dailysheet));
 		if (list.size() != CurrencyType.values().length) {
 
-			if (CuttingApp.getApplication().getPermissionManager().checkPermission(CurrencyListTab.class.getSimpleName(),
+            if (CuttingApp.getApplication().getPermissionManager().checkPermission(CurrencyListTab.class.getSimpleName(),
 					false)) {
 				DialogShowers.showBy(CurrencyPanel.valueOf(dailysheet, FacadeContext.getCurrencyFacade()), true);
 			} else {
-				return Boolean.FALSE;
-			}
-		}
-		return Boolean.TRUE;
-	}
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
+    }
 }

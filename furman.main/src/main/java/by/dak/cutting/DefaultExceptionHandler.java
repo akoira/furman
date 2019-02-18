@@ -1,7 +1,6 @@
 package by.dak.cutting;
 
 import by.dak.common.swing.ExceptionHandler;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.annotation.AfterThrowing;
 
@@ -26,7 +25,7 @@ public class DefaultExceptionHandler implements ExceptionHandler
         {
             public void run()
             {
-                JOptionPane.showMessageDialog(FocusManager.getCurrentManager().getActiveWindow(), ExceptionUtils.getStackTrace(e),
+                JOptionPane.showMessageDialog(FocusManager.getCurrentManager().getActiveWindow(), e.getLocalizedMessage(),
                         e.getLocalizedMessage(), JOptionPane.ERROR_MESSAGE);
             }
         };

@@ -172,7 +172,7 @@ public class GrooveSideMenu extends CommonSideMenu
         downspaceTextField.setText(String.valueOf(grove.getDistanceDown()));
         rightdepthTextFieled.setText(String.valueOf(grove.getDepthRight()));
         rightspaceTextField.setText(String.valueOf(grove.getDistanceRight()));
-        leftdepthTextField.setText(String.valueOf(grove.getDepthUp()));
+		leftdepthTextField.setText(String.valueOf(grove.getDepthLeft()));
         leftspaceTextField.setText(String.valueOf(grove.getDistanceLeft()));
     }
 

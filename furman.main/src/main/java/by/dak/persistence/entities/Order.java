@@ -112,22 +112,29 @@ public class Order extends AOrder
     public boolean isEditable()
     {
         return OrderStatus.miscalculation == this.getStatus() ||
-                OrderStatus.design == this.getStatus();
+                OrderStatus.design == this.getStatus() ||
+                OrderStatus.webDesign == this.getStatus() ||
+                OrderStatus.webMiscalculation == this.getStatus();
     }
 
 
     public void setMiscalculation(boolean value)
     {
-        if (OrderStatus.design == this.getStatus() && value)
-        {
+        if (OrderStatus.design == this.getStatus() && value) {
             setStatus(OrderStatus.miscalculation);
             return;
         }
-
+        if (OrderStatus.webDesign == this.getStatus() && value) {
+            setStatus(OrderStatus.webMiscalculation);
+            return;
+        }
         if (OrderStatus.miscalculation == this.getStatus() && !value)
         {
             setStatus(OrderStatus.design);
             return;
+        }
+        if (OrderStatus.webMiscalculation == this.getStatus() && !value) {
+            setStatus(OrderStatus.webDesign);
         }
 
         throw new IllegalArgumentException();
@@ -135,7 +142,8 @@ public class Order extends AOrder
 
     public boolean isMiscalculation()
     {
-        return OrderStatus.miscalculation == this.getStatus();
+        return OrderStatus.miscalculation == this.getStatus() ||
+                OrderStatus.webMiscalculation == this.getStatus();
     }
 
 }

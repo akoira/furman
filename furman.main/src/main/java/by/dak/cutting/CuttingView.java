@@ -7,7 +7,6 @@ import by.dak.buffer.importer.DilerImportFile;
 import by.dak.buffer.importer.swing.modules.DialerImportFilePanel;
 import by.dak.buffer.statistic.swing.DilerOrderStatisticsPanel;
 import by.dak.buffer.statistic.swing.RootOrderTableReloader;
-import by.dak.cutting.currency.swing.CurrencyListTab;
 import by.dak.cutting.currency.swing.CurrencyPanel;
 import by.dak.cutting.statistics.swing.StatisticsPanel;
 import by.dak.cutting.swing.archive.OrderExplorer;
@@ -341,13 +340,6 @@ public class CuttingView extends FrameView {
 		DialogShowers.showBy(actionsPanel,
 				CuttingApp.getApplication().getMainFrame(),
 				false);
-
-
-//        StoreBookingTab storeBookingTab = new StoreBookingTab();
-//        storeBookingTab.init();
-//        storeBookingTab.setValue(new StoreBooking());
-//
-//        DialogShowers.showOrderJasperViewer(MaterialType.border);
 	}
 
 	@Action
@@ -357,10 +349,6 @@ public class CuttingView extends FrameView {
 
 	@Action
 	public void showCurrency() {
-//		CurrencyListTab currencyListTab = new CurrencyListTab();
-//		currencyListTab.init();
-//		currencyListTab.setValue(FacadeContext.getDailysheetFacade().loadCurrentDailysheet());
-
 		CurrencyPanel currencyPanel = new CurrencyPanel(FacadeContext.getCurrencyFacade());
 		currencyPanel.setValue(FacadeContext.getDailysheetFacade().loadCurrentDailysheet());
 		DialogShowers.showBy(currencyPanel, CuttingApp.getApplication().getMainFrame(), false);

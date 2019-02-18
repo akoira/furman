@@ -223,9 +223,11 @@ public class TableEditorsRenders
                     switch (value)
                     {
                         case miscalculation:
+                        case webMiscalculation:
                             value = OrderStatus.design;
                             break;
                         case design:
+                        case webDesign:
                             value = OrderStatus.production;
                             break;
                         case production:
@@ -292,9 +294,9 @@ public class TableEditorsRenders
                     break;
                 case production:
                 case miscalculation:
+                case readyToProduction:
                 case design:
-                    result = true;
-                    break;
+                case webDesign:
                 case webMiscalculation:
                     result = true;
                     break;
