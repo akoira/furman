@@ -6,10 +6,19 @@ import by.dak.cutting.facade.BaseFacade;
 import by.dak.persistence.entities.Dailysheet;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
-public interface CurrencyFacade extends BaseFacade<Currency>
-{
-    Currency findCurrentBy(CurrencyType currencyType, Dailysheet dailysheet);
+import java.util.List;
 
-    Currency findCurrentBy(CurrencyType currencyType, Dailysheet dailysheet, boolean loadFromBase);
+@Transactional
+public interface CurrencyFacade extends BaseFacade<Currency> {
+	Currency findCurrentBy(CurrencyType currencyType, Dailysheet dailysheet);
+
+	Currency findCurrentBy(CurrencyType currencyType, Dailysheet dailysheet, boolean loadFromBase);
+
+	void setSelected(Currency currency);
+
+	Currency getSelected(Dailysheet dailysheet);
+
+	List<Currency> allBy(Dailysheet dailysheet);
+
+	List<Currency> create(Dailysheet dailysheet);
 }

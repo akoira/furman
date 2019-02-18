@@ -16,6 +16,7 @@ import by.dak.report.jasper.common.data.CommonData;
 import by.dak.utils.convert.Converter;
 import by.dak.utils.convert.StringValueAnnotationProcessor;
 import by.dak.utils.convert.TimeUtils;
+import org.springframework.beans.propertyeditors.CurrencyEditor;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -198,10 +199,9 @@ public class ReportUtils
         }
         if (price != null)
         {
-            Currency currency = FacadeContext.getCurrencyFacade().findCurrentBy(currencyType,
-                    DAILYSHEET,
-                    false);
-            return price / currency.getPrice();
+            Currency selected = FacadeContext.getCurrencyFacade().getSelected(DAILYSHEET);
+            Currency current = FacadeContext.getCurrencyFacade().findCurrentBy(currencyType, DAILYSHEET, false);
+            return price * current.getPrice() * selected.getPrice();
         }
         else
         {

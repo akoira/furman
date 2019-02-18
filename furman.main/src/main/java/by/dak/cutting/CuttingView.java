@@ -8,6 +8,7 @@ import by.dak.buffer.importer.swing.modules.DialerImportFilePanel;
 import by.dak.buffer.statistic.swing.DilerOrderStatisticsPanel;
 import by.dak.buffer.statistic.swing.RootOrderTableReloader;
 import by.dak.cutting.currency.swing.CurrencyListTab;
+import by.dak.cutting.currency.swing.CurrencyPanel;
 import by.dak.cutting.statistics.swing.StatisticsPanel;
 import by.dak.cutting.swing.archive.OrderExplorer;
 import by.dak.cutting.swing.archive.tree.RootNode;
@@ -356,10 +357,13 @@ public class CuttingView extends FrameView {
 
 	@Action
 	public void showCurrency() {
-		CurrencyListTab currencyListTab = new CurrencyListTab();
-		currencyListTab.init();
-		currencyListTab.setValue(FacadeContext.getDailysheetFacade().loadCurrentDailysheet());
-		DialogShowers.showBy(currencyListTab, CuttingApp.getApplication().getMainFrame(), false);
+//		CurrencyListTab currencyListTab = new CurrencyListTab();
+//		currencyListTab.init();
+//		currencyListTab.setValue(FacadeContext.getDailysheetFacade().loadCurrentDailysheet());
+
+		CurrencyPanel currencyPanel = new CurrencyPanel(FacadeContext.getCurrencyFacade());
+		currencyPanel.setValue(FacadeContext.getDailysheetFacade().loadCurrentDailysheet());
+		DialogShowers.showBy(currencyPanel, CuttingApp.getApplication().getMainFrame(), false);
 	}
 
 	@Action

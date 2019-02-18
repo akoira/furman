@@ -295,6 +295,9 @@ public class TableEditorsRenders
                 case design:
                     result = true;
                     break;
+                case webMiscalculation:
+                    result = true;
+                    break;
                 default:
                     throw new IllegalArgumentException();
             }

@@ -20,7 +20,8 @@ public enum OrderStatus
     production(new Color(0xFFD600)),//ПРОИЗВОДСТВО
     made(new Color(0x00C618)),//ПРОИЗВЕДЕНО
     shipped(new Color(0x39e24d)),//ОТГРУЖЕНО
-    archive(new Color(0x66e275));//АРХИВ
+    archive(new Color(0x66e275)),//АРХИВ
+    webMiscalculation(new Color(0x66e275));
 
 
     private java.awt.Color color;

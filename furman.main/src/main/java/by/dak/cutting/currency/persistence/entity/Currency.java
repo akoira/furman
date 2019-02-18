@@ -4,6 +4,7 @@ import by.dak.cutting.currency.persistence.entity.validator.CurrencyValidator;
 import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.PersistenceEntity;
 import by.dak.utils.validator.Validator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -20,6 +21,7 @@ public class Currency extends PersistenceEntity
 {
     public static final String PROPERTY_type = "type";
     public static final String PROPERTY_price = "price";
+    public static final String PROPERTY_selected = "selected";
     public static final String PROPERTY_dailysheet = "dailysheet";
 
 
@@ -29,6 +31,9 @@ public class Currency extends PersistenceEntity
 
     @Column(name = "price", nullable = false)
     private Double price;
+
+    @Column(name = "selected", nullable = false, columnDefinition = "BIT", length = 1)
+    private Boolean selected = Boolean.FALSE;
 
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, targetEntity = Dailysheet.class, fetch = FetchType.LAZY)
@@ -63,5 +68,12 @@ public class Currency extends PersistenceEntity
     public void setType(CurrencyType type)
     {
         this.type = type;
+    }
+
+    public Boolean getSelected() {
+        return selected;
+    }
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
     }
 }
