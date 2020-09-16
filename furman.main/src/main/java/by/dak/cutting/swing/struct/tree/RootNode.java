@@ -26,7 +26,7 @@ public class RootNode extends ARootNode
         EntityNode<DepartmentEntity> departmentNode = new EntityNode<DepartmentEntity>(DepartmentEntity.class);
         add(departmentNode);
 
-        EntityNode<Customer> customerNode = new EntityNode<Customer>(Customer.class);
+        EntityNode<Customer> customerNode = new CustomerNode();
         add(customerNode);
 
         EntityNode<Cutter> cutterNode = new EntityNode<Cutter>(Cutter.class);

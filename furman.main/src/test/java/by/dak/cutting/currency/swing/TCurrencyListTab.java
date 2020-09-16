@@ -18,7 +18,7 @@ public class TCurrencyListTab
         FacadeContext.setEmployee(FacadeContext.getEmployeeFacade().loadAll().get(0));
         NewDayManager newDayManager = new NewDayManager();
         newDayManager.checkDailysheet();
-        CurrencyListTab currencyListTab = new CurrencyListTab();
+        CurrencyListTab currencyListTab = new CurrencyListTab(springConfiguration.getMainFacade().getCurrencyFacade());
         currencyListTab.setValue(FacadeContext.getDailysheetFacade().loadCurrentDailysheet());
         TestUtils.showFrame(currencyListTab, currencyListTab.getTitle());
     }

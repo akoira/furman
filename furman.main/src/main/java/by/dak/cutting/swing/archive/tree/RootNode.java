@@ -25,6 +25,7 @@ import by.dak.swing.table.NewEditDeleteActions;
 import by.dak.swing.tree.ATreeNode;
 import by.dak.template.swing.action.CreateTemplateAction;
 import by.dak.utils.BindingUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.beansbinding.Validator;
@@ -36,6 +37,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -46,9 +48,8 @@ import java.util.logging.Logger;
  * Date: 05.04.11
  * Time: 11:14
  */
-public class RootNode extends ATreeNode implements ListUpdaterProvider<Order>
-{
-    private static final String[] EditableProperties = new String[]{Order.PROPERTY_orderStatus, Order.PROPERTY_id};
+public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
+    private static final String[] EditableProperties = new String[]{Order.PROPERTY_orderStatus, Order.PROPERTY_id, Order.PROPERTY_orderNumber};
 
     private static final String[] VisibleProperties = new String[]{Order.PROPERTY_orderStatus,
             Order.PROPERTY_createdDailySheet,
@@ -59,14 +60,14 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order>
             Order.PROPERTY_workedDailySheet,
             Order.PROPERTY_readyDate,
             Order.PROPERTY_orderGroup + "." + OrderGroup.PROPERTY_name,
-            Order.PROPERTY_id
+            Order.PROPERTY_id,
+            Order.PROPERTY_orderNumber
     };
 
     private OrderListUpdater listUpdater = new OrderListUpdater();
     private OrderStatusManager orderStatusManager;
 
-    public RootNode(OrderStatusManager orderStatusManager)
-    {
+    public RootNode(OrderStatusManager orderStatusManager) {
         setUserObject(getResourceMap().getString("node.name"));
         NEDActions nedActions = new NEDActions();
         nedActions.setActions(new String[]{"newValue", "openValue", "deleteValue"});
@@ -88,48 +89,39 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order>
 
 
     @Override
-    protected void initChildren()
-    {
+    protected void initChildren() {
 
     }
 
     @Override
-    public ListUpdater<Order> getListUpdater()
-    {
+    public ListUpdater<Order> getListUpdater() {
         return listUpdater;
     }
 
 
-    public class NEDActions extends NewEditDeleteActions<Order>
-    {
+    public class NEDActions extends NewEditDeleteActions<Order> {
 
         @Override
-        public void newValue()
-        {
+        public void newValue() {
             CuttingView.OrderCreator orderCreator = new CuttingView.OrderCreator();
             final Order order = orderCreator.create();
             showWizard(order);
         }
 
-        private void showWizard(final Order order)
-        {
+        private void showWizard(final Order order) {
             final OrderWizard orderWizard = new OrderWizard(order.getNumber().getStringValue());
             orderWizard.setOrder(order);
             DialogShowers.showWizard(orderWizard, orderWizard.getWizardObserver());
-            orderWizard.setiOrderWizardDelegator(new IOrderWizardDelegator()
-            {
+            orderWizard.setiOrderWizardDelegator(new IOrderWizardDelegator() {
                 @Override
-                public void finish(AOrderWizard wizard)
-                {
+                public void finish(AOrderWizard wizard) {
                     setSelectedElement(order);
                     firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, getSelectedElement());
                 }
 
                 @Override
-                public void cancel(AOrderWizard wizard)
-                {
-                    if (order.hasId())
-                    {
+                public void cancel(AOrderWizard wizard) {
+                    if (order.hasId()) {
                         setSelectedElement(order);
                         firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, getSelectedElement());
                     }
@@ -138,50 +130,37 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order>
         }
 
         @Override
-        public void openValue()
-        {
-            if (getSelectedElement() != null)
-            {
+        public void openValue() {
+            if (getSelectedElement() != null) {
                 showWizard(getSelectedElement());
-            }
-            else
-            {
+            } else {
                 MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
             }
         }
 
         @Override
-        public void deleteValue()
-        {
-            if (getSelectedElement() != null)
-            {
-                if (MessageDialog.showConfirmationMessage(MessageDialog.IS_DELETE_RECORD) == JOptionPane.OK_OPTION)
-                {
+        public void deleteValue() {
+            if (getSelectedElement() != null) {
+                if (MessageDialog.showConfirmationMessage(MessageDialog.IS_DELETE_RECORD) == JOptionPane.OK_OPTION) {
                     FacadeContext.getFacadeBy(getEntityClass()).delete(getSelectedElement());
                     firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, getSelectedElement());
                 }
-            }
-            else
-            {
+            } else {
                 MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
             }
         }
 
         @Action
-        public void exportOrder()
-        {
-            if (getSelectedElement() != null)
-            {
+        public void exportOrder() {
+            if (getSelectedElement() != null) {
                 JFileChooser jFileChooser = new JFileChooser();
                 jFileChooser.setDialogTitle(resourceMap.getString("export.order.dialog.title"));
                 jFileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
                 jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 int resultValue = jFileChooser.showSaveDialog(getRelatedComponent());
-                if (resultValue != JFileChooser.CANCEL_OPTION)
-                {
+                if (resultValue != JFileChooser.CANCEL_OPTION) {
                     File dir = jFileChooser.getSelectedFile();
-                    try
-                    {
+                    try {
                         OrderExporter orderExporter = new OrderExporter();
                         orderExporter.setOrder(getSelectedElement());
                         DataSource dataSource = (DataSource) FacadeContext.getApplicationContext().getBean("c3p0DataSource");
@@ -193,43 +172,33 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order>
                         orderExporter.setZipFile(file);
                         orderExporter.execute();
                         JOptionPane.showMessageDialog(getRelatedComponent(), file.getAbsolutePath(), "Export Order", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         JOptionPane.showMessageDialog(getRelatedComponent(), e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
                         Logger.getLogger(by.dak.order.swing.tree.RootNode.class.getName()).log(Level.SEVERE, e.getMessage(), e);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
             }
 
         }
 
         @Action
-        public void copyOrder()
-        {
-            if (!CuttingApp.getApplication().getPermissionManager().checkPermission("copyOrder"))
-            {
+        public void copyOrder() {
+            if (!CuttingApp.getApplication().getPermissionManager().checkPermission("copyOrder")) {
                 return;
             }
-            if (getSelectedElement() != null)
-            {
+            if (getSelectedElement() != null) {
                 Order order = getSelectedElement();
                 Order newOrder = FacadeContext.getOrderFacade().copy(order, getResourceMap().getString("order.copy.suffix"));
                 showWizard(newOrder);
-            }
-            else
-            {
+            } else {
                 MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
             }
         }
 
         @Action
-        public void createTemplate()
-        {
+        public void createTemplate() {
             CreateTemplateAction createTemplateAction = new CreateTemplateAction(getSelectedElement().getId());
             createTemplateAction.action();
         }
@@ -237,90 +206,68 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order>
 
     }
 
-    public class OrderListUpdater extends AListUpdater<Order>
-    {
+    public class OrderListUpdater extends AListUpdater<Order> {
 
         @Override
-        public void adjustFilter()
-        {
+        public void adjustFilter() {
             getSearchFilter().addDescOrder(Order.PROPERTY_createdDailySheet);
             getSearchFilter().addDescOrder(Order.PROPERTY_orderNumber);
         }
 
         @Override
-        public TableCellRenderer getTableCellRenderer(String propertyName)
-        {
-            if (propertyName.equals(Order.PROPERTY_orderStatus))
-            {
+        public TableCellRenderer getTableCellRenderer(String propertyName) {
+            if (propertyName.equals(Order.PROPERTY_orderStatus)) {
                 return TableEditorsRenders.getFastOrderStatusRendererEditor(orderStatusManager,
                         Application.getInstance().getContext().getResourceMap(OrderStatus.class));
-            }
-            else if (propertyName.equals(Order.PROPERTY_id))
-            {
+            } else if (propertyName.equals(Order.PROPERTY_id)) {
                 return new TableEditorsRenders.ButtonEditor(getResourceMap().getString(BindingUtils.PREFIX_TABLE_COLUMN_KEY + Order.PROPERTY_id),
                         getResourceMap().getIcon("reports.icon"));
-            }
-            else
-            {
+            } else if (propertyName.equals(Order.PROPERTY_orderNumber)) {
+                return new TableEditorsRenders.ButtonEditor(getResourceMap().getString(BindingUtils.PREFIX_TABLE_COLUMN_KEY + Order.PROPERTY_orderNumber),
+                        getResourceMap().getIcon("selco.icon"));
+            } else {
                 return super.getTableCellRenderer(propertyName);
             }
 
         }
 
         @Override
-        public TableCellEditor getTableCellEditor(String propertyName)
-        {
-            if (propertyName.equals(Order.PROPERTY_orderStatus))
-            {
+        public TableCellEditor getTableCellEditor(String propertyName) {
+            if (propertyName.equals(Order.PROPERTY_orderStatus)) {
                 return TableEditorsRenders.getFastOrderStatusRendererEditor(orderStatusManager,
                         Application.getInstance().getContext().getResourceMap(OrderStatus.class));
-            }
-            else if (propertyName.equals(Order.PROPERTY_id))
-            {
+            } else if (propertyName.equals(Order.PROPERTY_id)) {
                 return new ReportsEditor();
-            }
-            else
-            {
+            } else if (propertyName.equals(Order.PROPERTY_orderNumber)) {
+                return new SelcoEditor();
+            } else {
                 return super.getTableCellEditor(propertyName);
             }
         }
 
         @Override
-        public void adjustTableColumn(TableColumn tableColumn)
-        {
-            if (tableColumn.getIdentifier().equals(getResourceMap().getString(BindingUtils.PREFIX_TABLE_COLUMN_KEY + Order.PROPERTY_orderStatus)))
-            {
+        public void adjustTableColumn(TableColumn tableColumn) {
+            if (tableColumn.getIdentifier().equals(getResourceMap().getString(BindingUtils.PREFIX_TABLE_COLUMN_KEY + Order.PROPERTY_orderStatus))) {
                 tableColumn.setResizable(false);
                 tableColumn.setMaxWidth(32);
-            }
-            else if (tableColumn.getIdentifier().equals(getResourceMap().getString(BindingUtils.PREFIX_TABLE_COLUMN_KEY + Order.PROPERTY_id)))
-            {
+            } else if (tableColumn.getIdentifier().equals(getResourceMap().getString(BindingUtils.PREFIX_TABLE_COLUMN_KEY + Order.PROPERTY_id))) {
                 tableColumn.setResizable(false);
                 tableColumn.setMaxWidth(48);
             }
         }
 
         @Override
-        public void adjustColumnBinding(JTableBinding.ColumnBinding columnBinding)
-        {
-            if (columnBinding.getName().equals(Order.PROPERTY_orderStatus))
-            {
-                columnBinding.setValidator(new Validator<OrderStatus>()
-                {
+        public void adjustColumnBinding(JTableBinding.ColumnBinding columnBinding) {
+            if (columnBinding.getName().equals(Order.PROPERTY_orderStatus)) {
+                columnBinding.setValidator(new Validator<OrderStatus>() {
                     @Override
-                    public Result validate(OrderStatus value)
-                    {
+                    public Result validate(OrderStatus value) {
                         Order order = getNewEditDeleteActions().getSelectedElement();
-                        if (value == OrderStatus.production && orderStatusManager.canProductionOrder(order))
-                        {
+                        if (value == OrderStatus.production && orderStatusManager.canProductionOrder(order)) {
                             return null;
-                        }
-                        else if (value == OrderStatus.made && orderStatusManager.canMadeOrder(order))
-                        {
+                        } else if (value == OrderStatus.made && orderStatusManager.canMadeOrder(order)) {
                             return null;
-                        }
-                        else if (value == OrderStatus.design)
-                        {
+                        } else if (value == OrderStatus.design) {
                             return null;
                         }
                         return new Validator.Result(null, null);
@@ -332,32 +279,25 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order>
         }
     }
 
-    public class ReportsEditor extends TableEditorsRenders.ButtonEditor
-    {
-        public ReportsEditor()
-        {
+    public class ReportsEditor extends TableEditorsRenders.ButtonEditor {
+        public ReportsEditor() {
             super(getResourceMap().getString(BindingUtils.PREFIX_TABLE_COLUMN_KEY + Order.PROPERTY_id),
-                    new TableEditorsRenders.EditorCall<Long, Long>()
-                    {
+                    new TableEditorsRenders.EditorCall<Long, Long>() {
                         private Long value;
 
                         @Override
-                        public void setValue(Long value)
-                        {
+                        public void setValue(Long value) {
                             this.value = value;
                         }
 
                         @Override
-                        public Long getValue()
-                        {
+                        public Long getValue() {
                             return value;
                         }
 
                         @Override
-                        public Long call() throws Exception
-                        {
-                            if (getValue() != null)
-                            {
+                        public Long call() throws Exception {
+                            if (getValue() != null) {
                                 Order order = FacadeContext.getOrderFacade().findBy(getValue());
                                 order.setOrderItems(FacadeContext.getOrderItemFacade().loadBy(order));
                                 ReportModelCreator creator = new ReportModelCreator(order);
@@ -374,4 +314,54 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order>
             );
         }
     }
+
+    public class SelcoEditor extends TableEditorsRenders.ButtonEditor {
+        public SelcoEditor() {
+            super(getResourceMap().getString(BindingUtils.PREFIX_TABLE_COLUMN_KEY + Order.PROPERTY_orderNumber),
+                    new TableEditorsRenders.EditorCall<Long, Long>() {
+                        private Long value;
+
+                        @Override
+                        public void setValue(Long value) {
+                            this.value = value;
+                        }
+
+                        @Override
+                        public Long getValue() {
+                            return value;
+                        }
+
+                        @Override
+                        public Long call() throws Exception {
+                            Order order = (Order) RootNode.this.getListUpdater().getNewEditDeleteActions().getSelectedElement();
+                            if (order != null) {
+                                DialogShowers.showWaitDialog(new SwingWorker() {
+                                    @Override
+                                    protected Object doInBackground() throws Exception {
+                                        try {
+                                            return
+                                                    new SelcoConverter()
+                                                            .id(order.getId())
+                                                            .orderFacade(FacadeContext.getOrderFacade())
+                                                            .orderFurnitureFacade(FacadeContext.getOrderFurnitureFacade())
+                                                            .prepare().xlsx();
+                                        } catch (IOException e) {
+                                            System.out.println(ExceptionUtils.getStackTrace(e));
+                                            throw e;
+                                        }
+                                    }
+                                }, getTree());
+                            }
+                            return getValue();
+                        }
+                    },
+
+                    getResourceMap().
+
+                            getIcon("selco.icon")
+            );
+        }
+
+    }
+
 }

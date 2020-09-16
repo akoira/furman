@@ -107,7 +107,13 @@ dependencies {
         exclude group: 'com.lowagie', module: 'itext'
     }
     compile 'org.codehaus.groovy:groovy-all:2.1.7'
-    compile 'mysql:mysql-connector-java:5.1.36'
+    compile 'mysql:mysql-connector-java:8.0.21'
+
+    compile 'org.apache.poi:poi:3.9'
+    compile 'org.apache.poi:poi-scratchpad:3.9'
+    compile 'org.apache.poi:poi-ooxml:3.9'
+    compile 'org.apache.poi:poi-ooxml-schemas:3.9'
+    compile 'org.apache.poi:poi-examples:3.9'
 
     compile "junit:junit:4.+"
 }

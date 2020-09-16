@@ -41,6 +41,7 @@ public class OrderInfoTab extends BaseTabPanel
 {
 
     private final String regExp = "\\d*[,]{0,1}\\d{0,2}";
+    private final boolean newCustomerDisable = false;
 
     /**
      * Creates new form CustomerTab
@@ -308,21 +309,20 @@ public class OrderInfoTab extends BaseTabPanel
     @Action
     public void showNewCustomerDialog()
     {
-        MCustomerPanel customerPanel = new MCustomerPanel();
-        customerPanel.setValue(new Customer());
-        ValueSave<Customer> customerSaver = new ValueSave<Customer>()
-        {
-            @Override
-            public void save(Customer value)
-            {
-                FacadeContext.getCustomerFacade().save(value);
-                customerValue.addItem(value);
-                firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, value);
-            }
-        };
-        customerPanel.setValueSave(customerSaver);
-        DialogShowers.showBy(customerPanel, this, true);
-
+//        MCustomerPanel customerPanel = new MCustomerPanel();
+//        customerPanel.setValue(new Customer());
+//        ValueSave<Customer> customerSaver = new ValueSave<Customer>()
+//        {
+//            @Override
+//            public void save(Customer value)
+//            {
+//                FacadeContext.getCustomerFacade().save(value);
+//                customerValue.addItem(value);
+//                firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, value);
+//            }
+//        };
+//        customerPanel.setValueSave(customerSaver);
+//        DialogShowers.showBy(customerPanel, this, true);
     }
 
     public OrderNumberField getNumberValue()
@@ -363,5 +363,9 @@ public class OrderInfoTab extends BaseTabPanel
     public LastOrderNumberInfoPanel getLastOrderNumberInfoPanel()
     {
         return lastOrderNumberInfoPanel;
+    }
+
+    public boolean isNewCustomerDisable() {
+        return newCustomerDisable;
     }
 }

@@ -9,8 +9,11 @@ import by.dak.persistence.NamedQueryParameter;
 import by.dak.persistence.entities.Customer;
 import by.dak.persistence.entities.OrderStatus;
 import by.dak.persistence.entities.customer.CustomerAccount;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +49,18 @@ public class CustomerFacadeImpl extends BaseFacadeImpl<Customer> implements Cust
     public void setCustomerName(String customerName)
     {
         this.customerName = customerName;
+    }
+
+    @Override
+    public void delete(Customer entity)
+    {
+        dao.delete(entity, true);
+    }
+
+    @Override
+    public void delete(Serializable id)
+    {
+        dao.delete(id, true);
     }
 
     @Override

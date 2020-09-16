@@ -3,12 +3,6 @@ project(':furman.template.import')
           dependencies {
             compile project(':furman.main')
 
-            compile 'org.apache.poi:poi:3.9'
-            compile 'org.apache.poi:poi-scratchpad:3.9'
-            compile 'org.apache.poi:poi-ooxml:3.9'
-            compile 'org.apache.poi:poi-ooxml-schemas:3.9'
-            compile 'org.apache.poi:poi-examples:3.9'
-
             compile 'org.jdesktop.bsaf:bsaf:1.9.2'
 
             compile 'org.dockingframes:docking-frames-common:1.1.1'

@@ -123,17 +123,11 @@ public class Customer extends PersistenceEntity
         return emailAddress;
     }
 
-    /**
-     * @return the phoneNumber1
-     */
     public String getPhoneNumber1()
     {
         return phoneNumber1;
     }
 
-    /**
-     * @param phoneNumber1 the phoneNumber1 to set
-     */
     public void setPhoneNumber1(String phoneNumber1)
     {
         this.phoneNumber1 = phoneNumber1;
@@ -143,5 +137,4 @@ public class Customer extends PersistenceEntity
     {
         return customer == null || customer == Customer.NULL_CUSTOMER;
     }
-
 }
