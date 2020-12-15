@@ -8,6 +8,7 @@ import by.dak.report.jasper.common.data.CommonDatas;
 import by.dak.utils.convert.Converter;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * User: akoyro
@@ -36,7 +37,7 @@ public class AdditionalsConverter implements Converter<List<Additional>, CommonD
             commonData.setService(additional.getType());
             commonData.increase(additional.getSize());
             commonData.setPrice(additional.getPrice());
-            commonData.setDialerPrice(additional.getDialerPrice());
+            commonData.setDialerPrice(Optional.ofNullable(additional.getDialerPrice()).orElse(additional.getPrice()));
             commonDatas.add(commonData);
         }
         return commonDatas;

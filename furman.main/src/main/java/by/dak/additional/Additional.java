@@ -8,6 +8,7 @@ import org.hibernate.annotations.DiscriminatorOptions;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.util.Optional;
 
 /**
  * User: akoyro
@@ -70,7 +71,7 @@ public class Additional extends AOrderDetail
     {
         Additional result = new Additional();
         result.setPrice(additional.getPrice());
-        result.setDialerPrice(additional.getDialerPrice());
+        result.setDialerPrice(Optional.ofNullable(additional.getDialerPrice()).orElse(additional.getPrice()));
         result.setSize(additional.getSize());
         result.setType(additional.getType());
         result.setName(additional.getName());
