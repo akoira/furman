@@ -43,6 +43,11 @@ public class AdditionalValidator extends AResourceValidator<Additional>
         {
             validationResult.addError(resourceMap.getString("validator.price"));
         }
+
+        if (ValidationUtils.isLessThan(0.00001, additional.getDialerPrice()))
+        {
+            validationResult.addError(resourceMap.getString("validator.dialerPrice"));
+        }
         return validationResult;
     }
 }

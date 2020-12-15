@@ -3,10 +3,8 @@ package by.dak.persistence.dao.impl;
 import by.dak.persistence.dao.DailysheetDao;
 import by.dak.persistence.entities.Dailysheet;
 import by.dak.utils.convert.TimeUtils;
-import org.hibernate.Query;
-
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,23 +16,18 @@ import java.util.List;
 public class DailysheetDaoImpl extends GenericDaoImpl<Dailysheet> implements DailysheetDao
 {
 
-    // TODO findEntitiesByField
-
     public List<Dailysheet> findBy(java.util.Date date)
     {
-        Query query = getSession().createQuery("from Dailysheet d where d.date  = ?");
-        query.setTimestamp(0, TimeUtils.getDayTimestamp(date));
-        // findAllByField("date", TimeUtils.getDayTimestamp(date));
-        return query.list();
+        return findAllByField("date", TimeUtils.getDayTimestamp(date));
     }
 
     public Dailysheet loadCurrentDailysheet()
     {
-        List<Dailysheet> dailysheets = findBy(TimeUtils.getDayTimestamp(new Date(Calendar
-                .getInstance().getTimeInMillis())));
+        List<Dailysheet> dailysheets = findBy(new Date());
+        dailysheets.sort(Comparator.comparing(Dailysheet::getDate));
         if (dailysheets != null && dailysheets.size() > 0)
         {
-            return dailysheets.get(0);
+            return dailysheets.get(dailysheets.size() - 1);
         }
         else
         {

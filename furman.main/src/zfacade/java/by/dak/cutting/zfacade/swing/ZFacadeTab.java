@@ -19,10 +19,21 @@ import javax.swing.table.TableCellEditor;
  */
 public class ZFacadeTab extends AFacadeTab<ZFacade>
 {
+    @Override
+    public void setEditable(boolean editable) {
+
+    }
+
+
+    @Override
+    public void setEnabled(boolean enabled) {
+    }
 
     @Override
     public void init()
     {
+        super.setEditable(false);
+        super.setEnabled(false);
         setColorFacade(FacadeContext.getZProfileColorFacade());
         setTypeFacade(FacadeContext.getZProfileTypeFacade());
         setListUpdater(new ZFacadeListUpdater());

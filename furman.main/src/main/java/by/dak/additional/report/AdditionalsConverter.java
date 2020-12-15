@@ -36,7 +36,7 @@ public class AdditionalsConverter implements Converter<List<Additional>, CommonD
             commonData.setService(additional.getType());
             commonData.increase(additional.getSize());
             commonData.setPrice(additional.getPrice());
-            commonData.setDialerPrice(additional.getPrice());
+            commonData.setDialerPrice(additional.getDialerPrice());
             commonDatas.add(commonData);
         }
         return commonDatas;

@@ -81,6 +81,10 @@ public class CurrencyPanel extends BaseTabPanel<Dailysheet> {
 		return getResourceMap().getString("panel.title", getValue().getDate());
 	}
 
+	public void init() {
+		currencyListTab.init();
+	}
+
 	public static CurrencyPanel valueOf(Dailysheet dailysheet, CurrencyFacade currencyFacade) {
 		CurrencyPanel currencyPanel = new CurrencyPanel(currencyFacade);
 		currencyPanel.setValue(dailysheet);

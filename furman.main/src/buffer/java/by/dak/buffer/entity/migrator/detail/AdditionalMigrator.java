@@ -25,6 +25,7 @@ public class AdditionalMigrator extends DilerOrderDetailMigrator<Additional>
         additional.setType(dilerOrderDetail.getType());
         additional.setSize(dilerOrderDetail.getSize());
         additional.setPrice(dilerOrderDetail.getPrice());
+        additional.setDialerPrice(dilerOrderDetail.getPrice());
 
         return additional;
     }

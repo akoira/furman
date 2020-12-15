@@ -27,6 +27,8 @@ public class Additional extends AOrderDetail
     private Double size;
     @Column(nullable = false)
     private Double price;
+    @Column(nullable = false, name = "dialer_price")
+    private Double dialerPrice;
 
     public Additional()
     {
@@ -68,10 +70,19 @@ public class Additional extends AOrderDetail
     {
         Additional result = new Additional();
         result.setPrice(additional.getPrice());
+        result.setDialerPrice(additional.getDialerPrice());
         result.setSize(additional.getSize());
         result.setType(additional.getType());
         result.setName(additional.getName());
         result.setNumber(additional.getNumber());
         return result;
+    }
+
+    public Double getDialerPrice() {
+        return dialerPrice;
+    }
+
+    public void setDialerPrice(Double dialerPrice) {
+        this.dialerPrice = dialerPrice;
     }
 }

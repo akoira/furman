@@ -351,6 +351,7 @@ public class CuttingView extends FrameView {
 	public void showCurrency() {
 		CurrencyPanel currencyPanel = new CurrencyPanel(FacadeContext.getCurrencyFacade());
 		currencyPanel.setValue(FacadeContext.getDailysheetFacade().loadCurrentDailysheet());
+		currencyPanel.init();
 		DialogShowers.showBy(currencyPanel, CuttingApp.getApplication().getMainFrame(), false);
 	}
 

@@ -27,6 +27,14 @@ import java.util.List;
  */
 public class AGTTab extends AFacadeTab<AGTFacade>
 {
+    @Override
+    public void setEditable(boolean editable) {
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+    }
+
     public static final List<String> SYNCED_PROPERTIES = Collections.unmodifiableList(Arrays.asList(new String[]{AFacade.PROPERTY_profileType, AFacade.PROPERTY_profileColor, AFacade.PROPERTY_filling}));
 
     private static final String[] HIDDEN_PROPERTIES = new String[]{
@@ -58,6 +66,8 @@ public class AGTTab extends AFacadeTab<AGTFacade>
         setColorFacade(FacadeContext.getAGTColorFacade());
         setTypeFacade(FacadeContext.getAGTTypeFacade());
         setListUpdater(new AGTListUpdater());
+        super.setEditable(false);
+        super.setEnabled(false);
         super.init();
     }
 

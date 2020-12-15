@@ -58,8 +58,8 @@ public class CurrencyListTab extends AListTab<Currency, Dailysheet> {
 		};
 		getListNaviTable().setListUpdater(updater);
 		getListNaviTable().init();
-
 	}
+
 
 	@Override
 	protected void initBindingListeners() {

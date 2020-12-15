@@ -19,9 +19,20 @@ import org.jdesktop.application.ResourceMap;
  */
 public class AdditionalsTab extends AListTab<Additional, OrderItem>
 {
+    @Override
+    public void setEditable(boolean editable) {
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+    }
+
     public AdditionalsTab()
     {
         setResourceMap(Application.getInstance().getContext().getResourceMap(Additional.class));
+        setEditable(false);
+        setEnabled(false);
+
     }
 
     @Override
@@ -54,7 +65,7 @@ public class AdditionalsTab extends AListTab<Additional, OrderItem>
             @Override
             public String[] getEditableProperties()
             {
-                return new String[]{"type", "name", "size", "price"};
+                return new String[]{"type", "name", "size", "price", "dialerPrice"};
             }
 
             @Override
