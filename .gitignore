@@ -101,3 +101,5 @@ node_modules
 
 bower_components
 
+/out
+/*/out
