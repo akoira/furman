@@ -28,8 +28,7 @@ import static by.dak.report.jasper.ReportUtils.calcLinear;
  * Time: 15:50
  * To change this template use File | Settings | File Templates.
  */
-public abstract class ADirectSawCutConverter<D extends AOrderBoardDetail> implements Converter<List<D>, CommonDatas<CommonData>>
-{
+public abstract class ADirectSawCutConverter<D extends AOrderBoardDetail> implements Converter<List<D>, CommonDatas<CommonData>> {
 
     private final static String CUTTING_DATA = ResourceBundle.getBundle("by/dak/report/jasper/common/commonReport").getString("cutting.data");
 
@@ -38,67 +37,53 @@ public abstract class ADirectSawCutConverter<D extends AOrderBoardDetail> implem
 
     private CuttingModel cuttingModel;
 
-    protected ADirectSawCutConverter(CuttingModel cuttingModel)
-    {
+    protected ADirectSawCutConverter(CuttingModel cuttingModel) {
         this.cuttingModel = cuttingModel;
         datas = new CommonDatas<CommonData>(CommonDataType.cutting, cuttingModel.getOrder());
     }
 
-    public CommonDatas<CommonData> getDatas()
-    {
+    public CommonDatas<CommonData> getDatas() {
         return datas;
     }
 
-    public void setDatas(CommonDatas<CommonData> datas)
-    {
+    public void setDatas(CommonDatas<CommonData> datas) {
         this.datas = datas;
     }
 
-    public CuttingModel getCuttingModel()
-    {
+    public CuttingModel getCuttingModel() {
         return cuttingModel;
     }
 
-    protected void updateDirectSawCut(BoardDef boardDef, double length)
-    {
+    protected void updateDirectSawCut(BoardDef boardDef, double length) {
         CommonData data = CommonData.valueOf(ServiceType.cutting, boardDef);
         int i = datas.indexOf(data);
         data = i > -1 ? datas.remove(i) : data;
         data.increase(length);
-        if (data.isEmptyPrice())
-        {
+        if (data.isEmptyPrice()) {
             PriceEntity price = FacadeContext.getPriceFacade().getPrice(boardDef, ServiceType.cutting);
             ReportUtils.fillPrice(data, price);
         }
         datas.add(data);
     }
 
-    public CommonDatas<CommonData> convert(List<D> furnitures)
-    {
+    public CommonDatas<CommonData> convert(List<D> furnitures) {
         // Stage 1: count sawcut for simple types
-        for (TextureBoardDefPair pair : getCuttingModel().getPairs())
-        {
+        for (TextureBoardDefPair pair : getCuttingModel().getPairs()) {
             Strips strips = getCuttingModel().getStrips(pair);
-            if (strips != null)
-            {
+            if (strips != null) {
                 double length = calcLinear(GetSawLength.valueOf(strips, pair.getBoardDef()).get());
                 updateDirectSawCut(pair.getBoardDef(), length);
             }
         }
 
-        for (D furniture : furnitures)
-        {
+        for (D furniture : furnitures) {
             // Stage 2: count sawcut for complex types
-            if (furniture.isComplex())
-            {
-                if (furniture.isPrimary())
-                {
-                    double length = calcLinear((furniture.getLength() + furniture.getWidth()) * furniture.getAmount());
+            if (furniture.isComplex()) {
+                if (furniture.isPrimary()) {
+                    double length = calcLinear((furniture.getLength() * 2 + furniture.getWidth() * 2) * furniture.getAmount());
                     updateDirectSawCut(furniture.getComlexBoardDef(), length);
                 }
-            }
-            else
-            {
+            } else {
                 updateDirectSawCut(furniture.getBoardDef(), 0);
             }
         }

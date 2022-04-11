@@ -74,6 +74,11 @@ public class TextureConfigurePanel extends APricedCfgPanel<PriceAware>
         columnBinding.setColumnName(getResourceMap().getString("table.column.rotatable"));
         columnBinding.setColumnClass(Boolean.class);
         columnBinding.setEditable(true);
+
+        columnBinding = jTableBinding.addColumnBinding(ELProperty.create("${priced.inSize}"));
+        columnBinding.setColumnName(getResourceMap().getString("table.column.isSize"));
+        columnBinding.setColumnClass(Boolean.class);
+        columnBinding.setEditable(true);
     }
 
     @Override

@@ -37,8 +37,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.jhotdraw.draw.Figure;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 
 import static by.dak.report.jasper.ReportUtils.calcLinear;
 import static by.dak.report.jasper.ReportUtils.calcSquare;
@@ -50,8 +51,7 @@ import static by.dak.report.jasper.ReportUtils.calcSquare;
  * @since 2.0.0
  * todo класс должен быть переделан (оптимизирован)
  */
-public class CommonDataCreator implements Creator<CommonReportData>
-{
+public class CommonDataCreator implements Creator<CommonReportData> {
 
     private final AOrder order;
 
@@ -63,25 +63,23 @@ public class CommonDataCreator implements Creator<CommonReportData>
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("by/dak/report/jasper/common/commonReport");
 
 
-    public CommonDataCreator(CuttingModel cuttingModel)
-    {
+    public CommonDataCreator(CuttingModel cuttingModel) {
         this.cuttingModel = cuttingModel;
         dspPlasticModel = FacadeContext.getDSPPlasticStripsFacade().loadCuttingModel(cuttingModel.getOrder()).load();
 
         this.order = cuttingModel.getOrder();
     }
 
-    public CommonReportData create()
-    {
+    public CommonReportData create() {
         CommonReportDataImpl reportData = new CommonReportDataImpl(order);
 
         fillServicesData(reportData);
 
         fillMaterialsData(reportData);
 
-		fillFacadeData(reportData);
+        fillFacadeData(reportData);
 
-		reportData.getOrder().setCost(reportData.getCommonCost());
+        reportData.getOrder().setCost(reportData.getCommonCost());
         reportData.getOrder().setDialerCost(reportData.getDialerCommonCost());
 
         FacadeContext.getOrderFacadeBy(reportData.getOrder().getClass()).recalculate(reportData.getOrder());
@@ -89,7 +87,7 @@ public class CommonDataCreator implements Creator<CommonReportData>
         return reportData;
     }
 
-	private void fillFacadeData(CommonReportDataImpl reportData) {
+    private void fillFacadeData(CommonReportDataImpl reportData) {
         List<ZFacade> zFacades = FacadeContext.getZFacadeFacade().findAllByField(ZFacade.PROPERTY_order, order);
         FacadeContext.getZFacadeFacade().fillTransients(zFacades);
 
@@ -104,24 +102,20 @@ public class CommonDataCreator implements Creator<CommonReportData>
         fillFacadeDialerData(reportData, zFacades, agtFacades);
     }
 
-    private void fillFacadeFurnitureData(CommonReportDataImpl reportData, List<ZFacade> zFacades, List<AGTFacade> agtFacades)
-    {
+    private void fillFacadeFurnitureData(CommonReportDataImpl reportData, List<ZFacade> zFacades, List<AGTFacade> agtFacades) {
         ArrayList<FurnitureLink> furnitureLinks = new ArrayList<FurnitureLink>();
-        for (AGTFacade agtFacade : agtFacades)
-        {
+        for (AGTFacade agtFacade : agtFacades) {
             furnitureLinks.addAll(FacadeContext.getFurnitureLinkFacade().loadAllBy(agtFacade));
         }
 
-        for (ZFacade facade : zFacades)
-        {
+        for (ZFacade facade : zFacades) {
             furnitureLinks.addAll(FacadeContext.getFurnitureLinkFacade().loadAllBy(facade));
         }
         CommonDatas<CommonData> furnitureData = new FurnitureConverter(CommonDataType.facadeFurniture, order).convert(furnitureLinks);
         reportData.setCommonDatas(furnitureData);
     }
 
-    private void fillFacadeDialerData(CommonReportDataImpl reportData, List<ZFacade> zFacades, List<AGTFacade> agtFacades)
-    {
+    private void fillFacadeDialerData(CommonReportDataImpl reportData, List<ZFacade> zFacades, List<AGTFacade> agtFacades) {
         CommonDatas<CommonData> zfacadeDatas = new ZFacadeFurnitureDataConverter(order).convert(zFacades);
         CommonDatas<CommonData> agtDatas = new AGTFurnitureDataConverter(order).convert(agtFacades);
 
@@ -129,18 +123,14 @@ public class CommonDataCreator implements Creator<CommonReportData>
         reportData.setCommonDatas(agtDatas);
     }
 
-    private void fillMaterialsData(CommonReportDataImpl reportData)
-    {
+    private void fillMaterialsData(CommonReportDataImpl reportData) {
         BoardMaterialsConverter boardMaterialsConverter = new BoardMaterialsConverter();
         boardMaterialsConverter.setCuttingModel(cuttingModel);
         CommonDatas<CommonData> boardMaterialsData = boardMaterialsConverter.convert(cuttingModel.getPairs());
 
-        if (FacadeContext.getDSPPlasticDetailFacade().hasPlasticDetails(order))
-        {
-            for (TextureBoardDefPair pair : dspPlasticModel.getPairs())
-            {
-                if (FacadeContext.getDSPPlasticDetailFacade().isPlastic(pair.getBoardDef()))
-                {
+        if (FacadeContext.getDSPPlasticDetailFacade().hasPlasticDetails(order)) {
+            for (TextureBoardDefPair pair : dspPlasticModel.getPairs()) {
+                if (FacadeContext.getDSPPlasticDetailFacade().isPlastic(pair.getBoardDef())) {
                     //reset data calculated in the common cutting
                     boardMaterialsConverter.resetCommonDataBy(pair);
                 }
@@ -157,10 +147,8 @@ public class CommonDataCreator implements Creator<CommonReportData>
         List<OrderItem> orderItems = FacadeContext.getOrderItemFacade().loadBy(order);
         List<Additional> additionals = new ArrayList<Additional>();
         List<FurnitureLink> furnitureLinks = new ArrayList<FurnitureLink>();
-        for (OrderItem orderItem : orderItems)
-        {
-            if (orderItem.getType() == OrderItemType.first || orderItem.getType() == OrderItemType.common)
-            {
+        for (OrderItem orderItem : orderItems) {
+            if (orderItem.getType() == OrderItemType.first || orderItem.getType() == OrderItemType.common) {
                 additionals.addAll(FacadeContext.getAdditionalFacade().loadAll(AdditionalFacadeImpl.getSearchFilterBy(orderItem)));
                 furnitureLinks.addAll(FacadeContext.getFurnitureLinkFacade().loadAllBy(orderItem));
             }
@@ -175,8 +163,7 @@ public class CommonDataCreator implements Creator<CommonReportData>
 
     private void fillFacadeServicesData(CommonReportDataImpl reportData, List<ZFacade> zFacades,
                                         List<AGTFacade> agtFacades,
-                                        List<TemplateFacade> templateFacades)
-    {
+                                        List<TemplateFacade> templateFacades) {
         CommonDatas<CommonData> zServiceDatas = new ZFacadeServiceDataConverter(order).convert(zFacades);
         CommonDatas<CommonData> agtServiceDatas = new AGTServiceDataConverter(order).convert(agtFacades);
         CommonDatas<CommonData> templateServiceDatas = new TemplateFacadeServiceDataConverter(order).convert(templateFacades);
@@ -184,36 +171,31 @@ public class CommonDataCreator implements Creator<CommonReportData>
         setAndSave(reportData, zServiceDatas);
         setAndSave(reportData, agtServiceDatas);
 
-		//the code needs to add drilling for facade correctly.
-		CommonDatas datas = reportData.getCommonDatas(CommonDataType.drilling);
-		for (CommonData commonData : templateServiceDatas) {
-			int i = datas.indexOf(commonData);
-            if (i > -1)
-            {
+        //the code needs to add drilling for facade correctly.
+        CommonDatas datas = reportData.getCommonDatas(CommonDataType.drilling);
+        for (CommonData commonData : templateServiceDatas) {
+            int i = datas.indexOf(commonData);
+            if (i > -1) {
                 ((CommonData) datas.get(i)).increase(commonData.getCount());
-			} else {
-				datas.add(commonData);
-			}
-		}
-		sort(datas);
-		setAndSave(reportData, datas);
-	}
+            } else {
+                datas.add(commonData);
+            }
+        }
+        sort(datas);
+        setAndSave(reportData, datas);
+    }
 
-    private void fillServicesData(CommonReportDataImpl reportData)
-    {
+    private void fillServicesData(CommonReportDataImpl reportData) {
         fillOrderFurnitureServicesData(reportData);
         fillDSPPlasticServicesData(reportData);
     }
 
-    private void fillDSPPlasticServicesData(CommonReportDataImpl reportData)
-    {
+    private void fillDSPPlasticServicesData(CommonReportDataImpl reportData) {
         CommonDatas<CommonData> plasticPatch = new CommonDatas<CommonData>(CommonDataType.plasticPatch, order);
 
         List<DSPPlasticDetail> dspPlasticDetails = FacadeContext.getDSPPlasticDetailFacade().loadAllBy(order);
-        for (DSPPlasticDetail detail : dspPlasticDetails)
-        {
-            if (FacadeContext.getDSPPlasticDetailFacade().isPlastic(detail.getBoardDef()))
-            {
+        for (DSPPlasticDetail detail : dspPlasticDetails) {
+            if (FacadeContext.getDSPPlasticDetailFacade().isPlastic(detail.getBoardDef())) {
                 countPlasticPatch(plasticPatch, detail);
             }
         }
@@ -229,14 +211,12 @@ public class CommonDataCreator implements Creator<CommonReportData>
         setAndSave(reportData, directSawCutData);
     }
 
-    private void countPlasticPatch(List<CommonData> plasticPatch, DSPPlasticDetail detail)
-    {
+    private void countPlasticPatch(List<CommonData> plasticPatch, DSPPlasticDetail detail) {
         double square = calcSquare(detail.getLength() * detail.getWidth() * detail.getAmount());
         updateCommonDatas(plasticPatch, detail.getBoardDef(), ServiceType.plasticPatch, square);
     }
 
-    private void fillOrderFurnitureServicesData(CommonReportDataImpl reportData)
-    {
+    private void fillOrderFurnitureServicesData(CommonReportDataImpl reportData) {
         CommonDatas<CommonData> patch = new CommonDatas<CommonData>(CommonDataType.patch, order);
         CommonDatas<CommonData> groove = new CommonDatas<CommonData>(CommonDataType.groove, order);
         CommonDatas<CommonData> angle = new CommonDatas<CommonData>(CommonDataType.angle, order);
@@ -247,8 +227,7 @@ public class CommonDataCreator implements Creator<CommonReportData>
         CommonDatas<CommonData> drilling = new CommonDatas<CommonData>(CommonDataType.drilling, order);
 
         List<OrderFurniture> orderFurnitures = FacadeContext.getOrderFurnitureFacade().loadAllBy(order);
-        for (OrderFurniture furniture : orderFurnitures)
-        {
+        for (OrderFurniture furniture : orderFurnitures) {
             countPatch(patch, furniture);
             countGrooveSection(groove, furniture);
             countAnlgeSection(angle, furniture);
@@ -287,93 +266,73 @@ public class CommonDataCreator implements Creator<CommonReportData>
         setAndSave(reportData, drilling);
     }
 
-    private void setAndSave(CommonReportDataImpl reportData, CommonDatas<CommonData> commonDatas)
-    {
+    private void setAndSave(CommonReportDataImpl reportData, CommonDatas<CommonData> commonDatas) {
         reportData.setCommonDatas(commonDatas);
         FacadeContext.getCommonDataFacade().saveAll(commonDatas);
     }
 
 
-    private void sort(List<CommonData> datas)
-    {
+    private void sort(List<CommonData> datas) {
         Collections.sort(datas);
-        if (datas.size() > 0)
-        {
+        if (datas.size() > 0) {
             datas.get(datas.size() - 1).markAsLast();
         }
     }
 
-    private void countPatch(List<CommonData> complexGlueing, OrderFurniture furniture)
-    {
-        if (furniture.isComplex() && furniture.isPrimary())
-        {
+    private void countPatch(List<CommonData> complexGlueing, OrderFurniture furniture) {
+        if (furniture.isComplex() && furniture.isPrimary()) {
             double square = calcSquare(furniture.getLength() * furniture.getWidth() * furniture.getAmount());
             updateCommonDatas(complexGlueing, furniture.getComlexBoardDef(), ServiceType.patch, square);
         }
     }
 
-    private void countGrooveSection(List<CommonData> grooveDatas, OrderFurniture furniture)
-    {
-        if (furniture.getGroove() != null && (!furniture.isComplex() || furniture.isPrimary()))
-        {
+    private void countGrooveSection(List<CommonData> grooveDatas, OrderFurniture furniture) {
+        if (furniture.getGroove() != null && (!furniture.isComplex() || furniture.isPrimary())) {
             double size = recountFurnitureAmount(furniture, furniture.getGroove());
             updateCommonDatas(grooveDatas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), ServiceType.groove, size);
         }
     }
 
-    private void countAnlgeSection(List<CommonData> angle45Datas, OrderFurniture furniture)
-    {
-        if (furniture.getAngle45() != null && (!furniture.isComplex() || furniture.isPrimary()))
-        {
+    private void countAnlgeSection(List<CommonData> angle45Datas, OrderFurniture furniture) {
+        if (furniture.getAngle45() != null && (!furniture.isComplex() || furniture.isPrimary())) {
             double size = recountFurnitureAmount(furniture, furniture.getAngle45());
             updateCommonDatas(angle45Datas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), ServiceType.angle, size);
         }
     }
 
-    private void countCutoffSection(List<CommonData> cutoffDatas, OrderFurniture furniture)
-    {
-        if (furniture.getCutoff() != null && (!furniture.isComplex() || furniture.isPrimary()))
-        {
+    private void countCutoffSection(List<CommonData> cutoffDatas, OrderFurniture furniture) {
+        if (furniture.getCutoff() != null && (!furniture.isComplex() || furniture.isPrimary())) {
             Cutoff cutoff = (Cutoff) XstreamHelper.getInstance().fromXML(furniture.getCutoff());
             double length =
-                    calcLinear(CutoffPainter.lengthCutoff(cutoff, new Dimension(furniture.getLength().intValue(), furniture.getWidth().intValue())));
+                    calcLinear(CutoffPainter.lengthCutoff(cutoff, new Dimension(furniture.getLength().intValue(), furniture.getWidth().intValue())) * furniture.getAmount());
             updateCommonDatas(cutoffDatas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), ServiceType.cutoff, length);
         }
     }
 
-    private void countDriliingSection(CommonDatas<CommonData> datas, OrderFurniture furniture)
-    {
-        if (furniture.getDrilling() != null && (!furniture.isComplex() || furniture.isPrimary()))
-        {
+    private void countDriliingSection(CommonDatas<CommonData> datas, OrderFurniture furniture) {
+        if (furniture.getDrilling() != null && (!furniture.isComplex() || furniture.isPrimary())) {
             Drilling drilling = (Drilling) XstreamHelper.getInstance().fromXML(furniture.getDrilling());
             String value = drilling.getPicName();
-            if (StringUtils.isNumeric(value))
-            {
+            if (StringUtils.isNumeric(value)) {
                 updateCommonDatas(datas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), ServiceType.drilling, Integer.valueOf(value));
             }
         }
     }
 
-    private void countDirectGlueingSection(List<CommonData> glueingDatas, OrderFurniture furniture)
-    {
-        if (furniture.getGlueing() != null && furniture.isPrimary())
-        {
+    private void countDirectGlueingSection(List<CommonData> glueingDatas, OrderFurniture furniture) {
+        if (furniture.getGlueing() != null && furniture.isPrimary()) {
 
             Side[] sides = Side.values();
             GlueingSideHelper glueingSideHelper = null;
-            for (Side side : sides)
-            {
-                glueingSideHelper = new GlueingSideHelper(furniture, side)
-                {
+            for (Side side : sides) {
+                glueingSideHelper = new GlueingSideHelper(furniture, side) {
 
                     @Override
-                    public boolean isSide()
-                    {
+                    public boolean isSide() {
                         return isGlueing();
                     }
                 };
-                if (glueingSideHelper.isSide())
-                {
+                if (glueingSideHelper.isSide()) {
                     updateCommonDatas(glueingDatas, glueingSideHelper.getBorderDef(), ServiceType.directGluing, glueingSideHelper.getSize());
                 }
             }
@@ -386,29 +345,23 @@ public class CommonDataCreator implements Creator<CommonReportData>
      * @param glueingDatas
      * @param furniture
      */
-    private void countCurveGlueingSection(List<CommonData> glueingDatas, OrderFurniture furniture)
-    {
-        if (furniture.isPrimary() && furniture.getMilling() != null)
-        {
+    private void countCurveGlueingSection(List<CommonData> glueingDatas, OrderFurniture furniture) {
+        if (furniture.isPrimary() && furniture.getMilling() != null) {
             Milling milling = (Milling) XstreamHelper.getInstance().fromXML(furniture.getMilling());
-            if (milling.getCurveGluingLength() > 0)
-            {
+            if (milling.getCurveGluingLength() > 0) {
                 updateCommonDatas(glueingDatas, milling.getBorderDef(), ServiceType.curveGlueing,
                         ReportUtils.calcLinear((milling.getCurveGluingLength() + milling.getDirectGluingLength()) * furniture.getAmount()));
             }
         }
     }
 
-    private ElementDrawing getElementDrawing(OrderFurniture furniture)
-    {
+    private ElementDrawing getElementDrawing(OrderFurniture furniture) {
         MillingConverter converter = new MillingConverter();
         return converter.getElementDrawing(furniture);
     }
 
-    private void countMillingSection(List<CommonData> millingDatas, OrderFurniture furniture)
-    {
-        if (furniture.getMilling() != null && (!furniture.isComplex() || furniture.isPrimary()))
-        {
+    private void countMillingSection(List<CommonData> millingDatas, OrderFurniture furniture) {
+        if (furniture.getMilling() != null && (!furniture.isComplex() || furniture.isPrimary())) {
             Milling milling = (Milling) XstreamHelper.getInstance().fromXML(furniture.getMilling());
             double size = ReportUtils.calcLinear(milling.getCurveLength()) * furniture.getAmount();
             BoardDef boardDef = furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef();
@@ -417,23 +370,19 @@ public class CommonDataCreator implements Creator<CommonReportData>
     }
 
 
-    private void increaseEachEntryByExtraPercent(Collection<CommonData> datas)
-    {
-        for (CommonData data : datas)
-        {
+    private void increaseEachEntryByExtraPercent(Collection<CommonData> datas) {
+        for (CommonData data : datas) {
             double count = data.getRoundCount();
             data.increase(count / 10d);
         }
     }
 
-    private void updateCommonDatas(List<CommonData> datas, PriceAware priceAware, ServiceType serviceType, double size)
-    {
+    private void updateCommonDatas(List<CommonData> datas, PriceAware priceAware, ServiceType serviceType, double size) {
         CommonData data = CommonData.valueOf(serviceType, priceAware);
         int i = datas.indexOf(data);
         data = i > -1 ? datas.remove(i) : data;
 
-        if (data.getPrice() == null || data.getPrice() <= 0d)
-        {
+        if (data.getPrice() == null || data.getPrice() <= 0d) {
             PriceEntity price = FacadeContext.getPriceFacade().getPrice(priceAware, serviceType);
             ReportUtils.fillPrice(data, price);
         }
@@ -442,14 +391,12 @@ public class CommonDataCreator implements Creator<CommonReportData>
         datas.add(data);
     }
 
-    private double recountFurnitureAmount(OrderFurniture furniture, String stringData)
-    {
+    private double recountFurnitureAmount(OrderFurniture furniture, String stringData) {
         DTO dto = (DTO) XstreamHelper.getInstance().fromXML(stringData);
         return recountFurnitureAmount(furniture, dto);
     }
 
-    private double recountFurnitureAmount(OrderFurniture furniture, DTO dto)
-    {
+    private double recountFurnitureAmount(OrderFurniture furniture, DTO dto) {
         long size = 0;
         size += dto.isDown() ? furniture.getLength() : 0;
         size += dto.isLeft() ? furniture.getWidth() : 0;
@@ -461,21 +408,16 @@ public class CommonDataCreator implements Creator<CommonReportData>
     }
 
 
-    public static class GlueingCalc extends ElementDrawing.Calc
-    {
+    public static class GlueingCalc extends ElementDrawing.Calc {
         private HashMap<Gluieng, Double> map = new HashMap<Gluieng, Double>();
 
         @Override
-        public double getValue(Figure figure)
-        {
-            if (figure instanceof GluiengLength)
-            {
+        public double getValue(Figure figure) {
+            if (figure instanceof GluiengLength) {
                 Gluieng gluieng = figure.get(AttributeKeys.GLUEING);
-                if (gluieng != null)
-                {
+                if (gluieng != null) {
                     Double value = map.get(gluieng.getBorderDef());
-                    if (value == null)
-                    {
+                    if (value == null) {
                         value = 0D;
                     }
                     value += ((GluiengLength) figure).getGluiengLength();
@@ -485,8 +427,7 @@ public class CommonDataCreator implements Creator<CommonReportData>
             return 0;
         }
 
-        public Map<Gluieng, Double> getMap()
-        {
+        public Map<Gluieng, Double> getMap() {
             return map;
         }
     }

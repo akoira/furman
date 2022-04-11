@@ -21,6 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.EventObject;
@@ -36,8 +37,7 @@ import java.util.logging.Logger;
 /**
  * The main class of the application.
  */
-public class CuttingApp extends SingleFrameApplication
-{
+public class CuttingApp extends SingleFrameApplication {
     private ExceptionHandler exceptionHandler = new DefaultExceptionHandler();
 
     private static SpringConfiguration springConfiguration;
@@ -46,17 +46,12 @@ public class CuttingApp extends SingleFrameApplication
     private java.util.List<Future> list = new ArrayList<Future>();
     private JSplashWindow splashWindow;
 
-    private Timer initTimer = new Timer(5, new ActionListener()
-    {
+    private Timer initTimer = new Timer(5, new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            synchronized (list)
-            {
-                for (Future future : list)
-                {
-                    if (!future.isDone())
-                    {
+        public void actionPerformed(ActionEvent e) {
+            synchronized (list) {
+                for (Future future : list) {
+                    if (!future.isDone()) {
                         return;
                     }
                 }
@@ -77,14 +72,10 @@ public class CuttingApp extends SingleFrameApplication
         }
     });
 
-    private void checkLicense()
-    {
-        try
-        {
+    private void checkLicense() {
+        try {
             PermissionManager.PERMISSION_MANAGER.checkLicense();
-        }
-        catch (Throwable t)
-        {
+        } catch (Throwable t) {
             String message = getContext().getResourceMap(CuttingApp.class).getString("Application.msg.license.not.valid");
             JOptionPane.showMessageDialog(splashWindow,
                     message,
@@ -96,8 +87,7 @@ public class CuttingApp extends SingleFrameApplication
     }
 
 
-    public CuttingApp()
-    {
+    public CuttingApp() {
         super();
     }
 
@@ -105,8 +95,7 @@ public class CuttingApp extends SingleFrameApplication
      * At startup create and show the main frame of the application.
      */
     @Override
-    protected void startup()
-    {
+    protected void startup() {
 
         ImageIcon splashImage = getContext().getResourceMap(CuttingApp.class).getImageIcon("Application.splash.icon");
         splashWindow = new JSplashWindow(splashImage);
@@ -118,8 +107,7 @@ public class CuttingApp extends SingleFrameApplication
     }
 
     @Override
-    protected void initialize(String[] args)
-    {
+    protected void initialize(String[] args) {
         initSwings();
         JModalConfiguration.enableWaitOnEDT();
         Locale.setDefault(new Locale("ru", "RU"));
@@ -128,41 +116,33 @@ public class CuttingApp extends SingleFrameApplication
         getInstance().getContext().getSessionStorage().putProperty(RootWindow.class, new RootWindowProperty());
         getInstance().getContext().getSessionStorage().putProperty(SettingsPanel.class, new SettingsWindowProperty());
 
-        Callable callable = new Callable()
-        {
+        Callable callable = new Callable() {
             @Override
-            public Object call() throws Exception
-            {
-                try
-                {
+            public Object call() throws Exception {
+                try {
                     springConfiguration = new SpringConfiguration();
                     return null;
-                }
-                catch (Throwable e)
-                {
+                } catch (Throwable e) {
                     exceptionHandler.handle(e);
                     return null;
                 }
             }
         };
-        synchronized (list)
-        {
+        synchronized (list) {
             list.add(executorService.submit(callable));
         }
 
         initTimer.start();
     }
 
-    private void initSwings()
-    {
+    private void initSwings() {
         EventQueueProxy eventQueueProxy = new EventQueueProxy();
         eventQueueProxy.setExceptionHandler(exceptionHandler);
         Toolkit.getDefaultToolkit().getSystemEventQueue().push(eventQueueProxy);
     }
 
 
-    public static ClassPathXmlApplicationContext getApplicationContext()
-    {
+    public static ClassPathXmlApplicationContext getApplicationContext() {
         return springConfiguration.getApplicationContext();
     }
 
@@ -171,8 +151,7 @@ public class CuttingApp extends SingleFrameApplication
      * fully initialized from the GUI builder, so this additional configuration is not needed.
      */
     @Override
-    protected void configureWindow(java.awt.Window root)
-    {
+    protected void configureWindow(java.awt.Window root) {
         super.configureWindow(root);
     }
 
@@ -181,25 +160,38 @@ public class CuttingApp extends SingleFrameApplication
      *
      * @return the instance of CuttingApp
      */
-    public static CuttingApp getApplication()
-    {
+    public static CuttingApp getApplication() {
         return Application.getInstance(CuttingApp.class);
     }
 
     /**
      * Main method launching the application.
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Locale.setDefault(new Locale("ru", "RU", "utf8"));
+
+        loadTTF();
+
         launch(CuttingApp.class, args);
     }
 
+    private static void loadTTF() {
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arial.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arialbd.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arialbi.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/ariali.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/Tahoma.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/Tahoma-Bold.ttf")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void showDialog(Class<? extends JFrame> dialogClass,
-                                  HashMap<Class<? extends JFrame>, JFrame> dialogsMap)
-    {
-        try
-        {
+                                  HashMap<Class<? extends JFrame>, JFrame> dialogsMap) {
+        try {
             // JDialog dialog = dialogsMap.get(dialogClass);
             // if (dialog == null)
             // {
@@ -212,53 +204,42 @@ public class CuttingApp extends SingleFrameApplication
 
             CuttingApp.getApplication().show(dialog);
             dialog.dispose();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             CuttingApp.getApplication().getExceptionHandler().handle(ex);
         }
     }
 
     @Override
-    public void exit(EventObject eventObject)
-    {
+    public void exit(EventObject eventObject) {
         super.exit(eventObject);
     }
 
-    public ExceptionHandler getExceptionHandler()
-    {
-        if (exceptionHandler == null)
-        {
+    public ExceptionHandler getExceptionHandler() {
+        if (exceptionHandler == null) {
             exceptionHandler = FacadeContext.getExceptionHandler();
         }
         return exceptionHandler;
     }
 
-    public void setExceptionHandler(ExceptionHandler exceptionHandler)
-    {
+    public void setExceptionHandler(ExceptionHandler exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
     }
 
     @Override
-    public void show(JDialog c)
-    {
-        if (CuttingApp.getApplication().getPermissionManager().checkPermission(c))
-        {
+    public void show(JDialog c) {
+        if (CuttingApp.getApplication().getPermissionManager().checkPermission(c)) {
             super.show(c);
         }
     }
 
     @Override
-    public void show(JFrame c)
-    {
-        if (CuttingApp.getApplication().getPermissionManager().checkPermission(c))
-        {
+    public void show(JFrame c) {
+        if (CuttingApp.getApplication().getPermissionManager().checkPermission(c)) {
             super.show(c);
         }
     }
 
-    public PermissionManager getPermissionManager()
-    {
+    public PermissionManager getPermissionManager() {
         return PermissionManager.PERMISSION_MANAGER;
     }
 

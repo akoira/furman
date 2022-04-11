@@ -1,11 +1,14 @@
 package by.dak.cutting;
 
 import by.dak.common.swing.ExceptionHandler;
+import com.jidesoft.dialog.JideOptionPane;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.jdesktop.swingx.JXTipOfTheDay;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,8 +29,15 @@ public class DefaultExceptionHandler implements ExceptionHandler
         {
             public void run()
             {
-				JOptionPane.showMessageDialog(FocusManager.getCurrentManager().getActiveWindow(), ExceptionUtils.getStackTrace(e),
-                        e.getLocalizedMessage(), JOptionPane.ERROR_MESSAGE);
+                JTextArea textArea = new JTextArea(ExceptionUtils.getStackTrace(e));
+                textArea.setEditable(false);
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                textArea.setLineWrap(true);
+                textArea.setWrapStyleWord(true);
+                scrollPane.setPreferredSize( new Dimension( 500, 500 ) );
+                JideOptionPane.showMessageDialog(FocusManager.getCurrentManager().getActiveWindow(), scrollPane, e.getLocalizedMessage(),
+                        JideOptionPane.ERROR_MESSAGE);
+                System.exit(-1);
             }
         };
         SwingUtilities.invokeLater(runnable);

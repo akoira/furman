@@ -37,6 +37,9 @@ public class TextureEntity extends FurnitureCode
     @Column(name = "ROTATABLE", nullable = false, columnDefinition = "bit")
     private boolean rotatable;
 
+    @Column(name = "IN_SIZE", nullable = false, columnDefinition = "bit")
+    private boolean inSize;
+
 
     public void setSurface(String surface)
     {
@@ -69,6 +72,7 @@ public class TextureEntity extends FurnitureCode
         result = prime * result + (getManufacturer() == null ? 0 : getManufacturer().hashCode());
         result = prime * result + (getName() == null ? 0 : getName().hashCode());
         result = prime * result + (rotatable ? 1231 : 1237);
+        result = prime * result + (inSize ? 1231 : 1237);
         result = prime * result + (surface == null ? 0 : surface.hashCode());
         return result;
     }
@@ -180,7 +184,16 @@ public class TextureEntity extends FurnitureCode
         {
             textureEntity.setSurface(new String(surface));
         }
-        textureEntity.setRotatable(new Boolean(rotatable));
+        textureEntity.setRotatable(rotatable);
+        textureEntity.setInSize(inSize);
         return textureEntity;
+    }
+
+    public boolean isInSize() {
+        return inSize;
+    }
+
+    public void setInSize(boolean inSize) {
+        this.inSize = inSize;
     }
 }

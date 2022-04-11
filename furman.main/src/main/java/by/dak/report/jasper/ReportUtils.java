@@ -11,6 +11,7 @@ import by.dak.cutting.cut.guillotine.helper.DimensionsHelper;
 import by.dak.cutting.swing.order.data.TextureBoardDefPair;
 import by.dak.persistence.FacadeContext;
 import by.dak.persistence.entities.*;
+import by.dak.persistence.entities.predefined.Unit;
 import by.dak.persistence.entities.types.FurnitureCode;
 import by.dak.report.jasper.common.data.CommonData;
 import by.dak.utils.convert.Converter;
@@ -24,6 +25,8 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
 import static by.dak.cutting.configuration.Constants.MIN_USING_AREA;
 
@@ -216,22 +219,26 @@ public class ReportUtils
 			return getPriceBy(isPriceDealer ? price.getPriceDealer() : price.getPrice(), price.getCurrencyType());
 	}
 
+    //берем все boards котрые прикремлены к заказу и считаем их колличество
+    public static final Function<Strips, Double> segment_area = strips ->
+        strips.getSegments().stream().map(s -> s.getMaterialLength() * s.getMaterialWidth())
+                .reduce(0L, Long::sum).doubleValue();
+
+
     public static double getPaidValueBy(TextureBoardDefPair pair, Strips strips)
     {
         double value = 0.0;
-        switch (pair.getBoardDef().getUnit())
+        Unit unit = pair.getBoardDef().getUnit();
+        switch (unit)
         {
             case squareMetre:
-                value = calcSquare(calcPaidArea(pair.getBoardDef().getCutter(), strips));
+                if (pair.getTexture().isInSize())
+                    value = calcSquare(calcPaidArea(pair.getBoardDef().getCutter(), strips));
+                else
+                    value = calcSquare(segment_area.apply(strips));
                 break;
             case piece:
-                //берем все boards котрые прикремлены к заказу и считаем их колличество
-                for (int i = 0; i < strips.getSegmentsCount(); i++)
-                {
-                    Segment segment = strips.getSegment(i);
-                    value += segment.getMaterialLength() * segment.getMaterialWidth();
-                }
-                value = calcSquare(value);
+                value = calcSquare(segment_area.apply(strips));
                 break;
             case linearMetre:
                 //takes lenght of the board matirials which ara used in the cutting
