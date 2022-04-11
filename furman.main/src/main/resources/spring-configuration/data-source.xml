@@ -13,9 +13,6 @@
     <context:annotation-config/>
     <!--<context:component-scan base-package="by.dak.**.dao"/>-->
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="spring-properties/data-source.properties"/>
-    </bean>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">

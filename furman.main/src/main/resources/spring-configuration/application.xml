@@ -7,8 +7,6 @@
 
     <import resource="property-files-context.xml"/>
     <import resource="data-source.xml"/>
-    <import resource="liquibase.xml"/>
-
 
     <import resource="data-access-context.xml"/>
     <import resource="dao-context.xml"/>
