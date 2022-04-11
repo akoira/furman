@@ -291,7 +291,7 @@ public class ProfileDefDialog extends BaseGridDialog
         {
             public void run()
             {
-                new SpringConfiguration();
+                new SpringConfiguration(false);
 
                 DialogShowers.getProfileDefDialogShower().show();
             }

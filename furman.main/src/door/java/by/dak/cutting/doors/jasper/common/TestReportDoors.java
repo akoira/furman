@@ -53,7 +53,7 @@ public class TestReportDoors extends TAbstractReportTester
         order.setReadyDate(new Date(System.currentTimeMillis()));
         order.setCreatedDailySheet(new Dailysheet(null));
         order.setWorkedDailySheet(new Dailysheet(null));
-        order.setCustomer(new Customer("Койро Андрей", null, null, null, null, null));
+        order.setCustomer(Customer.valueOf("Койро Андрей"));
         order.setDesigner(new DesignerEntity("Койро Денис"));
         OrderItem orderItem = new OrderItem();
         orderItem.setName("Test item");

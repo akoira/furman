@@ -47,7 +47,8 @@ public class Constants
             "phoneNumber1",
             "faxNumber",
             "emailAddress",
-            "deleted"
+            "deleted",
+            "discount"
     };
 
     public static final String[] DeliveryTableVisibleProperties = new String[]{

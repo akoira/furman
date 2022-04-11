@@ -66,6 +66,7 @@ public class CommonDatas<E extends CommonData> extends ArrayList<E>
             {
                 dialerCommonCost += e.getDialerCost();
             }
+            dialerCommonCost = Math.max(0, dialerCommonCost - dialerCommonCost * order.getCustomer().getDiscount());
         }
         return dialerCommonCost;
     }

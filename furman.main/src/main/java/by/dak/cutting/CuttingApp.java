@@ -116,16 +116,13 @@ public class CuttingApp extends SingleFrameApplication {
         getInstance().getContext().getSessionStorage().putProperty(RootWindow.class, new RootWindowProperty());
         getInstance().getContext().getSessionStorage().putProperty(SettingsPanel.class, new SettingsWindowProperty());
 
-        Callable callable = new Callable() {
-            @Override
-            public Object call() throws Exception {
-                try {
-                    springConfiguration = new SpringConfiguration();
-                    return null;
-                } catch (Throwable e) {
-                    exceptionHandler.handle(e);
-                    return null;
-                }
+        Callable callable = () -> {
+            try {
+                springConfiguration = new SpringConfiguration(false);
+                return null;
+            } catch (Throwable e) {
+                exceptionHandler.handle(e);
+                return null;
             }
         };
         synchronized (list) {
@@ -168,11 +165,15 @@ public class CuttingApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("ru", "RU", "utf8"));
+        if (args.length > 0 && args[0].equals("--upgrade")) {
+            new SpringConfiguration(true);
+        } else {
+            Locale.setDefault(new Locale("ru", "RU", "utf8"));
 
-        loadTTF();
+            loadTTF();
 
-        launch(CuttingApp.class, args);
+            launch(CuttingApp.class, args);
+        }
     }
 
     private static void loadTTF() {

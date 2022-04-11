@@ -34,7 +34,7 @@ public class TCommonReportTester extends TAbstractReportTester
 
     public static void main(String[] args)
     {
-        new SpringConfiguration();
+        new SpringConfiguration(false);
         new TCommonReportTester();
         try
         {
@@ -63,7 +63,7 @@ public class TCommonReportTester extends TAbstractReportTester
         order.setReadyDate(new Date(System.currentTimeMillis()));
         order.setCreatedDailySheet(new Dailysheet(null));
         order.setWorkedDailySheet(new Dailysheet(null));
-        order.setCustomer(new Customer("Койро Андрей", null, null, null, null, null));
+        order.setCustomer(new Customer("Койро Андрей", null, null, null, null, null, null));
         order.setDesigner(new DesignerEntity("Койро Денис"));
         OrderItem orderItem = new OrderItem();
         orderItem.setName("Test item");

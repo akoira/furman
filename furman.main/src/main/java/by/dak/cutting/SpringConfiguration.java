@@ -15,34 +15,34 @@ import java.util.Arrays;
  * @introduced [Preview Plugin Support]
  * @since 2.0.0
  */
-public class SpringConfiguration
-{
+public class SpringConfiguration {
 
+    private final boolean liquibaseShouldRun;
     private ClassPathXmlApplicationContext applicationContext;
 
-    static
-    {
+    static {
         System.setProperty("WizardDisplayer.default", DWizardDisplayerImpl.class.getName());
     }
 
+    public SpringConfiguration() {
+        this(false);
+    }
 
-    public SpringConfiguration()
-    {
+    public SpringConfiguration(boolean liquibaseShouldRun) {
+        this.liquibaseShouldRun = liquibaseShouldRun;
         initContext();
     }
 
-    private void initContext()
-    {
+    private void initContext() {
         applicationContext = new ClassPathXmlApplicationContext(getPaths());
         FacadeContext.setApplicationContext(applicationContext);
     }
 
-    public String[] getPaths()
-    {
+    public String[] getPaths() {
         ArrayList<String> result = new ArrayList<String>();
         String[] paths =
                 {
-                        "spring-configuration/application.xml",
+                        this.liquibaseShouldRun ? "spring-configuration/application.with.liquibase.xml" : "spring-configuration/application.xml"
                 };
         result.addAll(Arrays.asList(paths));
 
@@ -53,13 +53,11 @@ public class SpringConfiguration
         return result.toArray(new String[]{});
     }
 
-    public ClassPathXmlApplicationContext getApplicationContext()
-    {
+    public ClassPathXmlApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
-    public MainFacade getMainFacade()
-    {
+    public MainFacade getMainFacade() {
         return applicationContext.getBean(MainFacade.class);
     }
 }

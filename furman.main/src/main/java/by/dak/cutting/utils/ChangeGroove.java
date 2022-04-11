@@ -18,7 +18,7 @@ public class ChangeGroove {
 
 
 	public static void main(String[] args) {
-		SpringConfiguration springConfiguration = new SpringConfiguration();
+		SpringConfiguration springConfiguration = new SpringConfiguration(false);
 
 		ChangeGroove changeGroove = new ChangeGroove();
 		changeGroove.setMainFacade(springConfiguration.getMainFacade());

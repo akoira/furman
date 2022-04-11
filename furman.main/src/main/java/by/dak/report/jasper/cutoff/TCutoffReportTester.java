@@ -27,7 +27,7 @@ public class TCutoffReportTester extends TAbstractReportTester
 
     public static void main(String[] args)
     {
-        new SpringConfiguration();
+        new SpringConfiguration(false);
         new TCutoffReportTester();
         try
         {
@@ -58,7 +58,7 @@ public class TCutoffReportTester extends TAbstractReportTester
         order.setReadyDate(new Date(System.currentTimeMillis()));
         order.setCreatedDailySheet(new Dailysheet(null));
         order.setWorkedDailySheet(new Dailysheet(null));
-        order.setCustomer(new Customer("Койро Андрей", null, null, null, null, null));
+        order.setCustomer(Customer.valueOf("Койро Андрей"));
         order.setDesigner(new DesignerEntity("Койро Денис"));
         //        OrderItem orderItem = new OrderItem("Test item");
 //        orderItem.setFurnitureItems(createFurnitures());

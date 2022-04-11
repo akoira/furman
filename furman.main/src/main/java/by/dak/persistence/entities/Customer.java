@@ -41,7 +41,7 @@ public class Customer extends PersistenceEntity
     }
 
     public Customer(String name, String address, String phoneNumber, String phoneNumber1, String faxNumber,
-                    String emailAddress)
+                    String emailAddress, Double discount)
     {
         this.name = name;
         this.address = address;
@@ -49,6 +49,7 @@ public class Customer extends PersistenceEntity
         this.phoneNumber1 = phoneNumber1;
         this.faxNumber = faxNumber;
         this.emailAddress = emailAddress;
+        this.discount = discount;
     }
 
     public Customer()
@@ -72,6 +73,9 @@ public class Customer extends PersistenceEntity
 
     @Column(name = "EMAIL_ADDRESS", nullable = true, length = 255)
     private String emailAddress;
+
+    @Column(name = "DISCOUNT", nullable = false)
+    private Double discount;
 
     public void setName(String name)
     {
@@ -136,5 +140,17 @@ public class Customer extends PersistenceEntity
     public static boolean isNull(Customer customer)
     {
         return customer == null || customer == Customer.NULL_CUSTOMER;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public static Customer valueOf(String name) {
+        return new Customer(name, null, null, null, null, null, 0.0);
     }
 }

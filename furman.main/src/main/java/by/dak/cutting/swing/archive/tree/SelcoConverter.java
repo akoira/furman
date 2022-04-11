@@ -39,7 +39,7 @@ public class SelcoConverter {
 
     public static void main(String[] args) throws IOException {
         Locale.setDefault(new Locale("ru", "RU", "utf8"));
-        SpringConfiguration springConfiguration = new SpringConfiguration();
+        SpringConfiguration springConfiguration = new SpringConfiguration(false);
 
         SelcoConverter converter = new SelcoConverter()
 //                .id(123249661L)

@@ -13,5 +13,12 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="akoyro" id="10">
+        <addColumn tableName="CUSTOMER">
+            <column name="DISCOUNT" type="double" defaultValueNumeric="0.0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
 
