@@ -6,6 +6,6 @@
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="property-files-context.xml"/>
-    <import resource="data-source.xml"/>
-    <import resource="liquibase.xml"/>
+    <import resource="../data-source.xml"/>
+    <import resource="../liquibase.xml"/>
 </beans>

@@ -5,6 +5,7 @@ import by.dak.cutting.DialogShowers;
 import by.dak.cutting.swing.renderer.TableEditorsRenders;
 import by.dak.cutting.swing.report.ReportsPanel;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.report.model.ReportsModel;
 import by.dak.report.model.impl.ReportModelCreator;
 import by.dak.swing.table.AListUpdater;
@@ -56,6 +57,7 @@ public class TemplateOrdersUpdater extends AListUpdater<TemplateOrder>
 
     };
 
+    private final MainFacade mainFacade;
 
     private NewEditDeleteActions<TemplateOrder> actions;
     private Category category;
@@ -63,6 +65,7 @@ public class TemplateOrdersUpdater extends AListUpdater<TemplateOrder>
     public TemplateOrdersUpdater(Category category)
     {
         init(category);
+        this.mainFacade = FacadeContext.getMainFacade();
     }
 
     protected void init(Category category)
@@ -239,7 +242,7 @@ public class TemplateOrdersUpdater extends AListUpdater<TemplateOrder>
                         {
                             TemplateOrder order = FacadeContext.getTemplateOrderFacade().findBy(getValue());
                             order.setOrderItems(FacadeContext.getOrderItemFacade().loadBy(order));
-                            ReportModelCreator creator = new ReportModelCreator(order);
+                            ReportModelCreator creator = new ReportModelCreator(order, mainFacade);
                             ReportsModel reportsModel = creator.create();
                             ReportsPanel reportsPanel = new ReportsPanel();
                             reportsPanel.setEditable(false);

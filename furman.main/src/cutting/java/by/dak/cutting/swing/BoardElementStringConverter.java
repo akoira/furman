@@ -6,8 +6,11 @@ import by.dak.persistence.entities.AOrderBoardDetail;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,7 +21,7 @@ import java.util.List;
  */
 public class BoardElementStringConverter extends AElement2StringConverter
 {
-    private ResourceMap resourceMap = Application.getInstance().getContext().getResourceMap(this.getClass());
+    private final Properties properties = new Properties();
 
     private static final BoardElementStringConverter CONVERTER = new BoardElementStringConverter();
 
@@ -27,6 +30,13 @@ public class BoardElementStringConverter extends AElement2StringConverter
         return CONVERTER;
     }
 
+    public BoardElementStringConverter() {
+        try {
+            properties.load(this.getClass().getResourceAsStream("resources/BoardElementStringConverter.properties"));
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
 
     @Override
     public String convertShort(Element element)
@@ -66,7 +76,7 @@ public class BoardElementStringConverter extends AElement2StringConverter
     {
         if (orderFurniture.getAngle45() != null)
         {
-            return resourceMap.getString("angle45.text");
+            return properties.getProperty("angle45.text");
         }
         return null;
     }
@@ -75,7 +85,7 @@ public class BoardElementStringConverter extends AElement2StringConverter
     {
         if (orderFurniture.getGroove() != null)
         {
-            return resourceMap.getString("groove.text");
+            return properties.getProperty("groove.text");
         }
         return null;
     }
@@ -83,7 +93,7 @@ public class BoardElementStringConverter extends AElement2StringConverter
 
     private String getGlueing()
     {
-        return resourceMap.getString("glueing.text");
+        return properties.getProperty("glueing.text");
     }
 
     private String getSize(Element element)

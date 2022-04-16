@@ -31,6 +31,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,6 +41,7 @@ import java.util.logging.Logger;
 public class CuttingApp extends SingleFrameApplication {
     private ExceptionHandler exceptionHandler = new DefaultExceptionHandler();
 
+    public static final String FURMAN_PROFILE  = "FURMAN_PROFILE";
     private static SpringConfiguration springConfiguration;
 
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -118,7 +120,9 @@ public class CuttingApp extends SingleFrameApplication {
 
         Callable callable = () -> {
             try {
-                springConfiguration = new SpringConfiguration(false);
+                String profile = System.getenv().get(FURMAN_PROFILE);
+                Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod : SpringConfiguration.home;
+                springConfiguration = config.get();
                 return null;
             } catch (Throwable e) {
                 exceptionHandler.handle(e);
@@ -166,7 +170,9 @@ public class CuttingApp extends SingleFrameApplication {
      */
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("--upgrade")) {
-            new SpringConfiguration(true);
+            String profile = System.getenv().get(FURMAN_PROFILE);
+            Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod_liquibase : SpringConfiguration.home_liquibase;
+            config.get();
         } else {
             Locale.setDefault(new Locale("ru", "RU", "utf8"));
 

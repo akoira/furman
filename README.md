@@ -11,4 +11,5 @@
     * 1,2,6
 * in progress:
   * 2.4.1
-    * 
+    * liquebase - need separate context
+    * mongodb check it works with new driver

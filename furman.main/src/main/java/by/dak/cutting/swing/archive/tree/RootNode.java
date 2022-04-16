@@ -14,6 +14,7 @@ import by.dak.order.swing.AOrderWizard;
 import by.dak.order.swing.IOrderWizardDelegator;
 import by.dak.ordergroup.OrderGroup;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.Order;
 import by.dak.persistence.entities.OrderStatus;
 import by.dak.report.model.ReportsModel;
@@ -66,6 +67,7 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
 
     private OrderListUpdater listUpdater = new OrderListUpdater();
     private OrderStatusManager orderStatusManager;
+    private MainFacade mainFacade;
 
     public RootNode(OrderStatusManager orderStatusManager) {
         setUserObject(getResourceMap().getString("node.name"));
@@ -84,6 +86,7 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
         setClosedIcon(getResourceMap().getIcon("all.orders.icon"));
         setLeafIcon(getResourceMap().getIcon("all.orders.icon"));
         setOpenIcon(getResourceMap().getIcon("all.orders.icon"));
+        mainFacade = FacadeContext.getMainFacade();
 
     }
 
@@ -300,7 +303,7 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
                             if (getValue() != null) {
                                 Order order = FacadeContext.getOrderFacade().findBy(getValue());
                                 order.setOrderItems(FacadeContext.getOrderItemFacade().loadBy(order));
-                                ReportModelCreator creator = new ReportModelCreator(order);
+                                ReportModelCreator creator = new ReportModelCreator(order, mainFacade);
                                 ReportsModel reportsModel = creator.create();
                                 ReportsPanel reportsPanel = new ReportsPanel();
                                 reportsPanel.setEditable(false);

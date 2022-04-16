@@ -346,14 +346,7 @@ public abstract class AOrderWizard<P extends JComponent, O extends AOrder> exten
             reportsModel.setCuttingModel(getView().getCommonCuttersPanel().getCuttingModel());
             reportsModel.setOrder(order);
             reportsStep.getReportsPanel().setReportsModel(reportsModel);
-            Runnable runnable = new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    reportsStep.getReportsPanel().create();
-                }
-            };
+            Runnable runnable = () -> reportsStep.getReportsPanel().create();
 
             SwingUtilities.invokeLater(runnable);
         }

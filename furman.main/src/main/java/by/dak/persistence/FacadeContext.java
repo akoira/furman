@@ -62,6 +62,9 @@ public class FacadeContext
         return applicationContext;
     }
 
+    public static MainFacade getMainFacade() {
+        return applicationContext.getBean(MainFacade.class);
+    }
     public static ITemplateFacadeFacade getTemplateFacadeFacade()
     {
         return applicationContext.getBean(ITemplateFacadeFacade.class);

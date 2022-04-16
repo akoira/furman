@@ -4,8 +4,11 @@
  */
 package by.dak.report.model.impl;
 
+import by.dak.common.swing.ExceptionHandler;
+import by.dak.cutting.cut.facade.StripsFacade;
 import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.plastic.jasper.data.DSPPlasticCuttedReportDataCreator;
 import by.dak.report.ReportType;
@@ -15,6 +18,7 @@ import by.dak.report.jasper.ReportGeneratorImpl;
 import by.dak.report.jasper.common.data.CommonDataCreator;
 import by.dak.report.jasper.common.data.CommonReportData;
 import by.dak.report.jasper.cutting.data.CuttedReportDataCreator;
+import by.dak.repository.IReportFacade;
 import by.dak.utils.CollectionUtils;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -37,6 +41,10 @@ public class ReportModelCreator {
 	private static final Logger LOGGER = Logger.getLogger(ReportModelCreator.class);
 	private ExecutorService service = Executors.newCachedThreadPool();
 
+	private final IReportFacade<AOrder, JasperPrint> reportFacade;
+	private final StripsFacade stripsFacade;
+	private final ExceptionHandler exceptionHandler;
+
 	private boolean createReports = true;
 
 	private AOrder order;
@@ -44,14 +52,20 @@ public class ReportModelCreator {
 	private CuttingModel cuttingModel;
 	private CommonReportData commonReportData;
 
-	public ReportModelCreator(AOrder order) {
+	public ReportModelCreator(AOrder order, MainFacade mainFacade) {
 		this.order = order;
 		this.createReports = false;
+		this.reportFacade = mainFacade.getReportFacade();
+		this.stripsFacade = mainFacade.getStripsFacade();
+		this.exceptionHandler = mainFacade.getExceptionHandler();
 	}
 
-	public ReportModelCreator(AOrder order, CuttingModel cuttingModel) {
+	public ReportModelCreator(AOrder order, CuttingModel cuttingModel, MainFacade mainFacade) {
 		this.order = order;
 		this.cuttingModel = cuttingModel;
+		this.reportFacade = mainFacade.getReportFacade();
+		this.stripsFacade = mainFacade.getStripsFacade();
+		this.exceptionHandler = mainFacade.getExceptionHandler();
 	}
 
 	public ReportsModelImpl create() {
@@ -86,7 +100,7 @@ public class ReportModelCreator {
 						//нужно загружать сдесь так как если открывать из архива ордеров всегда загружается
 						synchronized (reportsModel) {
 							if (reportsModel.getCuttingModel() == null || !reportsModel.getCuttingModel().isStripsLoaded()) {
-								reportsModel.setCuttingModel(FacadeContext.getStripsFacade().loadCuttingModel(order).load());
+								reportsModel.setCuttingModel(stripsFacade.loadCuttingModel(order).load());
 								ReportModelCreator.this.cuttingModel = reportsModel.getCuttingModel();
 							}
 						}
@@ -95,7 +109,7 @@ public class ReportModelCreator {
 							reportsModel.setReportData(reportType, DefaultReportCreatorFactory.getInstance().createReportDataCreator(reportObject, reportType).create());
 
 							reportsModel.setJasperPrint(reportType, getReportBy(reportType, reportsModel.getReportData(reportType)));
-							FacadeContext.<AOrder, JasperPrint>getReportJCRFacade().saveReport(order, reportType, reportsModel.getJasperPrint(reportType));
+							ReportModelCreator.this.reportFacade.saveReport(order, reportType, reportsModel.getJasperPrint(reportType));
 						}
 					} else {
 						synchronized (reportsModel) {
@@ -104,7 +118,7 @@ public class ReportModelCreator {
 					}
 					return report;
 				} catch (Throwable e) {
-					FacadeContext.getExceptionHandler().handle(e);
+					ReportModelCreator.this.exceptionHandler.handle(e);
 					LOGGER.error(e);
 				}
 				return null;

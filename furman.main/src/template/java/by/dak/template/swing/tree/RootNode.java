@@ -4,6 +4,7 @@ import by.dak.category.Category;
 import by.dak.cutting.DialogShowers;
 import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.report.model.impl.ReportModelCreator;
 import by.dak.report.model.impl.ReportsModelImpl;
 import by.dak.template.TemplateOrder;
@@ -25,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class RootNode extends ACategoryNode
 {
     private static final String[] ACTIONS = new String[]{"create", "recalculate", "print", "deleteAll"};
+    private final MainFacade mainFacade = FacadeContext.getMainFacade();
 
     @Override
     public void init()
@@ -126,7 +128,7 @@ public class RootNode extends ACategoryNode
                         public ReportsModelImpl call() throws Exception
                         {
                             CuttingModel cuttingModel = FacadeContext.getStripsFacade().loadCuttingModel(templateOrder).load();
-                            ReportModelCreator reportModelCreator = new ReportModelCreator(cuttingModel.getOrder(), cuttingModel);
+                            ReportModelCreator reportModelCreator = new ReportModelCreator(cuttingModel.getOrder(), cuttingModel, mainFacade);
                             return reportModelCreator.create();
                         }
                     };

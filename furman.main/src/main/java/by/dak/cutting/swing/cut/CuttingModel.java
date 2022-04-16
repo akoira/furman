@@ -138,4 +138,8 @@ public class CuttingModel extends AbstractBean
         return stripsMap;
     }
 
+    public CuttingModel replace(AOrder order) {
+        this.order = order;
+        return this;
+    }
 }

@@ -217,14 +217,14 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     }
 
     private void fillOrderFurnitureServicesData(CommonReportDataImpl reportData) {
-        CommonDatas<CommonData> patch = new CommonDatas<CommonData>(CommonDataType.patch, order);
-        CommonDatas<CommonData> groove = new CommonDatas<CommonData>(CommonDataType.groove, order);
-        CommonDatas<CommonData> angle = new CommonDatas<CommonData>(CommonDataType.angle, order);
-        CommonDatas<CommonData> directGlueing = new CommonDatas<CommonData>(CommonDataType.directGlueing, order);
-        CommonDatas<CommonData> curveGlueing = new CommonDatas<CommonData>(CommonDataType.curveGlueing, order);
-        CommonDatas<CommonData> milling = new CommonDatas<CommonData>(CommonDataType.milling, order);
-        CommonDatas<CommonData> cutoff = new CommonDatas<CommonData>(CommonDataType.cutoff, order);
-        CommonDatas<CommonData> drilling = new CommonDatas<CommonData>(CommonDataType.drilling, order);
+        CommonDatas<CommonData> patch = new CommonDatas<>(CommonDataType.patch, order);
+        CommonDatas<CommonData> groove = new CommonDatas<>(CommonDataType.groove, order);
+        CommonDatas<CommonData> angle = new CommonDatas<>(CommonDataType.angle, order);
+        CommonDatas<CommonData> directGlueing = new CommonDatas<>(CommonDataType.directGlueing, order);
+        CommonDatas<CommonData> curveGlueing = new CommonDatas<>(CommonDataType.curveGlueing, order);
+        CommonDatas<CommonData> milling = new CommonDatas<>(CommonDataType.milling, order);
+        CommonDatas<CommonData> cutoff = new CommonDatas<>(CommonDataType.cutoff, order);
+        CommonDatas<CommonData> drilling = new CommonDatas<>(CommonDataType.drilling, order);
 
         List<OrderFurniture> orderFurnitures = FacadeContext.getOrderFurnitureFacade().loadAllBy(order);
         for (OrderFurniture furniture : orderFurnitures) {

@@ -29,7 +29,7 @@ public class AdditionalsConverter implements Converter<List<Additional>, CommonD
 
     public CommonDatas<CommonData> convert(List<Additional> additionals)
     {
-        CommonDatas<CommonData> commonDatas = new CommonDatas<CommonData>(CommonDataType.additional, order);
+        CommonDatas<CommonData> commonDatas = new CommonDatas<>(CommonDataType.additional, order);
         for (Additional additional : additionals)
         {
             CommonData commonData = new CommonData();

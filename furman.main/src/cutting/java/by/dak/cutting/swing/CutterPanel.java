@@ -614,21 +614,9 @@ public class CutterPanel extends DPanel
             sawyer.setForceMinimumRatio(0.2f);
             sawyer.setForceMigrationRatio(0.5f);
 
-            sawyer.setNewSolutionListener(new Sawyer.INewSolutionListener()
-            {
-
-                public void newSolutionFound(final Strips strips)
-                {
-                    Runnable runnable = new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            getCuttingModel().putStrips(getTextureBoardDefPair(), strips);
-                        }
-                    };
-                    SwingUtilities.invokeLater(runnable);
-                }
+            sawyer.setNewSolutionListener(strips -> {
+                Runnable runnable = () -> getCuttingModel().putStrips(getTextureBoardDefPair(), strips);
+                SwingUtilities.invokeLater(runnable);
             });
 
             sawyer.setCutSettings(getCuttingModel().getCutSettings(getTextureBoardDefPair()));

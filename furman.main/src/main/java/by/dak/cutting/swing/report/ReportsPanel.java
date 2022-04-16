@@ -14,6 +14,8 @@ import by.dak.cutting.DialogShowers;
 import by.dak.cutting.swing.DPanel;
 import by.dak.cutting.swing.renderer.EntityListRenderer;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
+import by.dak.persistence.entities.AOrder;
 import by.dak.report.model.Report;
 import by.dak.report.model.ReportsModel;
 import by.dak.report.model.impl.ReportModelCreator;
@@ -39,6 +41,7 @@ import java.util.logging.Logger;
  */
 public class ReportsPanel extends DPanel
 {
+    private final MainFacade mainFacade;
     /**
      * Creates new form ReportsPanel
      */
@@ -46,6 +49,7 @@ public class ReportsPanel extends DPanel
     {
         initComponents();
         init();
+        mainFacade = FacadeContext.getMainFacade();
     }
 
     /**
@@ -193,6 +197,10 @@ public class ReportsPanel extends DPanel
         if (reportsModel != null)
         {
             FacadeContext.getReportJCRFacade().removeAll(reportsModel.getOrder());
+            AOrder order = FacadeContext.getOrderFacade().findBy(reportsModel.getOrder().getId());
+            ((ReportsModelImpl)reportsModel).setOrder(order);
+            if(reportsModel.getCuttingModel() != null)
+                reportsModel.getCuttingModel().replace(order);
             create();
         }
     }
@@ -208,7 +216,7 @@ public class ReportsPanel extends DPanel
             {
                 try
                 {
-                    ReportModelCreator reportModelCreator = new ReportModelCreator(reportsModel.getOrder(), reportsModel.getCuttingModel());
+                    ReportModelCreator reportModelCreator = new ReportModelCreator(reportsModel.getOrder(), reportsModel.getCuttingModel(), mainFacade);
                     reportsModelImpl[0] = reportModelCreator.create();
                     setReportsModel(reportsModelImpl[0]);
                     return null;

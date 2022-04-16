@@ -8,6 +8,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author admin
@@ -18,6 +20,7 @@ import java.util.Arrays;
 public class SpringConfiguration {
 
     private final boolean liquibaseShouldRun;
+    private String configPath;
     private ClassPathXmlApplicationContext applicationContext;
 
     static {
@@ -25,11 +28,16 @@ public class SpringConfiguration {
     }
 
     public SpringConfiguration() {
-        this(false);
+        this(false, "spring-configuration");
     }
 
     public SpringConfiguration(boolean liquibaseShouldRun) {
+        this(liquibaseShouldRun, "spring-configuration");
+    }
+
+    public SpringConfiguration(boolean liquibaseShouldRun, String configPath) {
         this.liquibaseShouldRun = liquibaseShouldRun;
+        this.configPath = configPath;
         initContext();
     }
 
@@ -39,17 +47,19 @@ public class SpringConfiguration {
     }
 
     public String[] getPaths() {
-        ArrayList<String> result = new ArrayList<String>();
         String[] paths =
                 {
-                        this.liquibaseShouldRun ? "spring-configuration/application.with.liquibase.xml" : "spring-configuration/application.xml"
+                        this.liquibaseShouldRun ? configPath + "/application.with.liquibase.xml" : configPath + "/application.xml"
                 };
-        result.addAll(Arrays.asList(paths));
+        ArrayList<String> result = new ArrayList<>(Arrays.asList(paths));
 
-        by.dak.cutting.agt.spring.SpringConfiguration agt = new by.dak.cutting.agt.spring.SpringConfiguration();
-        result.addAll(Arrays.asList(agt.getPaths()));
-        by.dak.buffer.spring.SpringConfiguration buffer = new by.dak.buffer.spring.SpringConfiguration();
-        result.addAll(Arrays.asList(buffer.getPaths()));
+        if (!this.liquibaseShouldRun) {
+            by.dak.cutting.agt.spring.SpringConfiguration agt = new by.dak.cutting.agt.spring.SpringConfiguration();
+            result.addAll(Arrays.asList(agt.getPaths()));
+            by.dak.buffer.spring.SpringConfiguration buffer = new by.dak.buffer.spring.SpringConfiguration();
+            result.addAll(Arrays.asList(buffer.getPaths()));
+        }
+
         return result.toArray(new String[]{});
     }
 
@@ -60,4 +70,9 @@ public class SpringConfiguration {
     public MainFacade getMainFacade() {
         return applicationContext.getBean(MainFacade.class);
     }
+
+    public static final Supplier<SpringConfiguration> prod = SpringConfiguration::new;
+    public static final Supplier<SpringConfiguration> prod_liquibase = () -> new SpringConfiguration(true);
+    public static final Supplier<SpringConfiguration> home = () -> new SpringConfiguration(false, "spring-configuration/home");
+    public static final Supplier<SpringConfiguration> home_liquibase = () -> new SpringConfiguration(true, "spring-configuration/home");
 }

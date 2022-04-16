@@ -37,7 +37,7 @@ public class CommonDataFacadeImpl extends BaseFacadeImpl<CommonData> implements 
         SearchFilter searchFilter = SearchFilter.instanceUnbound();
         searchFilter.eq(CommonData.PROPERTY_commonDataType, commonDataType);
         searchFilter.eq(CommonData.PROPERTY_order, order);
-        CommonDatas<CommonData> commonDatas = new CommonDatas<CommonData>(commonDataType, order);
+        CommonDatas<CommonData> commonDatas = new CommonDatas<>(commonDataType, order);
         commonDatas.addAll(loadAll(searchFilter));
         return commonDatas;
     }
