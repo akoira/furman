@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CuttingApp --upgrade" type="Application" factoryName="Application">
+    <envs>
+      <env name="DISABLE_MONGO" value="true" />
+      <env name="JAVA_FONTS" value="$PROJECT_DIR$/reports/fonts" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="by.dak.cutting.CuttingApp" />
+    <module name="furman.furman.main.main" />
+    <option name="PROGRAM_PARAMETERS" value="--upgrade" />
+    <option name="VM_PARAMETERS" value="-Dappendedfontpath=$PROJECT_DIR$/reports/fonts -Drepository.baseDir=$USER_HOME$/_tmp" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="by.dak.cutting.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
