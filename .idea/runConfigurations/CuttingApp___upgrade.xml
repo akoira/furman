@@ -3,6 +3,7 @@
     <envs>
       <env name="DISABLE_MONGO" value="true" />
       <env name="JAVA_FONTS" value="$PROJECT_DIR$/reports/fonts" />
+      <env name="FURMAN_PROFILE" value="home" />
     </envs>
     <option name="MAIN_CLASS_NAME" value="by.dak.cutting.CuttingApp" />
     <module name="furman.furman.main.main" />
