@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 /**
  * The main class of the application.
  */
-public class CuttingApp extends SingleFrameApplication {
+public final class CuttingApp extends SingleFrameApplication {
     private ExceptionHandler exceptionHandler = new DefaultExceptionHandler();
 
     public static final String FURMAN_PROFILE  = "FURMAN_PROFILE";
@@ -182,7 +182,7 @@ public class CuttingApp extends SingleFrameApplication {
         }
     }
 
-    private static void loadTTF() {
+    public static void loadTTF() {
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arial.ttf")));

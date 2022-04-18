@@ -19,6 +19,7 @@ import by.dak.cutting.zfacade.ZFacade;
 import by.dak.cutting.zfacade.report.ZFacadeFurnitureDataConverter;
 import by.dak.cutting.zfacade.report.ZFacadeServiceDataConverter;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.persistence.entities.predefined.OrderItemType;
 import by.dak.persistence.entities.predefined.ServiceType;
@@ -53,7 +54,10 @@ import static by.dak.report.jasper.ReportUtils.calcSquare;
  */
 public class CommonDataCreator implements Creator<CommonReportData> {
 
+    private final MainFacade mainFacade;
+
     private final AOrder order;
+    private final Dailysheet dailysheet;
 
     private final CuttingModel cuttingModel;
     private final CuttingModel dspPlasticModel;
@@ -65,9 +69,11 @@ public class CommonDataCreator implements Creator<CommonReportData> {
 
     public CommonDataCreator(CuttingModel cuttingModel) {
         this.cuttingModel = cuttingModel;
-        dspPlasticModel = FacadeContext.getDSPPlasticStripsFacade().loadCuttingModel(cuttingModel.getOrder()).load();
-
+        this.mainFacade = FacadeContext.getMainFacade();
+        this.dspPlasticModel = this.mainFacade.getDspPlasticStripsFacade().loadCuttingModel(cuttingModel.getOrder()).load();
         this.order = cuttingModel.getOrder();
+        Dailysheet dailysheet = this.mainFacade.getDailysheetFacade().loadCurrentDailysheet();
+        this.dailysheet = dailysheet != null ?  dailysheet : this.order.getCreatedDailySheet();
     }
 
     public CommonReportData create() {
@@ -124,8 +130,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     }
 
     private void fillMaterialsData(CommonReportDataImpl reportData) {
-        BoardMaterialsConverter boardMaterialsConverter = new BoardMaterialsConverter();
-        boardMaterialsConverter.setCuttingModel(cuttingModel);
+        BoardMaterialsConverter boardMaterialsConverter = new BoardMaterialsConverter(cuttingModel, mainFacade);
         CommonDatas<CommonData> boardMaterialsData = boardMaterialsConverter.convert(cuttingModel.getPairs());
 
         if (FacadeContext.getDSPPlasticDetailFacade().hasPlasticDetails(order)) {
@@ -383,8 +388,8 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         data = i > -1 ? datas.remove(i) : data;
 
         if (data.getPrice() == null || data.getPrice() <= 0d) {
-            PriceEntity price = FacadeContext.getPriceFacade().getPrice(priceAware, serviceType);
-            ReportUtils.fillPrice(data, price);
+            PriceEntity price = mainFacade.getPriceFacade().getPrice(priceAware, serviceType);
+            ReportUtils.fillPrice(data, price,dailysheet);
         }
 
         data.increase(size);

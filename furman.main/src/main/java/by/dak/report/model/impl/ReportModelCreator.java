@@ -36,7 +36,9 @@ import java.util.concurrent.Future;
 
 /**
  * @author admin
+ * @see by.dak.cutting.ReportsCalculate
  */
+@Deprecated
 public class ReportModelCreator {
 	private static final Logger LOGGER = Logger.getLogger(ReportModelCreator.class);
 	private ExecutorService service = Executors.newCachedThreadPool();

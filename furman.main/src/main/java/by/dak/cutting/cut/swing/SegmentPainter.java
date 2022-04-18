@@ -2,10 +2,13 @@ package by.dak.cutting.cut.swing;
 
 import by.dak.cutting.cut.graphics.Draw;
 import by.dak.cutting.cut.guillotine.Segment;
+import by.dak.cutting.cut.swing.board.BoardFreeAreaTitlePainter;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
 
 import java.awt.*;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * @author akoyro
@@ -19,7 +22,7 @@ public class SegmentPainter extends AbstractPainter
 
     private FreeAreaTitlePainter freeAreaTitlePainter;
 
-    private ResourceMap resourceMap = Application.getInstance().getContext().getResourceMap(this.getClass());
+    private final Properties properties = by.dak.cutting.configuration.Constants.properties(this.getClass());
 
     private int borderSheetWidth = 2;
 

@@ -39,7 +39,6 @@ import static by.dak.cutting.configuration.Constants.MIN_USING_AREA;
  */
 public class ReportUtils
 {
-    private static Dailysheet DAILYSHEET = null;
     public static final String EMPTY_STRING = Converter.EMPTY_STRING;
     public final static String PATTERN_FURNITURE_STRING = "{0}:{1}x{2}";
     private final static String GLUEING_VALUE_PATTERN = "{0} {1}";
@@ -187,22 +186,18 @@ public class ReportUtils
      * @param currencyTypeName
      * @return
      */
-    public static double getPriceBy(Double price, String currencyTypeName)
+    public static double getPriceBy(Double price, String currencyTypeName, Dailysheet dailysheet)
     {
 
-        return getPriceBy(price, CurrencyType.valueOf(currencyTypeName));
+        return getPriceBy(price, CurrencyType.valueOf(currencyTypeName), dailysheet);
     }
 
-    public static double getPriceBy(Double price, CurrencyType currencyType)
+    public static double getPriceBy(Double price, CurrencyType currencyType, Dailysheet dailysheet)
     {
-        if (DAILYSHEET == null)
-        {
-            DAILYSHEET = FacadeContext.getDailysheetFacade().loadCurrentDailysheet();
-        }
         if (price != null)
         {
-            Currency selected = FacadeContext.getCurrencyFacade().getSelected(DAILYSHEET);
-            Currency current = FacadeContext.getCurrencyFacade().findCurrentBy(currencyType, DAILYSHEET, false);
+            Currency selected = FacadeContext.getCurrencyFacade().getSelected(dailysheet);
+            Currency current = FacadeContext.getCurrencyFacade().findCurrentBy(currencyType, dailysheet, false);
             return price * current.getPrice() * selected.getPrice();
         }
         else
@@ -211,12 +206,12 @@ public class ReportUtils
         }
     }
 
-    public static double getPriceBy(PriceEntity price, boolean isPriceDealer)
+    public static double getPriceBy(PriceEntity price, boolean isPriceDealer, Dailysheet dailysheet)
     {
 		if (price == null)
 			return 0.0;
 		else
-			return getPriceBy(isPriceDealer ? price.getPriceDealer() : price.getPrice(), price.getCurrencyType());
+			return getPriceBy(isPriceDealer ? price.getPriceDealer() : price.getPrice(), price.getCurrencyType(), dailysheet);
 	}
 
     //берем все boards котрые прикремлены к заказу и считаем их колличество
@@ -253,10 +248,10 @@ public class ReportUtils
         return value;
     }
 
-    public static void fillPrice(CommonData commonData, PriceEntity price)
+    public static void fillPrice(CommonData commonData, PriceEntity price, Dailysheet dailysheet)
     {
-        commonData.setDialerPrice(getPriceBy(price, true));
-        commonData.setPrice(getPriceBy(price, false));
+        commonData.setDialerPrice(getPriceBy(price, true, dailysheet));
+        commonData.setPrice(getPriceBy(price, false, dailysheet));
     }
 
 

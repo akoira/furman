@@ -4,8 +4,10 @@ import by.dak.cutting.cut.guillotine.Strips;
 import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.cutting.swing.order.data.TextureBoardDefPair;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrderBoardDetail;
 import by.dak.persistence.entities.BoardDef;
+import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.PriceEntity;
 import by.dak.persistence.entities.predefined.ServiceType;
 import by.dak.report.jasper.GetSawLength;
@@ -33,11 +35,17 @@ public abstract class ADirectSawCutConverter<D extends AOrderBoardDetail> implem
     private final static String CUTTING_DATA = ResourceBundle.getBundle("by/dak/report/jasper/common/commonReport").getString("cutting.data");
 
 
+
     private CommonDatas<CommonData> datas;
 
     private CuttingModel cuttingModel;
 
+    public final MainFacade mainFacade;
+    public final Dailysheet dailysheet;
     protected ADirectSawCutConverter(CuttingModel cuttingModel) {
+        this.mainFacade = FacadeContext.getMainFacade();
+        this.dailysheet = MainFacade.dailysheet.apply(this.mainFacade).apply(cuttingModel.getOrder());
+
         this.cuttingModel = cuttingModel;
         datas = new CommonDatas<CommonData>(CommonDataType.cutting, cuttingModel.getOrder());
     }
@@ -60,8 +68,8 @@ public abstract class ADirectSawCutConverter<D extends AOrderBoardDetail> implem
         data = i > -1 ? datas.remove(i) : data;
         data.increase(length);
         if (data.isEmptyPrice()) {
-            PriceEntity price = FacadeContext.getPriceFacade().getPrice(boardDef, ServiceType.cutting);
-            ReportUtils.fillPrice(data, price);
+            PriceEntity price = mainFacade.getPriceFacade().getPrice(boardDef, ServiceType.cutting);
+            ReportUtils.fillPrice(data, price, this.dailysheet);
         }
         datas.add(data);
     }
