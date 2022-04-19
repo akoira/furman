@@ -3,12 +3,14 @@ package by.dak.report.jasper.common.data.converter;
 import by.dak.cutting.swing.order.data.Milling;
 import by.dak.cutting.swing.xml.XstreamHelper;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.persistence.entities.predefined.Side;
 import by.dak.report.jasper.ReportUtils;
 import by.dak.report.jasper.common.data.*;
 import by.dak.utils.convert.Converter;
 import by.dak.utils.convert.ListConverter;
+import jdk.jfr.internal.tool.Main;
 
 import java.util.*;
 
@@ -21,15 +23,16 @@ import java.util.*;
  */
 public class BorderMaterialsConverter implements Converter<List<OrderFurniture>, CommonDatas<CommonData>>
 {
-
+    private MainFacade mainFacade;
     private SortedMap<String, CommonDatas<CommonData>> borderMaterials = new TreeMap<String, CommonDatas<CommonData>>(new StringComparator());
 
     private String MATERIAL_DATA = ResourceBundle.getBundle("by/dak/report/jasper/common/commonReport").getString("material.data");
     private AOrder order;
 
-    public BorderMaterialsConverter(AOrder order)
+    public BorderMaterialsConverter(AOrder order, MainFacade mainFacade)
     {
         this.order = order;
+        this.mainFacade = mainFacade;
     }
 
     @Override
@@ -103,8 +106,8 @@ public class BorderMaterialsConverter implements Converter<List<OrderFurniture>,
 
             if (data.isEmptyPrice())
             {
-                PriceEntity price = FacadeContext.getPriceFacade().findUniqueBy(borderDef, texture);
-                ReportUtils.fillPrice(data, price);
+                PriceEntity price = mainFacade.getPriceFacade().findUniqueBy(borderDef, texture);
+                ReportUtils.fillPrice(data, price, MainFacade.dailysheet.apply(mainFacade).apply(order));
             }
             datas.add(data);
             borderMaterials.put(borderDef.getName(), datas);

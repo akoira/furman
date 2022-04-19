@@ -6,7 +6,6 @@ import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.Order;
 import by.dak.plastic.jasper.data.DSPPlasticCuttedReportDataCreator;
 import by.dak.report.ReportType;
-import by.dak.report.jasper.DefaultReportCreatorFactory;
 import by.dak.report.jasper.JReportData;
 import by.dak.report.jasper.ReportGeneratorImpl;
 import by.dak.report.jasper.common.data.CommonDataCreator;
@@ -15,7 +14,6 @@ import by.dak.report.jasper.cutting.data.CuttedReportDataCreator;
 import by.dak.report.model.impl.ReportsModelImpl;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import net.sf.jasperreports.engine.JRException;
@@ -25,7 +23,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -106,10 +103,10 @@ public class ReportsCalculate {
             }
         };
 
-        Function<ReportType, Function<Object, JReportData>> report_data = type -> object ->
-        DefaultReportCreatorFactory.getInstance().createReportDataCreator(object, type).create();
+        Function<MainFacade, Function<ReportType, Function<Object, JReportData>>> report_data = mf -> type -> object ->
+                mf.reportCreatorFactory.createReportDataCreator(object, type).create();
 
-        Function<Context, Context> delete = c ->  {
+        Function<Context, Context> delete = c -> {
             c.mainFacade.getCommonDataFacade().deleteAll(c.order);
             c.mainFacade.getReportFacade().removeAll(c.order);
             return c;
@@ -122,9 +119,9 @@ public class ReportsCalculate {
 
         Function<Context, Single<Map<ReportType, JReportData>>> report_datas = c -> Observable.fromIterable(c.reportsModel.getReportTypes())
                 .reduce(new HashMap<ReportType, JReportData>(), (map, t) -> {
-            map.put(t, func.report_data.apply(t).apply(c.reportObjects.get(t)));
-            return map;
-        });
+                    map.put(t, func.report_data.apply(c.mainFacade).apply(t).apply(c.reportObjects.get(t)));
+                    return map;
+                });
 
         Function<Context, Single<Map<ReportType, JasperPrint>>> jasper_prints = c -> Observable.fromIterable(c.reportsModel.getReportTypes())
                 .reduce(new HashMap<ReportType, JasperPrint>(), (map, t) -> {
@@ -160,7 +157,7 @@ public class ReportsCalculate {
 
         public final Map<ReportType, JReportData> reportData;
 
-        public final Map<ReportType, JasperPrint>  jasperPrints;
+        public final Map<ReportType, JasperPrint> jasperPrints;
 
         private Context(Long orderId, MainFacade mainFacade, Order order,
                         CuttingModel cuttingModel, ReportsModelImpl reportsModel,
@@ -228,7 +225,7 @@ public class ReportsCalculate {
 
     public static void main(String[] args) throws IOException {
         CuttingApp.loadTTF();
-        Observable<ReportsModelImpl> observable = just(Context.context(  Long.parseLong(args[0])))
+        Observable<ReportsModelImpl> observable = just(Context.context(Long.parseLong(args[0])))
                 .observeOn(Schedulers.io())
                 .map(c -> c.mainFacade(func.main_facade.blockingFirst()))
                 .map(c -> c.order(c.mainFacade.getOrderFacade().findBy(c.orderId)))

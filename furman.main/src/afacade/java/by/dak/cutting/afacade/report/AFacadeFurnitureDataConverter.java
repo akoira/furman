@@ -3,7 +3,9 @@ package by.dak.cutting.afacade.report;
 import by.dak.cutting.SearchFilter;
 import by.dak.cutting.afacade.AFacade;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
+import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.FurnitureLink;
 import by.dak.persistence.entities.PriceEntity;
 import by.dak.persistence.entities.predefined.Unit;
@@ -26,15 +28,19 @@ import java.util.List;
  */
 public abstract class AFacadeFurnitureDataConverter<F extends AFacade> implements Converter<List<F>, CommonDatas<CommonData>>
 {
+    private final MainFacade mainFacade;
+    private final Dailysheet dailysheet;
     private Class<F> elementClass = GenericUtils.getParameterClass(getClass(), 0);
 
     private CommonDataType commonDataType;
     private AOrder order;
 
-    public AFacadeFurnitureDataConverter(CommonDataType commonDataType, AOrder order)
+    public AFacadeFurnitureDataConverter(CommonDataType commonDataType, AOrder order, MainFacade mainFacade)
     {
         this.commonDataType = commonDataType;
         this.order = order;
+        this.mainFacade = mainFacade;
+        this.dailysheet = MainFacade.dailysheet.apply(mainFacade).apply(order);
     }
 
     @Override
@@ -63,7 +69,7 @@ public abstract class AFacadeFurnitureDataConverter<F extends AFacade> implement
     private void fillPriceBy(F facade, CommonData commonData)
     {
         List<FurnitureLink> links = FacadeContext.getFurnitureLinkFacade().loadAllBy(facade);
-        FurnitureConverter converter = new FurnitureConverter(false, commonDataType, order);
+        FurnitureConverter converter = new FurnitureConverter(false, commonDataType, order, mainFacade);
         commonData.setPrice(converter.convert(links).getCommonCost());
         commonData.setDialerPrice(converter.convert(links).getDialerCommonCost());
     }

@@ -117,13 +117,14 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         for (ZFacade facade : zFacades) {
             furnitureLinks.addAll(FacadeContext.getFurnitureLinkFacade().loadAllBy(facade));
         }
-        CommonDatas<CommonData> furnitureData = new FurnitureConverter(CommonDataType.facadeFurniture, order).convert(furnitureLinks);
+        CommonDatas<CommonData> furnitureData = new FurnitureConverter(CommonDataType.facadeFurniture, order, mainFacade)
+                .convert(furnitureLinks);
         reportData.setCommonDatas(furnitureData);
     }
 
     private void fillFacadeDialerData(CommonReportDataImpl reportData, List<ZFacade> zFacades, List<AGTFacade> agtFacades) {
-        CommonDatas<CommonData> zfacadeDatas = new ZFacadeFurnitureDataConverter(order).convert(zFacades);
-        CommonDatas<CommonData> agtDatas = new AGTFurnitureDataConverter(order).convert(agtFacades);
+        CommonDatas<CommonData> zfacadeDatas = new ZFacadeFurnitureDataConverter(order, mainFacade).convert(zFacades);
+        CommonDatas<CommonData> agtDatas = new AGTFurnitureDataConverter(order, mainFacade).convert(agtFacades);
 
         reportData.setCommonDatas(zfacadeDatas);
         reportData.setCommonDatas(agtDatas);
@@ -145,7 +146,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         }
         reportData.setCommonDatas(boardMaterialsData);
 
-        CommonDatas<CommonData> borderMaterialsData = new BorderMaterialsConverter(order).convert(FacadeContext.getOrderFurnitureFacade().findOrderedWithGlueing(order, Boolean.TRUE));
+        CommonDatas<CommonData> borderMaterialsData = new BorderMaterialsConverter(order, mainFacade).convert(FacadeContext.getOrderFurnitureFacade().findOrderedWithGlueing(order, Boolean.TRUE));
         reportData.setCommonDatas(borderMaterialsData);
 
 
@@ -159,7 +160,8 @@ public class CommonDataCreator implements Creator<CommonReportData> {
             }
         }
 
-        CommonDatas<CommonData> furnitureData = new FurnitureConverter(CommonDataType.furniture, order).convert(furnitureLinks);
+        CommonDatas<CommonData> furnitureData = new FurnitureConverter(CommonDataType.furniture, order, mainFacade)
+                .convert(furnitureLinks);
         CommonDatas<CommonData> additionalsData = new AdditionalsConverter(order).convert(additionals);
 
         reportData.setCommonDatas(furnitureData);
@@ -169,9 +171,9 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     private void fillFacadeServicesData(CommonReportDataImpl reportData, List<ZFacade> zFacades,
                                         List<AGTFacade> agtFacades,
                                         List<TemplateFacade> templateFacades) {
-        CommonDatas<CommonData> zServiceDatas = new ZFacadeServiceDataConverter(order).convert(zFacades);
-        CommonDatas<CommonData> agtServiceDatas = new AGTServiceDataConverter(order).convert(agtFacades);
-        CommonDatas<CommonData> templateServiceDatas = new TemplateFacadeServiceDataConverter(order).convert(templateFacades);
+        CommonDatas<CommonData> zServiceDatas = new ZFacadeServiceDataConverter(order, mainFacade).convert(zFacades);
+        CommonDatas<CommonData> agtServiceDatas = new AGTServiceDataConverter(order, mainFacade).convert(agtFacades);
+        CommonDatas<CommonData> templateServiceDatas = new TemplateFacadeServiceDataConverter(order, mainFacade).convert(templateFacades);
 
         setAndSave(reportData, zServiceDatas);
         setAndSave(reportData, agtServiceDatas);

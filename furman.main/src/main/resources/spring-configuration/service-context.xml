@@ -4,6 +4,8 @@
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
         default-autowire="byName">
 
+    <bean id="mainFacade" class="by.dak.persistence.MainFacade"/>
+
     <bean id="dailysheetFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="proxyInterfaces" value="by.dak.cutting.facade.DailysheetFacade"/>
         <property name="target">
@@ -139,6 +141,7 @@
         <property name="proxyInterfaces" value="by.dak.cutting.facade.BorderFacade"/>
         <property name="target">
             <bean class="by.dak.cutting.facade.impl.BorderFacadeImpl">
+                <constructor-arg ref="mainFacade"/>
                 <property name="dao" ref="borderDao"/>
                 <property name="curveGluingAdditionalLength" value="150"/>
             </bean>
@@ -529,6 +532,4 @@
     </bean>
 
     <bean id="exceptionHandler" class="by.dak.cutting.DefaultExceptionHandler"/>
-
-    <bean id="mainFacade" class="by.dak.persistence.MainFacade"/>
 </beans>

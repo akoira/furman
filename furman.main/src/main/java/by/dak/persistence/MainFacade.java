@@ -31,9 +31,9 @@ import by.dak.ordergroup.facade.OrderGroupFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.Employee;
-import by.dak.persistence.entities.Order;
 import by.dak.plastic.facade.DSPPlasticDetailFacade;
 import by.dak.plastic.strips.facade.DSPPlasticStripsFacade;
+import by.dak.report.jasper.DefaultReportCreatorFactory;
 import by.dak.report.jasper.common.facade.CommonDataFacade;
 import by.dak.repository.IReportFacade;
 import by.dak.repository.IRepositoryService;
@@ -134,6 +134,13 @@ public class MainFacade implements ApplicationContextAware
     private TempOrderDetailFacade tempOrderDetailFacade;
     private MaterialTypeNodeFactory materialTypeNodeFactory;
     private MaterialTypePanelFactory materialTypePanelFactory;
+
+
+    public final DefaultReportCreatorFactory reportCreatorFactory;
+
+    public MainFacade() {
+        this.reportCreatorFactory = new DefaultReportCreatorFactory(this);
+    }
 
     public static String getDataSourceName()
     {

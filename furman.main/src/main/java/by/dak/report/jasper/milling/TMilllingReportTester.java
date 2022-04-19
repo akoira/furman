@@ -2,6 +2,7 @@ package by.dak.report.jasper.milling;
 
 import by.dak.cutting.SpringConfiguration;
 import by.dak.persistence.FinderException;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.Customer;
 import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.DesignerEntity;
@@ -27,7 +28,8 @@ public class TMilllingReportTester extends TAbstractReportTester
 
     public static void main(String[] args)
     {
-        new SpringConfiguration();
+        SpringConfiguration springConfiguration = new SpringConfiguration();
+        MainFacade mainFacade = springConfiguration.getMainFacade();
         new TMilllingReportTester();
         try
         {
@@ -39,7 +41,7 @@ public class TMilllingReportTester extends TAbstractReportTester
             else
             {
                 compile(TMilllingReportTester.class.getResource("MillingReport.jrxml").getFile(), null);
-                process(createReportData());
+                process(createReportData(springConfiguration.getMainFacade()));
             }
         }
         catch (Exception e)
@@ -48,7 +50,7 @@ public class TMilllingReportTester extends TAbstractReportTester
         }
     }
 
-    private static JReportData createReportData() throws FinderException
+    public static JReportData createReportData(MainFacade mainFacade) throws FinderException
     {
         Order order = new Order();
         order.setOrderNumber(((long) (Math.random() * 1000)));
@@ -63,6 +65,6 @@ public class TMilllingReportTester extends TAbstractReportTester
 //        OrderItem orderItem = new OrderItem("Test item");
 //        orderItem.setFurnitureItems(createFurnitures());
 //        order.addOrderItem(orderItem);
-        return DefaultReportCreatorFactory.getInstance().createReportDataCreator(order, REPORT_TYPE).create();
+        return mainFacade.reportCreatorFactory.createReportDataCreator(order, REPORT_TYPE).create();
     }
 }

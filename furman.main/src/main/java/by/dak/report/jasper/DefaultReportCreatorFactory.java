@@ -2,6 +2,7 @@ package by.dak.report.jasper;
 
 import by.dak.cutting.agt.report.AGTFacadeReportDataCreator;
 import by.dak.cutting.zfacade.report.ZFacadeReportDataCreator;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.report.ReportType;
 import by.dak.report.jasper.common.CommonReportDataCreator;
@@ -21,24 +22,17 @@ import by.dak.report.jasper.store.StoreReportDataCreator;
  * @introduced [Furniture constructor | Iteration 1]
  * @since 1.0.0
  */
-public class DefaultReportCreatorFactory<O> implements ReportCreatorFactory<O>
+public final class DefaultReportCreatorFactory implements ReportCreatorFactory
 {
     private static DefaultReportCreatorFactory factoryInstance;
+    private final MainFacade mainFacade;
 
-    public synchronized static <P> DefaultReportCreatorFactory<P> getInstance()
+    public DefaultReportCreatorFactory(MainFacade mainFacade)
     {
-        if (factoryInstance == null)
-        {
-            factoryInstance = new DefaultReportCreatorFactory<P>();
-        }
-        return factoryInstance;
+        this.mainFacade = mainFacade;
     }
 
-    private DefaultReportCreatorFactory()
-    {
-    }
-
-    public ReportDataCreator createReportDataCreator(O reportObject, ReportType reportType)
+    public ReportDataCreator createReportDataCreator(Object reportObject, ReportType reportType)
     {
         switch (reportType)
         {
@@ -51,19 +45,19 @@ public class DefaultReportCreatorFactory<O> implements ReportCreatorFactory<O>
             case production_common:
                 return new CommonReportDataCreator((CommonReportData) reportObject);
             case cutting:
+            case cutting_dsp_plastic:
                 return new CuttingReportDataCreator((CuttedReportData) reportObject);
             case cutoff:
                 return new CutoffReportDataCreator((AOrder) reportObject);
             case milling:
                 return new MillingReportDataCreator((AOrder) reportObject);
             case store:
-                return reportObject instanceof AOrder ? new StoreReportDataCreator((AOrder) reportObject) : new StoreReportDataCreator((CommonReportData) reportObject);
+                return reportObject instanceof AOrder ? new StoreReportDataCreator((AOrder) reportObject, mainFacade) :
+                        new StoreReportDataCreator((CommonReportData) reportObject, mainFacade);
             case zfacade:
                 return new ZFacadeReportDataCreator((AOrder) reportObject);
             case agtfacade:
                 return new AGTFacadeReportDataCreator((AOrder) reportObject);
-            case cutting_dsp_plastic:
-                return new CuttingReportDataCreator((CuttedReportData) reportObject);
             default:
                 assert false : "Unknown report type is specified!";
                 return ReportDataCreator.UNKNOWN;

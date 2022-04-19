@@ -6,6 +6,7 @@ import by.dak.cutting.swing.order.data.Glueing;
 import by.dak.cutting.swing.report.ReportsPanel;
 import by.dak.cutting.swing.xml.XstreamHelper;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.report.ReportType;
 import by.dak.report.jasper.DefaultReportCreatorFactory;
@@ -27,12 +28,14 @@ import java.sql.Date;
 public class TestReportsPanel
 {
     private SpringConfiguration springConfiguration = new SpringConfiguration();
+    private  MainFacade mainFacade = springConfiguration.getMainFacade();
     private ReportsPanel reportTab = new ReportsPanel();
 
     public static void main(String[] args) throws JRException
     {
 
         final TestReportsPanel testReportsPanel = new TestReportsPanel();
+
         Dailysheet dailysheet = new Dailysheet();
         dailysheet.setDate(new Date(System.currentTimeMillis()));
 
@@ -124,7 +127,7 @@ public class TestReportsPanel
         orderItem.addDetail(orderFurniture);
 
 
-        final JasperPrint print = ReportGeneratorImpl.getInstance().generate(DefaultReportCreatorFactory.getInstance().createReportDataCreator(order, ReportType.glueing).create());
+        final JasperPrint print = ReportGeneratorImpl.getInstance().generate(testReportsPanel.mainFacade.reportCreatorFactory.createReportDataCreator(order, ReportType.glueing).create());
         FrameView frameView = new FrameView(CuttingApp.getApplication());
         frameView.setComponent(testReportsPanel.reportTab);
         CuttingApp.getApplication().show(frameView);

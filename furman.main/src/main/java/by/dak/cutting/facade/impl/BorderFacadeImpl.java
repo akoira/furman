@@ -4,6 +4,7 @@ import by.dak.cutting.SearchFilter;
 import by.dak.cutting.configuration.Constants;
 import by.dak.cutting.facade.BorderFacade;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.persistence.entities.predefined.StoreElementStatus;
 import by.dak.report.jasper.common.data.BorderCommonData;
@@ -20,12 +21,16 @@ import java.util.List;
  */
 public class BorderFacadeImpl extends AStoreElementFacadeImpl<Border> implements BorderFacade
 {
+    private final MainFacade mainFacade;
     private double curveGluingAdditionalLength = 150; //150 mm
 
+    public BorderFacadeImpl(MainFacade mainFacade) {
+        this.mainFacade = mainFacade;
+    }
     @Override
     public void attachTo(Order order)
     {
-        BorderMaterialsConverter converter = new BorderMaterialsConverter(order);
+        BorderMaterialsConverter converter = new BorderMaterialsConverter(order, mainFacade);
         List<OrderFurniture> entities = FacadeContext.getOrderFurnitureFacade().findOrderedWithGlueing(order, Boolean.TRUE);
         CommonDatas<CommonData> datas = converter.convert(entities);
         for (CommonData commonData : datas)

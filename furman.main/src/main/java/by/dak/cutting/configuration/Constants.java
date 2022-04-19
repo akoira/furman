@@ -4,7 +4,9 @@ import by.dak.cutting.CuttingApp;
 
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * Класс содержит конфигурационные константы для данного проекта.
@@ -14,6 +16,9 @@ import java.util.Properties;
  * Time: 20:54:16
  */
 public interface Constants {
+    static ResourceBundle resourceBundle(Class aClass) {
+        return ResourceBundle.getBundle(aClass.getPackage().getName() + ".resources." + aClass.getSimpleName());
+    }
     static Properties properties(Class aClass) {
         Properties properties = new Properties();
         try {
@@ -27,11 +32,16 @@ public interface Constants {
         return properties(CuttingApp.class);
     }
 
+    static ResourceBundle resourceBundle() {
+        return resourceBundle(CuttingApp.class);
+    }
+
     Properties properties = properties();
+    ResourceBundle resourceBundle = resourceBundle();
     /**
      * На сколько должен быть увеличин размер составных частей комплексной детали
      */
-    int COMPEXT_FURNITURE_INCREASE = Integer.parseInt(properties.getProperty("Application.default.OrderFurniture.complex.increas"));
+    int COMPEXT_FURNITURE_INCREASE = Integer.parseInt(resourceBundle.getString("Application.default.OrderFurniture.complex.increas"));
 
     /**
      * Used only for tests
@@ -55,32 +65,32 @@ public interface Constants {
     /*
      Дефолтное значение градуса угла
      */
-    String DEFAULT_A45_VALUE = properties.getProperty("Application.default.a45.value");
+    String DEFAULT_A45_VALUE = resourceBundle.getString("Application.default.a45.value");
 
 
     /**
      * Минимальная длинна материала
      */
-    int MIN_BORDER_LENGTH = Integer.parseInt(properties.getProperty("Application.border.length.min.value"));
+    int MIN_BORDER_LENGTH = Integer.parseInt(resourceBundle.getString("Application.border.length.min.value"));
 
-    int MIN_MATERIAL_LENGTH = Integer.parseInt(properties.getProperty("Application.mat.length.min.value"));
+    int MIN_MATERIAL_LENGTH = Integer.parseInt(resourceBundle.getString("Application.mat.length.min.value"));
 
-    int MIN_MATERIAL_WIDTH = Integer.parseInt(properties.getProperty("Application.mat.width.min.value"));
+    int MIN_MATERIAL_WIDTH = Integer.parseInt(resourceBundle.getString("Application.mat.width.min.value"));
 
-    int MIN_DETAIL_LENGTH = Integer.parseInt(properties.getProperty("Application.detail.length.min.value"));
+    int MIN_DETAIL_LENGTH = Integer.parseInt(resourceBundle.getString("Application.detail.length.min.value"));
 
-    int MIN_DETAIL_WIDTH = Integer.parseInt(properties.getProperty("Application.detail.width.min.value"));
+    int MIN_DETAIL_WIDTH = Integer.parseInt(resourceBundle.getString("Application.detail.width.min.value"));
 
-    int DETAIL_LENGTH_MAX = Integer.parseInt(properties.getProperty("Application.detail.length.max.value"));
+    int DETAIL_LENGTH_MAX = Integer.parseInt(resourceBundle.getString("Application.detail.length.max.value"));
 
-    int DETAIL_WIDTH_MAX = Integer.parseInt(properties.getProperty("Application.detail.width.max.value"));
+    int DETAIL_WIDTH_MAX = Integer.parseInt(resourceBundle.getString("Application.detail.width.max.value"));
 
 
-    int MAX_COUNT_DETAIL_VALUE = Integer.parseInt(properties.getProperty("Application.detail.max.count.value"));
+    int MAX_COUNT_DETAIL_VALUE = Integer.parseInt(resourceBundle.getString("Application.detail.max.count.value"));
 
-    int MIN_COUNT_DETAIL_VALUE = Integer.parseInt(properties.getProperty("Application.detail.min.count.value"));
+    int MIN_COUNT_DETAIL_VALUE = Integer.parseInt(resourceBundle.getString("Application.detail.min.count.value"));
 
-    String DEFAULT_DETAIL_NAME = properties.getProperty("Application.default.OrderFurniture.name");
+    String DEFAULT_DETAIL_NAME = resourceBundle.getString("Application.default.OrderFurniture.name");
 
 
     /**
@@ -96,7 +106,7 @@ public interface Constants {
     public static long TIME_FOR_STRIP = 15;
 
 
-    boolean IS_PUT_REST_TO_STORE = Boolean.parseBoolean(properties.getProperty("Application.default.isPutRestToStore"));
+    boolean IS_PUT_REST_TO_STORE = Boolean.parseBoolean(resourceBundle.getString("Application.default.isPutRestToStore"));
 
 
 }

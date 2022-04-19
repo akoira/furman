@@ -112,7 +112,6 @@ public final class CuttingApp extends SingleFrameApplication {
     protected void initialize(String[] args) {
         initSwings();
         JModalConfiguration.enableWaitOnEDT();
-        Locale.setDefault(new Locale("ru", "RU"));
 
         super.initialize(args);
         getInstance().getContext().getSessionStorage().putProperty(RootWindow.class, new RootWindowProperty());
@@ -169,15 +168,14 @@ public final class CuttingApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
+        Locale.setDefault(new Locale("ru", "RU", "utf8"));
+
         if (args.length > 0 && args[0].equals("--upgrade")) {
             String profile = System.getenv().get(FURMAN_PROFILE);
             Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod_liquibase : SpringConfiguration.home_liquibase;
             config.get();
         } else {
-            Locale.setDefault(new Locale("ru", "RU", "utf8"));
-
             loadTTF();
-
             launch(CuttingApp.class, args);
         }
     }

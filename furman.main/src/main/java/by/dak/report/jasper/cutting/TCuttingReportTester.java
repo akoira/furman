@@ -3,9 +3,9 @@ package by.dak.report.jasper.cutting;
 import by.dak.cutting.SpringConfiguration;
 import by.dak.cutting.cut.guillotine.Segment;
 import by.dak.persistence.FinderException;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.report.ReportType;
-import by.dak.report.jasper.DefaultReportCreatorFactory;
 import by.dak.report.jasper.JReportData;
 import by.dak.report.jasper.TAbstractReportTester;
 import by.dak.report.jasper.cutting.data.CuttedReportDataImpl;
@@ -35,7 +35,7 @@ public class TCuttingReportTester extends TAbstractReportTester
 
     public static void main(String[] args)
     {
-        new SpringConfiguration(false);
+        SpringConfiguration springConfiguration = new SpringConfiguration(false);
         new TCuttingReportTester();
         try
         {
@@ -48,7 +48,7 @@ public class TCuttingReportTester extends TAbstractReportTester
             }
             else
             {
-                process(createReportData());
+                process(createReportData(springConfiguration.getMainFacade()));
             }
         }
         catch (Exception e)
@@ -57,7 +57,7 @@ public class TCuttingReportTester extends TAbstractReportTester
         }
     }
 
-    private static JReportData createReportData() throws FinderException
+    private static JReportData createReportData(MainFacade mainFacade) throws FinderException
     {
         Order order = new Order();
         order.setOrderNumber(((long) (Math.random() * 1000)));
@@ -78,7 +78,7 @@ public class TCuttingReportTester extends TAbstractReportTester
         CuttedReportDataImpl cuttedReportData = new CuttedReportDataImpl();
         cuttedReportData.setOrder(order);
         fillMaterials(furnitureItems, cuttedReportData);
-        return DefaultReportCreatorFactory.getInstance().createReportDataCreator(cuttedReportData, REPORT_TYPE).create();
+        return mainFacade.reportCreatorFactory.createReportDataCreator(cuttedReportData, REPORT_TYPE).create();
     }
 
     private static void fillMaterials(List<AOrderDetail> furnitureItems, CuttedReportDataImpl cuttedReportData)

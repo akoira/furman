@@ -2,6 +2,7 @@ package by.dak.cutting.zfacade.report;
 
 import by.dak.cutting.afacade.report.AFacadeServiceDataConverter;
 import by.dak.cutting.zfacade.ZFacade;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.predefined.ServiceType;
 
@@ -12,9 +13,9 @@ import by.dak.persistence.entities.predefined.ServiceType;
  */
 public class ZFacadeServiceDataConverter extends AFacadeServiceDataConverter<ZFacade>
 {
-    public ZFacadeServiceDataConverter(AOrder order)
+    public ZFacadeServiceDataConverter(AOrder order, MainFacade mainFacade)
     {
-        super(order);
+        super(order, mainFacade);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package by.dak.report.jasper.common.data.converter;
 
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
+import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.FurnitureLink;
 import by.dak.persistence.entities.PriceEntity;
 import by.dak.report.jasper.ReportUtils;
@@ -26,21 +28,25 @@ public class FurnitureConverter implements Converter<List<FurnitureLink>, List<C
     private boolean useOrderItemCount = true;
     private CommonDataType commonDataType;
     private AOrder order;
+    private final Dailysheet dailysheet;
+    private final MainFacade mainFacade;
 
     private SortedMap<String, CommonDatas<CommonData>> commonDatas = new TreeMap<String, CommonDatas<CommonData>>(new StringComparator());
 
     //private CommonDatas<CommonData> commonDatas;
 
-    public FurnitureConverter(boolean useOrderItemCount, CommonDataType commonDataType, AOrder order)
+    public FurnitureConverter(boolean useOrderItemCount, CommonDataType commonDataType, AOrder order, MainFacade mainFacade)
     {
         this.useOrderItemCount = useOrderItemCount;
         this.commonDataType = commonDataType;
         this.order = order;
+        this.mainFacade = mainFacade;
+        this.dailysheet = MainFacade.dailysheet.apply(mainFacade).apply(order);
     }
 
-    public FurnitureConverter(CommonDataType commonDataType, AOrder order)
+    public FurnitureConverter(CommonDataType commonDataType, AOrder order, MainFacade mainFacade)
     {
-        this(true, commonDataType, order);
+        this(true, commonDataType, order, mainFacade);
     }
 
     @Override
@@ -61,8 +67,8 @@ public class FurnitureConverter implements Converter<List<FurnitureLink>, List<C
                     //case jar760g:
                     commonData.setSizeAsDouble(link.getSize());
                     commonData.setCount(getAmountBy(link).doubleValue());
-                    PriceEntity price = FacadeContext.getPriceFacade().findUniqueBy(link.getFurnitureType(), link.getFurnitureCode());
-                    ReportUtils.fillPrice(commonData, price);
+                    PriceEntity price = mainFacade.getPriceFacade().findUniqueBy(link.getFurnitureType(), link.getFurnitureCode());
+                    ReportUtils.fillPrice(commonData, price, dailysheet);
                     commonData.setUnit(StringValueAnnotationProcessor.getProcessor().convert(link.getFurnitureType().getUnit()));
                     commonDatas.add(commonData);
                     break;
@@ -80,8 +86,8 @@ public class FurnitureConverter implements Converter<List<FurnitureLink>, List<C
                     }
                     else
                     {
-                        price = FacadeContext.getPriceFacade().findUniqueBy(link.getFurnitureType(), link.getFurnitureCode());
-                        ReportUtils.fillPrice(commonData, price);
+                        price = mainFacade.getPriceFacade().findUniqueBy(link.getFurnitureType(), link.getFurnitureCode());
+                        ReportUtils.fillPrice(commonData, price, dailysheet);
                         commonDatas.add(commonData);
                     }
                     break;
