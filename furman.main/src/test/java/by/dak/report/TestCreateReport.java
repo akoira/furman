@@ -11,9 +11,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.*;
-import net.sf.jasperreports.engine.type.HorizontalAlignEnum;
-import net.sf.jasperreports.engine.type.LineStyleEnum;
-import net.sf.jasperreports.engine.type.VerticalAlignEnum;
+import net.sf.jasperreports.engine.type.*;
 import net.sf.jasperreports.view.JasperDesignViewer;
 
 import java.awt.*;
@@ -155,8 +153,8 @@ public class TestCreateReport
 
         if (angle == 0.0)
         {
-            field.setHorizontalAlignment(HorizontalAlignEnum.CENTER);
-            field.setVerticalAlignment(VerticalAlignEnum.BOTTOM);
+            field.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
+            field.setVerticalTextAlign(VerticalTextAlignEnum.BOTTOM);
             field.setX((int) (dimensionLine.getXStart()));
             field.setY((int) (dimensionLine.getYStart() - dimensionLine.getOffset() - 20));
             field.setWidth((int) (dimensionLineLength - 10));

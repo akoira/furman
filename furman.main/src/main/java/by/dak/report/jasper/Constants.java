@@ -1,6 +1,9 @@
 package by.dak.report.jasper;
 
+import by.dak.persistence.MainFacade;
 import net.sf.jasperreports.engine.ReportContext;
+
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,11 +14,27 @@ import net.sf.jasperreports.engine.ReportContext;
  */
 public interface Constants
 {
+    String MAIN_FACADE = "MAIN_FACADE";
     public static final String EXT_JRXML = ".jrxml";
     public static final String EXT_JASPER = ".jasper";
 
-    public static final ReportContext DUMMY_REPORT_CONTEXT = new ReportContext()
+    ReportContext DUMMY_REPORT_CONTEXT = new ReportContext()
     {
+        @Override
+        public Map<String, Object> getParameterValues() {
+            return null;
+        }
+
+        @Override
+        public Object removeParameterValue(String parameterName) {
+            return null;
+        }
+
+        @Override
+        public void clearParameterValues() {
+
+        }
+
         @Override
         public String getId()
         {

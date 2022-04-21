@@ -10,7 +10,6 @@ import by.dak.report.jasper.ReportUtils;
 import by.dak.report.jasper.common.data.*;
 import by.dak.utils.convert.Converter;
 import by.dak.utils.convert.ListConverter;
-import jdk.jfr.internal.tool.Main;
 
 import java.util.*;
 
@@ -21,25 +20,21 @@ import java.util.*;
  * @since 1.0.0
  * todo должен быть перенесен в более общий пакет
  */
-public class BorderMaterialsConverter implements Converter<List<OrderFurniture>, CommonDatas<CommonData>>
-{
+public class BorderMaterialsConverter implements Converter<List<OrderFurniture>, CommonDatas<CommonData>> {
     private MainFacade mainFacade;
     private SortedMap<String, CommonDatas<CommonData>> borderMaterials = new TreeMap<String, CommonDatas<CommonData>>(new StringComparator());
 
     private String MATERIAL_DATA = ResourceBundle.getBundle("by/dak/report/jasper/common/commonReport").getString("material.data");
     private AOrder order;
 
-    public BorderMaterialsConverter(AOrder order, MainFacade mainFacade)
-    {
+    public BorderMaterialsConverter(AOrder order, MainFacade mainFacade) {
         this.order = order;
         this.mainFacade = mainFacade;
     }
 
     @Override
-    public CommonDatas<CommonData> convert(List<OrderFurniture> furnitures)
-    {
-        for (OrderFurniture furniture : furnitures)
-        {
+    public CommonDatas<CommonData> convert(List<OrderFurniture> furnitures) {
+        for (OrderFurniture furniture : furnitures) {
             calculateBorderMaterials(furniture);
         }
         List<CommonData> borderMaterials = sortBorderMaterials();
@@ -50,13 +45,10 @@ public class BorderMaterialsConverter implements Converter<List<OrderFurniture>,
         return result;
     }
 
-    private void calculateBorderMaterials(OrderFurniture furniture)
-    {
-        if (furniture.getMilling() != null && furniture.isPrimary())
-        {
+    private void calculateBorderMaterials(OrderFurniture furniture) {
+        if (furniture.getMilling() != null && furniture.isPrimary()) {
             Milling milling = (Milling) XstreamHelper.getInstance().fromXML(furniture.getMilling());
-            if (milling.getCurveGluingLength() > 0 || milling.getDirectGluingLength() > 0)
-            {
+            if (milling.getCurveGluingLength() > 0 || milling.getDirectGluingLength() > 0) {
 
                 //curveLength + directLength + 10%*directLength + 150
                 updateBorderMaterial(milling.getTexture(), milling.getBorderDef(), ReportUtils.calcLinear(milling.getCurveGluingLength()
@@ -66,22 +58,17 @@ public class BorderMaterialsConverter implements Converter<List<OrderFurniture>,
             }
         }
 
-        if (furniture.getGlueing() != null && furniture.isPrimary())
-        {
+        if (furniture.getGlueing() != null && furniture.isPrimary()) {
             Side[] sides = Side.values();
-            for (Side side : sides)
-            {
-                GlueingSideHelper glueingSideHelper = new GlueingSideHelper(furniture, side)
-                {
+            for (Side side : sides) {
+                GlueingSideHelper glueingSideHelper = new GlueingSideHelper(furniture, side) {
 
                     @Override
-                    public boolean isSide()
-                    {
+                    public boolean isSide() {
                         return super.isGlueing();
                     }
                 };
-                if (glueingSideHelper.isSide())
-                {
+                if (glueingSideHelper.isSide()) {
                     updateBorderMaterial(glueingSideHelper.getTexture(), glueingSideHelper.getBorderDef(), glueingSideHelper.getSize());
                 }
             }
@@ -89,13 +76,10 @@ public class BorderMaterialsConverter implements Converter<List<OrderFurniture>,
     }
 
     private void updateBorderMaterial(TextureEntity texture, BorderDefEntity borderDef,
-                                      double size)
-    {
-        if (texture != null && borderDef != null)
-        {
+                                      double size) {
+        if (texture != null && borderDef != null) {
             CommonDatas<CommonData> datas = borderMaterials.get(borderDef.getName());
-            if (datas == null)
-            {
+            if (datas == null) {
                 datas = new CommonDatas<CommonData>(CommonDataType.border, order);
             }
 
@@ -104,21 +88,18 @@ public class BorderMaterialsConverter implements Converter<List<OrderFurniture>,
             data = i > -1 ? datas.remove(i) : data;
             data.increase(size);
 
-            if (data.isEmptyPrice())
-            {
+            if (data.isEmptyPrice()) {
                 PriceEntity price = mainFacade.getPriceFacade().findUniqueBy(borderDef, texture);
-                ReportUtils.fillPrice(data, price, MainFacade.dailysheet.apply(mainFacade).apply(order));
+                ReportUtils.fillPrice(data, price, order, mainFacade);
             }
             datas.add(data);
             borderMaterials.put(borderDef.getName(), datas);
         }
     }
 
-    private CommonDatas<CommonData> sortBorderMaterials()
-    {
+    private CommonDatas<CommonData> sortBorderMaterials() {
         CommonDatas<CommonData> sorted = new CommonDatas<CommonData>(CommonDataType.border, order);
-        for (String borderDefKey : borderMaterials.keySet())
-        {
+        for (String borderDefKey : borderMaterials.keySet()) {
             CommonDatas<CommonData> materials = borderMaterials.get(borderDefKey);
             Collections.sort(materials);
             materials.get(materials.size() - 1).markAsLast();

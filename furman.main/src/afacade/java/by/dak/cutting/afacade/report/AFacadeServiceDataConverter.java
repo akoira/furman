@@ -61,7 +61,7 @@ public abstract class AFacadeServiceDataConverter<F extends AFacade> implements 
             List<PriceEntity> prices = FacadeContext.getPriceFacade().loadAll(searchFilter);
             if (prices.size() > 0)
             {
-                ReportUtils.fillPrice(commonData, prices.get(0), dailysheet);
+                ReportUtils.fillPrice(commonData, prices.get(0), order, mainFacade);
             }
             datas.add(commonData);
         }

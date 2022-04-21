@@ -42,7 +42,7 @@ public class BoardMaterialsConverter implements Converter<List<TextureBoardDefPa
     public BoardMaterialsConverter(CuttingModel cuttingModel, MainFacade facade) {
         this.cuttingModel = cuttingModel;
         this.mainFacade =facade;
-        this.dailysheet = MainFacade.dailysheet.apply(this.mainFacade).apply(null);
+        this.dailysheet = MainFacade.dailysheet.apply(this.mainFacade).apply(cuttingModel.getOrder());
     }
 
     public CommonDatas<CommonData> convert(List<TextureBoardDefPair> textureBoardDefPairs)
@@ -103,7 +103,7 @@ public class BoardMaterialsConverter implements Converter<List<TextureBoardDefPa
         CommonDatas<CommonData> datas = boardMaterials.get(key);
         if (datas == null)
         {
-            datas = new CommonDatas<CommonData>(CommonDataType.board, cuttingModel.getOrder());
+            datas = new CommonDatas<>(CommonDataType.board, cuttingModel.getOrder());
         }
 
         CommonData data = CommonData.valueOf(boardDef, texture);
@@ -113,7 +113,7 @@ public class BoardMaterialsConverter implements Converter<List<TextureBoardDefPa
         if (data.isEmptyPrice())
         {
             PriceEntity price = mainFacade.getPriceFacade().findUniqueBy(boardDef, texture);
-            ReportUtils.fillPrice(data, price, this.dailysheet);
+            ReportUtils.fillPrice(data, price, cuttingModel.getOrder(), this.mainFacade);
         }
         datas.add(data);
         boardMaterials.put(key, datas);

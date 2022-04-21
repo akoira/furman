@@ -6,6 +6,7 @@ import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.engine.design.*;
 import net.sf.jasperreports.engine.type.EvaluationTimeEnum;
 import net.sf.jasperreports.engine.type.HorizontalAlignEnum;
+import net.sf.jasperreports.engine.type.HorizontalTextAlignEnum;
 import net.sf.jasperreports.engine.type.OrientationEnum;
 
 import java.awt.*;
@@ -35,7 +36,7 @@ public class TableReportCreator
     private static final int topMargin = 20;
     private static final int bottomMargin = 20;
     private static final int lineWidth = 1;
-    private static final int titleFontSize = 15;
+    private static final float titleFontSize = 15.0f;
     private static final int footerOffsetWidth = 20;
 
     private String title;
@@ -221,7 +222,7 @@ public class TableReportCreator
                 JRDesignExpression expression = new JRDesignExpression();
                 expression.setText("$F{" + getTable().getColumnName(count) + "}");
                 textField.setExpression(expression);
-                textField.setHorizontalAlignment(HorizontalAlignEnum.CENTER);
+                textField.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
                 designTextFields.add(textField);
                 x += width;
             }
@@ -260,7 +261,7 @@ public class TableReportCreator
                 staticTextField.setY(startY);
                 staticTextField.setHeight(textFieldHeight);
                 staticTextField.setWidth(width);
-                staticTextField.setHorizontalAlignment(HorizontalAlignEnum.CENTER);
+                staticTextField.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
                 staticTextFields.add(staticTextField);
                 x += width;
             }
@@ -328,7 +329,7 @@ public class TableReportCreator
             titleTextField.setFontSize(titleFontSize);
             String designTitle = getTitle() == null ? "" : getTitle();
             titleTextField.setText(designTitle);
-            titleTextField.setHorizontalAlignment(HorizontalAlignEnum.CENTER);
+            titleTextField.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
             titleBand.addElement(titleTextField);
 
             return titleBand;

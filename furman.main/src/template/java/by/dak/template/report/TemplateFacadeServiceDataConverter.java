@@ -57,7 +57,7 @@ public class TemplateFacadeServiceDataConverter extends AFacadeServiceDataConver
 
                 List<PriceEntity> prices = FacadeContext.getPriceFacade().loadAll(searchFilter);
                 if (prices.size() > 0)
-                    ReportUtils.fillPrice(commonData, prices.get(0), dailysheet);
+                    ReportUtils.fillPrice(commonData, prices.get(0), order, mainFacade);
                 datas.add(commonData);
             }
         }

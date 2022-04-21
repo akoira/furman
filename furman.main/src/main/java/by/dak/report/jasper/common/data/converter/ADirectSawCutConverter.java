@@ -69,7 +69,7 @@ public abstract class ADirectSawCutConverter<D extends AOrderBoardDetail> implem
         data.increase(length);
         if (data.isEmptyPrice()) {
             PriceEntity price = mainFacade.getPriceFacade().getPrice(boardDef, ServiceType.cutting);
-            ReportUtils.fillPrice(data, price, this.dailysheet);
+            ReportUtils.fillPrice(data, price, cuttingModel.getOrder(), mainFacade);
         }
         datas.add(data);
     }

@@ -40,7 +40,6 @@ import org.jhotdraw.draw.Figure;
 import java.awt.*;
 import java.util.List;
 import java.util.*;
-import java.util.function.Function;
 
 import static by.dak.report.jasper.ReportUtils.calcLinear;
 import static by.dak.report.jasper.ReportUtils.calcSquare;
@@ -73,7 +72,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         this.dspPlasticModel = this.mainFacade.getDspPlasticStripsFacade().loadCuttingModel(cuttingModel.getOrder()).load();
         this.order = cuttingModel.getOrder();
         Dailysheet dailysheet = this.mainFacade.getDailysheetFacade().loadCurrentDailysheet();
-        this.dailysheet = dailysheet != null ?  dailysheet : this.order.getCreatedDailySheet();
+        this.dailysheet = dailysheet != null ? dailysheet : this.order.getCreatedDailySheet();
     }
 
     public CommonReportData create() {
@@ -391,7 +390,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
 
         if (data.getPrice() == null || data.getPrice() <= 0d) {
             PriceEntity price = mainFacade.getPriceFacade().getPrice(priceAware, serviceType);
-            ReportUtils.fillPrice(data, price,dailysheet);
+            ReportUtils.fillPrice(data, price, order, mainFacade);
         }
 
         data.increase(size);

@@ -10,6 +10,7 @@ import by.dak.cutting.cut.guillotine.helper.BoardDimensionsHelper;
 import by.dak.cutting.cut.guillotine.helper.DimensionsHelper;
 import by.dak.cutting.swing.order.data.TextureBoardDefPair;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.persistence.entities.predefined.Unit;
 import by.dak.persistence.entities.types.FurnitureCode;
@@ -186,18 +187,22 @@ public class ReportUtils
      * @param currencyTypeName
      * @return
      */
-    public static double getPriceBy(Double price, String currencyTypeName, Dailysheet dailysheet)
-    {
-
-        return getPriceBy(price, CurrencyType.valueOf(currencyTypeName), dailysheet);
+    public static double getPriceBy(Double price, String currencyTypeName, MainFacade mainFacade) {
+        return getPriceBy(price, currencyTypeName, null, mainFacade);
     }
 
-    public static double getPriceBy(Double price, CurrencyType currencyType, Dailysheet dailysheet)
+    public static double getPriceBy(Double price, String currencyTypeName, AOrder order, MainFacade mainFacade)
+    {
+        return getPriceBy(price, CurrencyType.valueOf(currencyTypeName), order, mainFacade);
+    }
+
+    public static double getPriceBy(Double price, CurrencyType currencyType, AOrder order, MainFacade mainFacade)
     {
         if (price != null)
         {
-            Currency selected = FacadeContext.getCurrencyFacade().getSelected(dailysheet);
-            Currency current = FacadeContext.getCurrencyFacade().findCurrentBy(currencyType, dailysheet, false);
+            Dailysheet dailysheet =  MainFacade.dailysheet.apply(mainFacade).apply(order);
+            Currency selected = mainFacade.getCurrencyFacade().getSelected(dailysheet);
+            Currency current = mainFacade.getCurrencyFacade().findCurrentBy(currencyType, dailysheet, false);
             return price * current.getPrice() * selected.getPrice();
         }
         else
@@ -206,12 +211,12 @@ public class ReportUtils
         }
     }
 
-    public static double getPriceBy(PriceEntity price, boolean isPriceDealer, Dailysheet dailysheet)
+    public static double getPriceBy(PriceEntity price, boolean isPriceDealer, AOrder order, MainFacade mainFacade)
     {
 		if (price == null)
 			return 0.0;
 		else
-			return getPriceBy(isPriceDealer ? price.getPriceDealer() : price.getPrice(), price.getCurrencyType(), dailysheet);
+            return getPriceBy(isPriceDealer ? price.getPriceDealer() : price.getPrice(), price.getCurrencyType(), order, mainFacade);
 	}
 
     //берем все boards котрые прикремлены к заказу и считаем их колличество
@@ -248,10 +253,10 @@ public class ReportUtils
         return value;
     }
 
-    public static void fillPrice(CommonData commonData, PriceEntity price, Dailysheet dailysheet)
+    public static void fillPrice(CommonData commonData, PriceEntity price, AOrder order, MainFacade mainFacade)
     {
-        commonData.setDialerPrice(getPriceBy(price, true, dailysheet));
-        commonData.setPrice(getPriceBy(price, false, dailysheet));
+        commonData.setDialerPrice(getPriceBy(price, true, order, mainFacade));
+        commonData.setPrice(getPriceBy(price, false, order, mainFacade));
     }
 
 
