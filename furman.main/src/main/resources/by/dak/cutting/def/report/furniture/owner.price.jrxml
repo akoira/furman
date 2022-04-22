@@ -156,7 +156,7 @@ ORDER BY
                     <font size="8"/>
                 </textElement>
                 <textFieldExpression>
-                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE_SALE},$F{PRICE_CURRENCY_TYPE}))]]></textFieldExpression>
+                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE_SALE},$F{PRICE_CURRENCY_TYPE},$P{MAIN_FACADE}))]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement style="Detail" x="242" y="1" width="106" height="10"/>
@@ -171,7 +171,7 @@ ORDER BY
                     <font size="8"/>
                 </textElement>
                 <textFieldExpression>
-                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE},$F{PRICE_CURRENCY_TYPE}))]]></textFieldExpression>
+                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE},$F{PRICE_CURRENCY_TYPE},$P{MAIN_FACADE}))]]></textFieldExpression>
             </textField>
             <textField pattern="###0.00">
                 <reportElement style="Detail" x="464" y="1" width="49" height="10"/>
@@ -179,7 +179,7 @@ ORDER BY
                     <font size="8"/>
                 </textElement>
                 <textFieldExpression>
-                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE_DEALER},$F{PRICE_CURRENCY_TYPE}))]]></textFieldExpression>
+                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE_DEALER},$F{PRICE_CURRENCY_TYPE},$P{MAIN_FACADE}))]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement style="Detail" x="5" y="1" width="237" height="10"/>
