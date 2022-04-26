@@ -1,10 +1,10 @@
 dependencies {
-  compile 'org.springframework:spring-context:4.0.1.RELEASE'
-  compile 'org.springframework.data:spring-data-jpa:1.4.3.RELEASE'
-  compile 'org.springframework.data:spring-data-mongodb:1.4.3.RELEASE'
+  implementation 'org.springframework:spring-context:4.0.1.RELEASE'
+  implementation 'org.springframework.data:spring-data-jpa:1.4.3.RELEASE'
+  implementation 'org.springframework.data:spring-data-mongodb:1.4.3.RELEASE'
 
 //    compile 'org.mongodb:mongo-java-driver:3.12.10'
 
-  compile 'commons-io:commons-io:2.4'
+  implementation 'commons-io:commons-io:2.4'
 
 }

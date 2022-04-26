@@ -1,0 +1,55 @@
+apply plugin: "java-library"
+apply plugin: "maven-publish"
+
+version = rootProject.version
+
+jar {
+    archiveBaseName = "furman.nifi"
+    archiveExtension = "nar"
+
+    into('META-INF/bundled-dependencies') {
+        from configurations.api
+    }
+
+    manifest {
+        def defaultAttrs = [
+                'Build-Revision'                     : 'unknown',
+                'Build-Branch'                       : 'unknown',
+                'Build-Tag'                          : project.version,
+                'Build-Timestamp'                    : new Date().format(BUILD_TIMESTAMP_FORMAT),
+                'Built-By'                           : System.properties['user.name'],
+                'Nar-Id'                             : project.name,
+                'Nar-Version'                        : project.version,
+                'Nar-Group'                          : rootProject.group,
+                'Clone-During-Instance-Class-Loading': false,
+                'Created-By'                         : "Gradle ${gradle.gradleVersion}",
+                'Build-Jdk'                          : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+                'Build-OS'                           : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
+        ]
+        attributes(defaultAttrs)
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            if (project.version.endsWith('-SNAPSHOT')) {
+                url project.property("maven.snapshot.url")
+            } else {
+                url project.property("maven.publish.url")
+            }
+            credentials {
+                username = project.property("maven.publish.user")
+                password = project.property("maven.publish.password")
+            }
+
+            allowInsecureProtocol = true
+        }
+    }
+
+    publications {
+        nar(MavenPublication) {
+            from project.components.java
+        }
+    }
+}

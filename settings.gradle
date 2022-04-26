@@ -1,1 +1,4 @@
-include 'furman.common', 'furman.main', 'furman.template.import', 'furman.repository', 'furman.upgrade'
+include 'furman.common', 'furman.main', 'furman.template.import', 'furman.repository', 'furman.upgrade',
+        'nifi', 'nifi:nar'
+
+//project(":nifi-nar").projectDir = file("nifi/nar")

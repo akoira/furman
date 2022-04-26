@@ -12,7 +12,6 @@ import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.plastic.jasper.data.DSPPlasticCuttedReportDataCreator;
 import by.dak.report.ReportType;
-import by.dak.report.jasper.DefaultReportCreatorFactory;
 import by.dak.report.jasper.JReportData;
 import by.dak.report.jasper.ReportGeneratorImpl;
 import by.dak.report.jasper.common.data.CommonDataCreator;

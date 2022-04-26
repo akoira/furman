@@ -1,5 +1,6 @@
-package by.dak.cutting;
+package by.dak.furman.nifi;
 
+import by.dak.cutting.SpringConfiguration;
 import by.dak.cutting.cut.gui.CutSettings;
 import by.dak.cutting.cut.gui.cuttingApp.CSawyer;
 import by.dak.cutting.cut.gui.cuttingApp.IndividualSawyer;
@@ -8,13 +9,14 @@ import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.cutting.swing.order.data.TextureBoardDefPair;
 import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class CuttingModelCalculate {
             sawyer.setNewSolutionListener(strips -> {
                 try {
                     consumer.accept(strips);
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     throw new RuntimeException(e);
                 }
             });

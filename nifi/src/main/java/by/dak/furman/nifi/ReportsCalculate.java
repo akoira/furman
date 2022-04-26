@@ -1,5 +1,6 @@
-package by.dak.cutting;
+package by.dak.furman.nifi;
 
+import by.dak.cutting.CuttingApp;
 import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
@@ -12,10 +13,10 @@ import by.dak.report.jasper.common.data.CommonDataCreator;
 import by.dak.report.jasper.common.data.CommonReportData;
 import by.dak.report.jasper.cutting.data.CuttedReportDataCreator;
 import by.dak.report.model.impl.ReportsModelImpl;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -28,7 +29,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.reactivex.Observable.just;
 
 public class ReportsCalculate {
     public static final Logger logger = LogManager.getLogger(ReportsCalculate.class);
@@ -144,93 +144,15 @@ public class ReportsCalculate {
 
     }
 
-    public static final class Context {
-        public final Long orderId;
-        public final MainFacade mainFacade;
-        public final Order order;
-
-        public final CuttingModel cuttingModel;
-
-        public final ReportsModelImpl reportsModel;
-
-        public final Map<ReportType, Object> reportObjects;
-
-        public final Map<ReportType, JReportData> reportData;
-
-        public final Map<ReportType, JasperPrint> jasperPrints;
-
-        private Context(Long orderId, MainFacade mainFacade, Order order,
-                        CuttingModel cuttingModel, ReportsModelImpl reportsModel,
-                        Map<ReportType, Object> reportObjects,
-                        Map<ReportType, JReportData> reportData,
-                        Map<ReportType, JasperPrint> jasperPrints) {
-            this.orderId = orderId;
-            this.mainFacade = mainFacade;
-            this.order = order;
-            this.cuttingModel = cuttingModel;
-            this.reportsModel = reportsModel;
-            this.reportObjects = reportObjects;
-            this.reportData = reportData;
-            this.jasperPrints = jasperPrints;
-        }
-
-        public Context orderId(Long orderId) {
-            return new Context(orderId, mainFacade, order, cuttingModel,
-                    reportsModel, reportObjects, reportData, jasperPrints);
-        }
-
-        public Context mainFacade(MainFacade mainFacade) {
-            return new Context(orderId, mainFacade, order, cuttingModel,
-                    reportsModel, reportObjects, reportData, jasperPrints);
-        }
-
-        public Context order(Order order) {
-            return new Context(orderId, mainFacade, order, cuttingModel,
-                    reportsModel, reportObjects, reportData, jasperPrints);
-        }
-
-        public Context cuttingModel(CuttingModel cuttingModel) {
-            return new Context(orderId, mainFacade, order, cuttingModel,
-                    reportsModel, reportObjects, reportData, jasperPrints);
-        }
-
-        public Context reportsModel(ReportsModelImpl reportsModel) {
-            return new Context(orderId, mainFacade, order, cuttingModel,
-                    reportsModel, reportObjects, reportData, jasperPrints);
-        }
-
-        public Context reportObjects(Map<ReportType, Object> reportObjects) {
-            return new Context(orderId, mainFacade, order, cuttingModel,
-                    reportsModel, reportObjects, reportData, jasperPrints);
-        }
-
-        public Context reportData(Map<ReportType, JReportData> reportData) {
-            return new Context(orderId, mainFacade, order, cuttingModel,
-                    reportsModel, reportObjects, reportData, jasperPrints);
-        }
-
-        public Context jasperPrints(Map<ReportType, JasperPrint> jasperPrints) {
-            return new Context(orderId, mainFacade, order, cuttingModel,
-                    reportsModel, reportObjects, reportData, jasperPrints);
-        }
-
-
-        public static Context context(Long orderId) {
-            return new Context(orderId, null, null,
-                    null, null,
-                    null, null, null);
-        }
-
-    }
 
     public static void main(String[] args) throws IOException {
         CuttingApp.loadTTF();
-        Observable<ReportsModelImpl> observable = just(Context.context(Long.parseLong(args[0])))
+        Observable<ReportsModelImpl> observable = Observable.just(Context.context(Long.parseLong(args[0])))
                 .observeOn(Schedulers.io())
                 .map(c -> c.mainFacade(func.main_facade.blockingFirst()))
                 .map(c -> c.order(c.mainFacade.getOrderFacade().findBy(c.orderId)))
                 .doOnNext(c -> logger.info("order loaded"))
-                .doOnNext(c -> func.delete.apply(c))
+                .doOnNext(func.delete::apply)
                 .doOnNext(c -> logger.info("cleared all"))
                 .map(c -> c.cuttingModel(func.cutting_model.apply(c.mainFacade).apply(c.order)))
                 .doOnNext(c -> logger.info("cutting model loaded"))

@@ -18,15 +18,13 @@ import org.jdesktop.application.SingleFrameApplication;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -119,8 +117,9 @@ public final class CuttingApp extends SingleFrameApplication {
 
         Callable callable = () -> {
             try {
-                String profile = System.getenv().get(FURMAN_PROFILE);
-                Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod : SpringConfiguration.home;
+                String profile = Optional.ofNullable(System.getenv().get(FURMAN_PROFILE))
+                        .orElseGet(() -> System.getProperty(FURMAN_PROFILE));
+                Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod : SpringConfiguration.profile.apply(profile);
                 springConfiguration = config.get();
                 return null;
             } catch (Throwable e) {
@@ -172,7 +171,7 @@ public final class CuttingApp extends SingleFrameApplication {
 
         if (args.length > 0 && args[0].equals("--upgrade")) {
             String profile = System.getenv().get(FURMAN_PROFILE);
-            Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod_liquibase : SpringConfiguration.home_liquibase;
+            Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod_liquibase : SpringConfiguration.profile_liquibase.apply(profile);
             config.get();
         } else {
             loadTTF();

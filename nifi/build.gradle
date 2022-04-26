@@ -1,0 +1,9 @@
+apply from: "$rootDir/gradle/nifi.jar.gradle"
+apply from: "$rootDir/gradle/org.apache.nifi.gradle"
+apply from: "$rootDir/gradle/io.reactivex.rxjava2.gradle"
+apply from: "$rootDir/gradle/org.apache.logging.log4j.gradle"
+
+dependencies {
+    api project(':furman.main')
+}
+

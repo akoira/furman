@@ -1,0 +1,7 @@
+apply from: "$rootDir/gradle/jvm.gradle"
+apply from: "$rootDir/gradle/org.apache.nifi.gradle"
+apply from: "$rootDir/gradle/io.reactivex.rxjava2.gradle"
+//apply from: "$rootDir/gradle/publish.jar.gradle"
+
+dependencies {
+}

@@ -1,18 +1,18 @@
 project(':furman.template.import')
         {
           dependencies {
-            compile project(':furman.main')
+              implementation project(':furman.main')
 
-            compile 'org.jdesktop.bsaf:bsaf:1.9.2'
+              implementation 'org.jdesktop.bsaf:bsaf:1.9.2'
 
-            compile 'org.dockingframes:docking-frames-common:1.1.1'
-            compile 'org.dockingframes:docking-frames-ext-toolbar-common:1.1.1'
-            compile 'org.dockingframes:docking-frames-demo-app:1.1.0'
-            compile 'org.dockingframes:docking-frames-demo-app-ice:1.1.0'
+              implementation 'org.dockingframes:docking-frames-common:1.1.1'
+              implementation 'org.dockingframes:docking-frames-ext-toolbar-common:1.1.1'
+              implementation 'org.dockingframes:docking-frames-demo-app:1.1.0'
+              implementation 'org.dockingframes:docking-frames-demo-app-ice:1.1.0'
 
-            compile 'org.swinglabs.swingx:swingx-all:1.6.5-1'
+              implementation 'org.swinglabs.swingx:swingx-all:1.6.5-1'
 
-            compile 'com.jidesoft:jide-oss:3.5.3'
+              implementation 'com.jidesoft:jide-oss:3.5.3'
           }
           apply plugin: 'application'
           mainClassName = 'by.dak.furman.templateimport.TemplateImportApp'

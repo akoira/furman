@@ -3,12 +3,12 @@
     <envs>
       <env name="FURMAN_PROFILE" value="home" />
     </envs>
-    <option name="MAIN_CLASS_NAME" value="by.dak.cutting.ReportsCalculate" />
-    <module name="furman.furman.main.main" />
+    <option name="MAIN_CLASS_NAME" value="by.dak.furman.nifi.ReportsCalculate" />
+    <module name="furman.nifi.main" />
     <option name="PROGRAM_PARAMETERS" value="123353550" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="by.dak.cutting.*" />
+        <option name="PATTERN" value="by.dak.furman.nifi.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
