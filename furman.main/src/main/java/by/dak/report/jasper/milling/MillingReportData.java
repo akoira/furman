@@ -6,7 +6,7 @@ package by.dak.report.jasper.milling;
 
 import by.dak.cutting.swing.order.data.Milling;
 import by.dak.cutting.swing.xml.XstreamHelper;
-import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.OrderFurniture;
 import by.dak.report.jasper.ReportUtils;
 import by.dak.utils.convert.StringValueAnnotationProcessor;
@@ -21,8 +21,11 @@ public class MillingReportData
 
     private Value value = new Value();
 
-    public MillingReportData(OrderFurniture furniture)
+    public final MainFacade mainFacade;
+
+    public MillingReportData(OrderFurniture furniture, MainFacade mainFacade)
     {
+        this.mainFacade = mainFacade;
         prepare(furniture, value);
     }
 
@@ -32,7 +35,7 @@ public class MillingReportData
         {
             Milling milling = (Milling) XstreamHelper.getInstance().fromXML(furniture.getMilling());
             value.name = StringValueAnnotationProcessor.getProcessor().convert(furniture);
-            File file = FacadeContext.getRepositoryService().readTempFile(milling.getImageFileUuid());
+            File file = mainFacade.getRepositoryService().readTempFile(milling.getImageFileUuid());
             value.path = file.getAbsolutePath();
             if (milling.getBorderDef() != null && milling.getTexture() != null)
             {

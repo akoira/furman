@@ -73,7 +73,7 @@ public class TCommonReportTester extends TAbstractReportTester
         CommonReportDataImpl commonReportData = new CommonReportDataImpl(order);
         commonReportData.setCommonDatas(new CommonDatas(CommonDataType.cutting, order));
         fillMaterials(furnitureItems, commonReportData);
-        return new CommonReportDataCreator(commonReportData).create();
+        return new CommonReportDataCreator(commonReportData, null).create();
     }
 
     private static void fillMaterials(List<AOrderDetail> furnitureItems, CommonReportDataImpl commonReportData)

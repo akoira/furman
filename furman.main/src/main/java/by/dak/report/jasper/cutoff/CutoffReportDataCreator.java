@@ -1,6 +1,7 @@
 package by.dak.report.jasper.cutoff;
 
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.OrderFurniture;
 import by.dak.report.jasper.OrderHeaderReportDataCreator;
@@ -22,9 +23,9 @@ public class CutoffReportDataCreator extends OrderHeaderReportDataCreator
 
     private static final String REPORT_BUNDLES_PATH = "by/dak/report/jasper/cutoff/cutoffReport";
 
-    public CutoffReportDataCreator(AOrder order)
+    public CutoffReportDataCreator(AOrder order, MainFacade mainFacade)
     {
-        super(order);
+        super(order, mainFacade);
     }
 
     @Override

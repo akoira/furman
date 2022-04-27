@@ -40,17 +40,16 @@ public final class DefaultReportCreatorFactory implements ReportCreatorFactory
                 return new GlueingReportDataCreator((AOrder) reportObject);
             case common:
                 CommonReportDataImpl commonReportData = (CommonReportDataImpl) reportObject;
-                return new DialerCommonReportDataCreator(
-                        commonReportData);
+                return new DialerCommonReportDataCreator(commonReportData, mainFacade);
             case production_common:
-                return new CommonReportDataCreator((CommonReportData) reportObject);
+                return new CommonReportDataCreator((CommonReportData) reportObject, mainFacade);
             case cutting:
             case cutting_dsp_plastic:
                 return new CuttingReportDataCreator((CuttedReportData) reportObject);
             case cutoff:
-                return new CutoffReportDataCreator((AOrder) reportObject);
+                return new CutoffReportDataCreator((AOrder) reportObject, mainFacade);
             case milling:
-                return new MillingReportDataCreator((AOrder) reportObject);
+                return new MillingReportDataCreator((AOrder) reportObject, mainFacade);
             case store:
                 return reportObject instanceof AOrder ? new StoreReportDataCreator((AOrder) reportObject, mainFacade) :
                         new StoreReportDataCreator((CommonReportData) reportObject, mainFacade);
