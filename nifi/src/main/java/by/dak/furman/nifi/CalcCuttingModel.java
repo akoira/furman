@@ -94,7 +94,7 @@ public final class CalcCuttingModel extends AbstractProcessor {
             System.setProperty(CuttingApp.FURMAN_PROFILE, profile);
 
         Observable<CuttingModel> observable = Observable.just(orderId)
-                .flatMap(id -> CuttingModelCalculate.func.main_facade
+                .flatMap(id -> CuttingModelCalculate.func.main_facade.apply(profile)
                         .observeOn(Schedulers.io())
                         .flatMap(mf -> Observable.just(mf.getOrderFacade().findBy(id))
                                 .doOnNext(CuttingModelCalculate.func.delete.apply(mf))

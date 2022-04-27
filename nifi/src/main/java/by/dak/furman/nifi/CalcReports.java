@@ -97,7 +97,7 @@ public class CalcReports extends AbstractProcessor {
         CuttingApp.loadTTF();
         Observable<ReportsModelImpl> observable = Observable.just(Context.context(orderId))
                 .observeOn(Schedulers.io())
-                .map(c -> c.mainFacade(ReportsCalculate.func.main_facade.blockingFirst()))
+                .map(c -> c.mainFacade(ReportsCalculate.func.main_facade.apply(profile).blockingFirst()))
                 .map(c -> c.order(c.mainFacade.getOrderFacade().findBy(c.orderId)))
                 .doOnNext(c -> getLogger().info("order loaded"))
                 .doOnNext(ReportsCalculate.func.delete::apply)

@@ -72,7 +72,8 @@ public class CuttingModelCalculate {
             return sawyer;
         };
 
-        Observable<MainFacade> main_facade = Observable.just(SpringConfiguration.home.get())
+        Function<String, Observable<MainFacade>> main_facade = profile ->
+                Observable.just(SpringConfiguration.profile.apply(profile).get())
                 .map(SpringConfiguration::getMainFacade)
                 .doOnNext(mf -> logger.info("context initialized"));
 
@@ -89,7 +90,7 @@ public class CuttingModelCalculate {
     public static void main(String[] args) {
 
         Observable<CuttingModel> observable = Observable.just(123353550L)
-                .flatMap(id -> func.main_facade
+                .flatMap(id -> func.main_facade.apply("home")
                         .observeOn(Schedulers.io())
                         .flatMap(mf -> Observable.just(mf.getOrderFacade().findBy(id))
                                 .doOnNext(func.delete.apply(mf))

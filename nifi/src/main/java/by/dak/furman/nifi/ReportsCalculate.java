@@ -4,7 +4,6 @@ import by.dak.cutting.CuttingApp;
 import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
-import by.dak.persistence.entities.Order;
 import by.dak.plastic.jasper.data.DSPPlasticCuttedReportDataCreator;
 import by.dak.report.ReportType;
 import by.dak.report.jasper.JReportData;
@@ -34,7 +33,7 @@ public class ReportsCalculate {
     public static final Logger logger = LogManager.getLogger(ReportsCalculate.class);
 
     public interface func {
-        Observable<MainFacade> main_facade = CuttingModelCalculate.func.main_facade;
+        Function<String, Observable<MainFacade>> main_facade = CuttingModelCalculate.func.main_facade;
 
         Function<Context, Function<ReportType, JasperPrint>> jasper_print = c -> type -> {
             switch (type) {
@@ -149,7 +148,7 @@ public class ReportsCalculate {
         CuttingApp.loadTTF();
         Observable<ReportsModelImpl> observable = Observable.just(Context.context(Long.parseLong(args[0])))
                 .observeOn(Schedulers.io())
-                .map(c -> c.mainFacade(func.main_facade.blockingFirst()))
+                .map(c -> c.mainFacade(func.main_facade.apply("home").blockingFirst()))
                 .map(c -> c.order(c.mainFacade.getOrderFacade().findBy(c.orderId)))
                 .doOnNext(c -> logger.info("order loaded"))
                 .doOnNext(func.delete::apply)
