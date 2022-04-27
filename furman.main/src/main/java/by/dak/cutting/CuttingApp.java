@@ -3,6 +3,7 @@
  */
 package by.dak.cutting;
 
+import by.dak.common.Funcs;
 import by.dak.common.swing.EventQueueProxy;
 import by.dak.common.swing.ExceptionHandler;
 import by.dak.cutting.permision.PermissionManager;
@@ -174,24 +175,12 @@ public final class CuttingApp extends SingleFrameApplication {
             Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod_liquibase : SpringConfiguration.profile_liquibase.apply(profile);
             config.get();
         } else {
-            loadTTF();
+            Funcs.init_fonts.run();
             launch(CuttingApp.class, args);
         }
     }
 
-    public static void loadTTF() {
-        try {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arial.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arialbd.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arialbi.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/ariali.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/Tahoma.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/Tahoma-Bold.ttf")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public static void showDialog(Class<? extends JFrame> dialogClass,
                                   HashMap<Class<? extends JFrame>, JFrame> dialogsMap) {

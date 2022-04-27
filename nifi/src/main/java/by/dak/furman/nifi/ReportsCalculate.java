@@ -1,5 +1,6 @@
 package by.dak.furman.nifi;
 
+import by.dak.common.Funcs;
 import by.dak.cutting.CuttingApp;
 import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.persistence.MainFacade;
@@ -145,7 +146,7 @@ public class ReportsCalculate {
 
 
     public static void main(String[] args) throws IOException {
-        CuttingApp.loadTTF();
+        Funcs.init_fonts.run();
         Observable<ReportsModelImpl> observable = Observable.just(Context.context(Long.parseLong(args[0])))
                 .observeOn(Schedulers.io())
                 .map(c -> c.mainFacade(func.main_facade.apply("home").blockingFirst()))

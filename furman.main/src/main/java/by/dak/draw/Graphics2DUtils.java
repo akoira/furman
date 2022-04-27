@@ -58,11 +58,7 @@ public class Graphics2DUtils
 
     public static BufferedImage createBufferedImage(int width, int heigth)
     {
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice gs = ge.getDefaultScreenDevice();
-        GraphicsConfiguration gc = gs.getDefaultConfiguration();
-        return gc.createCompatibleImage(width, heigth, Transparency.OPAQUE);
-
+        return new BufferedImage(width, heigth, Transparency.OPAQUE);
     }
 
 

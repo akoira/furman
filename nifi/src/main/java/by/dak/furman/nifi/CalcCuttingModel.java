@@ -1,5 +1,6 @@
 package by.dak.furman.nifi;
 
+import by.dak.common.Funcs;
 import by.dak.cutting.CuttingApp;
 import by.dak.cutting.swing.cut.CuttingModel;
 import io.reactivex.rxjava3.core.Observable;
@@ -11,10 +12,7 @@ import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.flowfile.FlowFile;
-import org.apache.nifi.processor.AbstractProcessor;
-import org.apache.nifi.processor.ProcessContext;
-import org.apache.nifi.processor.ProcessSession;
-import org.apache.nifi.processor.Relationship;
+import org.apache.nifi.processor.*;
 import org.apache.nifi.processor.exception.ProcessException;
 import org.apache.nifi.processor.util.StandardValidators;
 
@@ -111,5 +109,10 @@ public final class CalcCuttingModel extends AbstractProcessor {
                     session.transfer(file, REL_FAILURE);
                 },
                 () -> session.transfer(file, REL_SUCCESS));
+    }
+
+    @Override
+    protected void init(ProcessorInitializationContext context) {
+        Funcs.init_fonts.run();
     }
 }
