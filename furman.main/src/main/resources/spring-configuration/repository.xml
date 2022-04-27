@@ -19,7 +19,7 @@
 	<!--</bean>-->
 
 	<mongo:mongo host="${mango.db.host}" port="${mango.db.port}"/>
-	<mongo:db-factory id="mongoDbFactory" dbname="${mango.db.name}" username="${mango.db.user}"  password="${mango.db.password}"/>
+	<mongo:db-factory id="mongoDbFactory" mongo-ref="mongo" dbname="${mango.db.name}" username="${mango.db.user}"  password="${mango.db.password}"/>
 	<mongo:mapping-converter id="converter"/>
 
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
