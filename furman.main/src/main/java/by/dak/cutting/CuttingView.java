@@ -360,7 +360,7 @@ public class CuttingView extends FrameView {
 
 	@Action
 	public void showStatistics() {
-		StatisticsPanel panel = new StatisticsPanel();
+		StatisticsPanel panel = new StatisticsPanel(mainFacade);
 		DialogShowers.showBy(panel, CuttingApp.getApplication().getMainFrame(), false);
 	}
 
@@ -373,7 +373,7 @@ public class CuttingView extends FrameView {
 
 	@Action
 	public void showDilerOrderStatisticDialog() {
-		DilerOrderStatisticsPanel dilerOrderStatisticsPanel = new DilerOrderStatisticsPanel();
+		DilerOrderStatisticsPanel dilerOrderStatisticsPanel = new DilerOrderStatisticsPanel(mainFacade);
 		IOrderWizardDelegator orderWizardDelegator = new RootOrderTableReloader(((OrderExplorer) archiveOrdersPanel.getPanelResult()).getListNaviTable());
 		dilerOrderStatisticsPanel.setOrderWizardDelegator(orderWizardDelegator);
 		DialogShowers.showBy(dilerOrderStatisticsPanel, CuttingApp.getApplication().getMainFrame(), false);
@@ -397,7 +397,7 @@ public class CuttingView extends FrameView {
 	private void initComponents() {
 
 		mainPanel = new javax.swing.JPanel();
-		archiveOrdersPanel = new by.dak.cutting.swing.archive.ArchiveOrdersPanel();
+		archiveOrdersPanel = new by.dak.cutting.swing.archive.ArchiveOrdersPanel(mainFacade);
 		menuBar = new javax.swing.JMenuBar();
 		javax.swing.JMenu fileMenu = new javax.swing.JMenu();
 		newOrderMenuItem = new javax.swing.JMenuItem();

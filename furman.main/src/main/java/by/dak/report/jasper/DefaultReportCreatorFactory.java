@@ -37,7 +37,7 @@ public final class DefaultReportCreatorFactory implements ReportCreatorFactory
         switch (reportType)
         {
             case glueing:
-                return new GlueingReportDataCreator((AOrder) reportObject);
+                return new GlueingReportDataCreator((AOrder) reportObject, mainFacade);
             case common:
                 CommonReportDataImpl commonReportData = (CommonReportDataImpl) reportObject;
                 return new DialerCommonReportDataCreator(commonReportData, mainFacade);
@@ -45,7 +45,7 @@ public final class DefaultReportCreatorFactory implements ReportCreatorFactory
                 return new CommonReportDataCreator((CommonReportData) reportObject, mainFacade);
             case cutting:
             case cutting_dsp_plastic:
-                return new CuttingReportDataCreator((CuttedReportData) reportObject);
+                return new CuttingReportDataCreator((CuttedReportData) reportObject, mainFacade);
             case cutoff:
                 return new CutoffReportDataCreator((AOrder) reportObject, mainFacade);
             case milling:

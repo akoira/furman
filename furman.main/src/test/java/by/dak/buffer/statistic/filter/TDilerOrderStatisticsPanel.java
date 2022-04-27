@@ -15,8 +15,8 @@ public class TDilerOrderStatisticsPanel
 {
     public static void main(String[] args)
     {
-        new SpringConfiguration();
-        DilerOrderStatisticsPanel dilerOrderStatisticsPanel = new DilerOrderStatisticsPanel();
+        SpringConfiguration springConfiguration = new SpringConfiguration();
+        DilerOrderStatisticsPanel dilerOrderStatisticsPanel = new DilerOrderStatisticsPanel(springConfiguration.getMainFacade());
         TestUtils.showFrame(dilerOrderStatisticsPanel, "test");
     }
 }

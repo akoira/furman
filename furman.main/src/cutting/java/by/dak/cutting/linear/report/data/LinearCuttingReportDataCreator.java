@@ -3,6 +3,7 @@ package by.dak.cutting.linear.report.data;
 import by.dak.cutting.cut.base.Element;
 import by.dak.cutting.linear.LinearElementDimensionItem;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.report.jasper.*;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperReport;
@@ -39,7 +40,7 @@ public class LinearCuttingReportDataCreator extends ReportDataCreatorDecorator
 
     public LinearCuttingReportDataCreator(LinearCuttedDataReport cuttedReportData)
     {
-        super(new DefaultReportDataCreator(REPORT_BUNDLES_PATH));
+        super(new DefaultReportDataCreator(REPORT_BUNDLES_PATH), new MainFacade());
         this.cuttedReportData = cuttedReportData;
     }
 

@@ -5,6 +5,7 @@ import by.dak.cutting.statistics.StatisticFilter;
 import by.dak.cutting.statistics.swing.tree.RootStaristicsNode;
 import by.dak.cutting.swing.BaseTable;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.Order;
 import by.dak.report.jasper.JReportData;
 import by.dak.report.jasper.ReportGeneratorImpl;
@@ -36,6 +37,10 @@ public class StatisticsPanel<V> extends AStatisticPanel<V>
 {
     private static final String PRINT_TABLE_ACTION_COMMAND = ColumnControlButton.COLUMN_CONTROL_MARKER +
             "printTable";
+    public StatisticsPanel(MainFacade mainFacade)
+    {
+        super(mainFacade);
+    }
 
     @Override
     protected void init()
@@ -117,7 +122,7 @@ public class StatisticsPanel<V> extends AStatisticPanel<V>
 
     public void printTable(List<Order> orders)
     {
-        StatisticOrdersReportDataCreator reportDataCreator = new StatisticOrdersReportDataCreator();
+        StatisticOrdersReportDataCreator reportDataCreator = new StatisticOrdersReportDataCreator(mainFacade);
         reportDataCreator.setOrders(orders);
         try
         {

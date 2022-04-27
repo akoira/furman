@@ -1,6 +1,7 @@
 package by.dak.cutting.doors.jasper.common;
 
 import by.dak.cutting.doors.jasper.common.reportData.DoorsDataReport;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.Order;
 import by.dak.report.jasper.*;
 import net.sf.jasperreports.engine.JRParameter;
@@ -24,7 +25,7 @@ public class CommonReportDoorsDataCreator extends ReportDataCreatorDecorator
 
     public CommonReportDoorsDataCreator(DoorsDataReport doorsDataReport)
     {
-        super(new DefaultReportDataCreator(REPORT_BUNDLES_PATH));
+        super(new DefaultReportDataCreator(REPORT_BUNDLES_PATH), new MainFacade());
         this.doorsDataReport = doorsDataReport;
     }
 

@@ -27,7 +27,7 @@ public class MillingReportDataCreator extends OrderHeaderReportDataCreator
 
     public MillingReportDataCreator(AOrder order, MainFacade mainFacade)
     {
-        super(order);
+        super(order, mainFacade);
     }
 
     @Override

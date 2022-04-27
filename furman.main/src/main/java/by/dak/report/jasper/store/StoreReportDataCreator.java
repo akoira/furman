@@ -42,13 +42,13 @@ public class StoreReportDataCreator extends OrderHeaderReportDataCreator
 
     public StoreReportDataCreator(CommonReportData commonReportData, MainFacade mainFacade)
     {
-        super(commonReportData.getOrder());
+        super(commonReportData.getOrder(), mainFacade);
         this.commonReportData = commonReportData;
         this.mainFacade = mainFacade;
     }
 
     public StoreReportDataCreator(AOrder order, MainFacade mainFacade) {
-        super(order);
+        super(order, mainFacade);
         this.mainFacade = mainFacade;
     }
 

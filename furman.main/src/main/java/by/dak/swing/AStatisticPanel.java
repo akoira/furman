@@ -1,6 +1,7 @@
 package by.dak.swing;
 
 import by.dak.cutting.swing.BaseTabPanel;
+import by.dak.persistence.MainFacade;
 import org.jdesktop.swingx.JXTaskPane;
 
 import javax.swing.*;
@@ -21,9 +22,11 @@ public abstract class AStatisticPanel<V> extends BaseTabPanel<V>
     private JXTaskPane panelFilter = new JXTaskPane();
     private JPanel panelFilterControl;
     private JPanel panelResult;
+    public final MainFacade mainFacade;
 
-    public AStatisticPanel()
+    public AStatisticPanel(MainFacade mainFacade)
     {
+        this.mainFacade = mainFacade;
         panelFilter.setAnimated(false);
         if (!Beans.isDesignTime())
         {
