@@ -73,7 +73,7 @@ public class CuttingModelCalculate {
         };
 
         Function<String, Observable<MainFacade>> main_facade = profile ->
-                Observable.just(SpringConfiguration.profile.apply(profile).get())
+                Observable.just(profile.equals("prod") ? SpringConfiguration.prod.get() : SpringConfiguration.profile.apply(profile).get())
                 .map(SpringConfiguration::getMainFacade)
                 .doOnNext(mf -> logger.info("context initialized"));
 
