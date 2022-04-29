@@ -187,6 +187,10 @@ public class MainFacade implements ApplicationContextAware
             return getFacadeBy0(eClass);
         }
     }
+    public AOrderFacade getOrderFacadeBy(Class aClass)
+    {
+        return (AOrderFacade) getFacadeBy(aClass);
+    }
 
     private BaseFacade getFacadeBy0(Class eClass)
     {
@@ -196,7 +200,7 @@ public class MainFacade implements ApplicationContextAware
 
             Method method = this.getClass().getMethod(name, null);
 
-            return (BaseFacade) method.invoke(null, null);
+            return (BaseFacade) method.invoke(this, null);
         }
         catch (Exception e)
         {

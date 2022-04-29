@@ -78,7 +78,7 @@ public class ReportsCalculate {
         };
 
         Function<MainFacade, Function<AOrder, Function<CuttingModel, CommonReportData>>> common_report_data = mf -> o -> cm ->
-                new CommonDataCreator(cm).create();
+                new CommonDataCreator(cm, mf).create();
 
         Function<Context,
                 Function<ReportType, Object>> report_object = c -> type -> {

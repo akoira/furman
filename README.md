@@ -20,3 +20,12 @@
   * 2.4.1
     * liquebase - need separate context
     * mongodb check it works with new driver
+
+# web 
+* http://80.249.92.51:36752/
+* dveri
+* dveri
+
+# Заказы на прощет в nifi
+* STATUS = webMiscalculation
+* 

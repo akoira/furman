@@ -1,6 +1,7 @@
-version ='2.4.2.11'
+version ='2.4.2.13'
 
 ext {
+    spring_version = '4.1.6.RELEASE'
     nifi_version = '1.16.0'
     rxjava_version = "3.1.4"
     log4j_version = '2.17.2'

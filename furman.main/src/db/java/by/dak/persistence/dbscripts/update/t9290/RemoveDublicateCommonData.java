@@ -21,7 +21,7 @@ public class RemoveDublicateCommonData
 {
     public static void main(String[] args)
     {
-        new SpringConfiguration();
+        SpringConfiguration springConfiguration = new SpringConfiguration();
         HibernateInterceptor hibernateInterceptor = (HibernateInterceptor) FacadeContext.getApplicationContext().getBean("hibernateInterceptor");
         Session session = hibernateInterceptor.getSessionFactory().openSession();
 
@@ -45,7 +45,7 @@ public class RemoveDublicateCommonData
                 Order order = FacadeContext.getOrderFacade().findBy(((BigInteger) o).longValue());
                 FacadeContext.getCommonDataFacade().deleteAll(order);
                 CuttingModel cuttingModel = FacadeContext.getStripsFacade().loadCuttingModel(order).load();
-                CommonDataCreator commonDataCreator = new CommonDataCreator(cuttingModel);
+                CommonDataCreator commonDataCreator = new CommonDataCreator(cuttingModel, springConfiguration.getMainFacade());
                 commonDataCreator.create();
             }
             catch (Throwable e)

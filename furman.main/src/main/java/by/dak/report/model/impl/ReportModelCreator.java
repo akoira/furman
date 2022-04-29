@@ -195,7 +195,7 @@ public final class ReportModelCreator {
 			if (order != null) {
 				FacadeContext.getCommonDataFacade().deleteAll(order);
 			}
-			commonReportData = new CommonDataCreator(cuttingModel).create();
+			commonReportData = new CommonDataCreator(cuttingModel, mainFacade).create();
 		}
 		return commonReportData;
 	}

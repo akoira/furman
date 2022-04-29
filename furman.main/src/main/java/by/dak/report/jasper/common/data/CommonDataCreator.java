@@ -18,7 +18,6 @@ import by.dak.cutting.swing.xml.XstreamHelper;
 import by.dak.cutting.zfacade.ZFacade;
 import by.dak.cutting.zfacade.report.ZFacadeFurnitureDataConverter;
 import by.dak.cutting.zfacade.report.ZFacadeServiceDataConverter;
-import by.dak.persistence.FacadeContext;
 import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.persistence.entities.predefined.OrderItemType;
@@ -66,9 +65,9 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("by/dak/report/jasper/common/commonReport");
 
 
-    public CommonDataCreator(CuttingModel cuttingModel) {
+    public CommonDataCreator(CuttingModel cuttingModel, MainFacade mainFacade) {
         this.cuttingModel = cuttingModel;
-        this.mainFacade = FacadeContext.getMainFacade();
+        this.mainFacade = mainFacade;
         this.dspPlasticModel = this.mainFacade.getDspPlasticStripsFacade().loadCuttingModel(cuttingModel.getOrder()).load();
         this.order = cuttingModel.getOrder();
         Dailysheet dailysheet = this.mainFacade.getDailysheetFacade().loadCurrentDailysheet();
@@ -87,19 +86,19 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         reportData.getOrder().setCost(reportData.getCommonCost());
         reportData.getOrder().setDialerCost(reportData.getDialerCommonCost());
 
-        FacadeContext.getOrderFacadeBy(reportData.getOrder().getClass()).recalculate(reportData.getOrder());
-        FacadeContext.getOrderFacadeBy(reportData.getOrder().getClass()).save(reportData.getOrder());
+        mainFacade.getOrderFacadeBy(reportData.getOrder().getClass()).recalculate(reportData.getOrder());
+        mainFacade.getOrderFacadeBy(reportData.getOrder().getClass()).save(reportData.getOrder());
         return reportData;
     }
 
     private void fillFacadeData(CommonReportDataImpl reportData) {
-        List<ZFacade> zFacades = FacadeContext.getZFacadeFacade().findAllByField(ZFacade.PROPERTY_order, order);
-        FacadeContext.getZFacadeFacade().fillTransients(zFacades);
+        List<ZFacade> zFacades = mainFacade.getzFacadeFacade().findAllByField(ZFacade.PROPERTY_order, order);
+        mainFacade.getzFacadeFacade().fillTransients(zFacades);
 
-        List<AGTFacade> agtFacades = FacadeContext.getAGTFacadeFacade().findAllByField(AGTFacade.PROPERTY_order, order);
-        FacadeContext.getAGTFacadeFacade().fillTransients(agtFacades);
+        List<AGTFacade> agtFacades = mainFacade.getAgtFacadeFacade().findAllByField(AGTFacade.PROPERTY_order, order);
+        mainFacade.getAgtFacadeFacade().fillTransients(agtFacades);
 
-        List<TemplateFacade> templateFacades = FacadeContext.getTemplateFacadeFacade().findAllByField(TemplateFacade.PROPERTY_order, order);
+        List<TemplateFacade> templateFacades =  mainFacade.getTemplateFacadeFacade().findAllByField(TemplateFacade.PROPERTY_order, order);
 
         fillFacadeServicesData(reportData, zFacades, agtFacades, templateFacades);
 
@@ -110,11 +109,11 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     private void fillFacadeFurnitureData(CommonReportDataImpl reportData, List<ZFacade> zFacades, List<AGTFacade> agtFacades) {
         ArrayList<FurnitureLink> furnitureLinks = new ArrayList<FurnitureLink>();
         for (AGTFacade agtFacade : agtFacades) {
-            furnitureLinks.addAll(FacadeContext.getFurnitureLinkFacade().loadAllBy(agtFacade));
+            furnitureLinks.addAll(mainFacade.getFurnitureLinkFacade().loadAllBy(agtFacade));
         }
 
         for (ZFacade facade : zFacades) {
-            furnitureLinks.addAll(FacadeContext.getFurnitureLinkFacade().loadAllBy(facade));
+            furnitureLinks.addAll(mainFacade.getFurnitureLinkFacade().loadAllBy(facade));
         }
         CommonDatas<CommonData> furnitureData = new FurnitureConverter(CommonDataType.facadeFurniture, order, mainFacade)
                 .convert(furnitureLinks);
@@ -133,9 +132,9 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         BoardMaterialsConverter boardMaterialsConverter = new BoardMaterialsConverter(cuttingModel, mainFacade);
         CommonDatas<CommonData> boardMaterialsData = boardMaterialsConverter.convert(cuttingModel.getPairs());
 
-        if (FacadeContext.getDSPPlasticDetailFacade().hasPlasticDetails(order)) {
+        if (mainFacade.getDspPlasticDetailFacade().hasPlasticDetails(order)) {
             for (TextureBoardDefPair pair : dspPlasticModel.getPairs()) {
-                if (FacadeContext.getDSPPlasticDetailFacade().isPlastic(pair.getBoardDef())) {
+                if (mainFacade.getDspPlasticDetailFacade().isPlastic(pair.getBoardDef())) {
                     //reset data calculated in the common cutting
                     boardMaterialsConverter.resetCommonDataBy(pair);
                 }
@@ -145,17 +144,18 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         }
         reportData.setCommonDatas(boardMaterialsData);
 
-        CommonDatas<CommonData> borderMaterialsData = new BorderMaterialsConverter(order, mainFacade).convert(FacadeContext.getOrderFurnitureFacade().findOrderedWithGlueing(order, Boolean.TRUE));
+        CommonDatas<CommonData> borderMaterialsData = new BorderMaterialsConverter(order, mainFacade)
+                .convert(mainFacade.getOrderFurnitureFacade().findOrderedWithGlueing(order, Boolean.TRUE));
         reportData.setCommonDatas(borderMaterialsData);
 
 
-        List<OrderItem> orderItems = FacadeContext.getOrderItemFacade().loadBy(order);
+        List<OrderItem> orderItems = mainFacade.getOrderItemFacade().loadBy(order);
         List<Additional> additionals = new ArrayList<Additional>();
         List<FurnitureLink> furnitureLinks = new ArrayList<FurnitureLink>();
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getType() == OrderItemType.first || orderItem.getType() == OrderItemType.common) {
-                additionals.addAll(FacadeContext.getAdditionalFacade().loadAll(AdditionalFacadeImpl.getSearchFilterBy(orderItem)));
-                furnitureLinks.addAll(FacadeContext.getFurnitureLinkFacade().loadAllBy(orderItem));
+                additionals.addAll(mainFacade.getAdditionalFacade().loadAll(AdditionalFacadeImpl.getSearchFilterBy(orderItem)));
+                furnitureLinks.addAll(mainFacade.getFurnitureLinkFacade().loadAllBy(orderItem));
             }
         }
 
@@ -199,9 +199,9 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     private void fillDSPPlasticServicesData(CommonReportDataImpl reportData) {
         CommonDatas<CommonData> plasticPatch = new CommonDatas<CommonData>(CommonDataType.plasticPatch, order);
 
-        List<DSPPlasticDetail> dspPlasticDetails = FacadeContext.getDSPPlasticDetailFacade().loadAllBy(order);
+        List<DSPPlasticDetail> dspPlasticDetails = mainFacade.getDspPlasticDetailFacade().loadAllBy(order);
         for (DSPPlasticDetail detail : dspPlasticDetails) {
-            if (FacadeContext.getDSPPlasticDetailFacade().isPlastic(detail.getBoardDef())) {
+            if (mainFacade.getDspPlasticDetailFacade().isPlastic(detail.getBoardDef())) {
                 countPlasticPatch(plasticPatch, detail);
             }
         }
@@ -232,7 +232,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         CommonDatas<CommonData> cutoff = new CommonDatas<>(CommonDataType.cutoff, order);
         CommonDatas<CommonData> drilling = new CommonDatas<>(CommonDataType.drilling, order);
 
-        List<OrderFurniture> orderFurnitures = FacadeContext.getOrderFurnitureFacade().loadAllBy(order);
+        List<OrderFurniture> orderFurnitures = mainFacade.getOrderFurnitureFacade().loadAllBy(order);
         for (OrderFurniture furniture : orderFurnitures) {
             countPatch(patch, furniture);
             countGrooveSection(groove, furniture);
@@ -274,7 +274,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
 
     private void setAndSave(CommonReportDataImpl reportData, CommonDatas<CommonData> commonDatas) {
         reportData.setCommonDatas(commonDatas);
-        FacadeContext.getCommonDataFacade().saveAll(commonDatas);
+        mainFacade.getCommonDataFacade().saveAll(commonDatas);
     }
 
 
