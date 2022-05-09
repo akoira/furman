@@ -33,12 +33,13 @@ dependencies {
     api files('../lib/jcr-1.0/jcr-1.0.jar')
 
 
-    api files('../lib/jgoodies/looks-2.3.1.jar')
+//    api files('../lib/jgoodies/looks-2.3.1.jar')
 
+    api 'com.jgoodies:jgoodies-looks:2.7.0'
     api 'com.jgoodies:jgoodies-animation:1.4.2'
-    api 'com.jgoodies:jgoodies-validation:2.4.2'
-    api 'com.jgoodies:jgoodies-forms:1.6.0'
-    api 'com.jgoodies:jgoodies-binding:2.7.0'
+    api 'com.jgoodies:jgoodies-validation:2.5.1'
+    api 'com.jgoodies:jgoodies-forms:1.9.0'
+    api 'com.jgoodies:jgoodies-binding:2.13.0'
 
     api files('../lib/jhotdraw/jhotdraw.jar')
 
