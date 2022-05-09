@@ -1,6 +1,7 @@
 package by.dak.report.jasper.milling;
 
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.OrderFurniture;
 import by.dak.report.jasper.OrderHeaderReportDataCreator;
@@ -24,9 +25,9 @@ public class MillingReportDataCreator extends OrderHeaderReportDataCreator
     private static final String REPORT_BUNDLES_PATH = "by/dak/report/jasper/milling/millingReport";
 
 
-    public MillingReportDataCreator(AOrder order)
+    public MillingReportDataCreator(AOrder order, MainFacade mainFacade)
     {
-        super(order);
+        super(order, mainFacade);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class MillingReportDataCreator extends OrderHeaderReportDataCreator
 
         for (OrderFurniture furniture1 : furnitures)
         {
-            MillingReportData millingReportData = new MillingReportData(furniture1);
+            MillingReportData millingReportData = new MillingReportData(furniture1, mainFacade);
             list.add(millingReportData);
         }
         return list;

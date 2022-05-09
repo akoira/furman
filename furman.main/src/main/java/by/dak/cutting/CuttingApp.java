@@ -3,6 +3,7 @@
  */
 package by.dak.cutting;
 
+import by.dak.common.Funcs;
 import by.dak.common.swing.EventQueueProxy;
 import by.dak.common.swing.ExceptionHandler;
 import by.dak.cutting.permision.PermissionManager;
@@ -18,15 +19,13 @@ import org.jdesktop.application.SingleFrameApplication;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,7 +37,7 @@ import java.util.logging.Logger;
 /**
  * The main class of the application.
  */
-public class CuttingApp extends SingleFrameApplication {
+public final class CuttingApp extends SingleFrameApplication {
     private ExceptionHandler exceptionHandler = new DefaultExceptionHandler();
 
     public static final String FURMAN_PROFILE  = "FURMAN_PROFILE";
@@ -112,7 +111,6 @@ public class CuttingApp extends SingleFrameApplication {
     protected void initialize(String[] args) {
         initSwings();
         JModalConfiguration.enableWaitOnEDT();
-        Locale.setDefault(new Locale("ru", "RU"));
 
         super.initialize(args);
         getInstance().getContext().getSessionStorage().putProperty(RootWindow.class, new RootWindowProperty());
@@ -120,8 +118,9 @@ public class CuttingApp extends SingleFrameApplication {
 
         Callable callable = () -> {
             try {
-                String profile = System.getenv().get(FURMAN_PROFILE);
-                Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod : SpringConfiguration.home;
+                String profile = Optional.ofNullable(System.getenv().get(FURMAN_PROFILE))
+                        .orElseGet(() -> System.getProperty(FURMAN_PROFILE));
+                Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod : SpringConfiguration.profile.apply(profile);
                 springConfiguration = config.get();
                 return null;
             } catch (Throwable e) {
@@ -169,32 +168,19 @@ public class CuttingApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
+        Locale.setDefault(new Locale("ru", "RU", "utf8"));
+
         if (args.length > 0 && args[0].equals("--upgrade")) {
             String profile = System.getenv().get(FURMAN_PROFILE);
-            Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod_liquibase : SpringConfiguration.home_liquibase;
+            Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod_liquibase : SpringConfiguration.profile_liquibase.apply(profile);
             config.get();
         } else {
-            Locale.setDefault(new Locale("ru", "RU", "utf8"));
-
-            loadTTF();
-
+            Funcs.init_fonts.run();
             launch(CuttingApp.class, args);
         }
     }
 
-    private static void loadTTF() {
-        try {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arial.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arialbd.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/arialbi.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/ariali.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/Tahoma.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/user/_prj/_modernhouse/furman/reports/fonts/Tahoma-Bold.ttf")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public static void showDialog(Class<? extends JFrame> dialogClass,
                                   HashMap<Class<? extends JFrame>, JFrame> dialogsMap) {

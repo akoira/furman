@@ -1,0 +1,12 @@
+apply from: "$rootDir/gradle/nifi.nar.gradle"
+
+jar {
+    manifest {
+        def defaultAttrs = [
+                'Nar-Dependency-Group'               : 'org.apache.nifi',
+                'Nar-Dependency-Version'             : nifi_version,
+                'Nar-Dependency-Id'                  : 'nifi-standard-services-api-nar',
+        ]
+        attributes(defaultAttrs)
+    }
+}

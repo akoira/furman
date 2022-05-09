@@ -7,10 +7,17 @@ buildscript {
   }
 }
 
+ext {
+  BUILD_TIMESTAMP_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+}
+
 allprojects {
-  version = '2.4.1.1'
+  group = "by.dak.furman"
+  apply from: "$rootDir/versions.gradle"
+
   apply plugin: 'java'
-  apply plugin: 'maven'
+  apply plugin: 'java-library'
+  apply plugin: 'maven-publish'
 
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
@@ -26,5 +33,5 @@ allprojects {
 }
 
 wrapper {
-  gradleVersion = "4.8.1"
+  gradleVersion = "7.4.2"
 }

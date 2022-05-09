@@ -1,5 +1,6 @@
 package by.dak.report.jasper;
 
+import by.dak.persistence.MainFacade;
 import by.dak.utils.Decorator;
 
 import java.util.Locale;
@@ -15,13 +16,17 @@ public class ReportDataCreatorDecorator implements ReportDataCreator, Decorator<
 {
     private ReportDataCreator underlyingCreator;
 
-    protected ReportDataCreatorDecorator()
+    public final MainFacade mainFacade;
+
+    protected ReportDataCreatorDecorator(MainFacade mainFacade)
     {
+        this.mainFacade = mainFacade;
     }
 
-    public ReportDataCreatorDecorator(ReportDataCreator underlyingCreator)
+    public ReportDataCreatorDecorator(ReportDataCreator underlyingCreator, MainFacade mainFacade)
     {
         this.underlyingCreator = underlyingCreator;
+        this.mainFacade = mainFacade;
     }
 
     public JReportData create()

@@ -11,22 +11,17 @@ import java.util.ResourceBundle;
  * @author dkoyro
  * @version 0.1 13.03.2009 13:25:46
  */
-public class JReportDataImpl implements JReportData
+public final class JReportDataImpl implements JReportData
 {
-    private JRDataSource dataSource;
-    private Map<String, Object> additionalParams;
-    private ResourceBundle resourceBundle;
-    private Locale locale;
-    private URL jasperReportPath;
+    private final JRDataSource dataSource;
+    private final Map<String, Object> additionalParams;
+    private final ResourceBundle resourceBundle;
+    private final Locale locale;
+    private final URL jasperReportPath;
 
     public JReportDataImpl(JRDataSource dataSource, Map<String, Object> additionalParams, URL jasperReportPath,
                            ResourceBundle resourceBundle, Locale locale)
     {
-        assert dataSource != null;
-        assert additionalParams != null;
-        assert jasperReportPath != null;
-        assert resourceBundle != null;
-        assert locale != null;
         this.dataSource = dataSource;
         this.additionalParams = additionalParams;
         this.jasperReportPath = jasperReportPath;

@@ -1,5 +1,6 @@
 package by.dak.report.statistics.data;
 
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.Order;
 import by.dak.report.jasper.DefaultReportDataCreator;
@@ -36,9 +37,12 @@ public class StatisticOrdersReportDataCreator extends ReportDataCreatorDecorator
         this.orders = orders;
     }
 
-    public StatisticOrdersReportDataCreator()
+    public StatisticOrdersReportDataCreator(MainFacade mainFacade)
     {
+        super(mainFacade);
         setUnderlying(new DefaultReportDataCreator(REPORT_BUNDLES_PATH));
+
+
     }
 
     @Override

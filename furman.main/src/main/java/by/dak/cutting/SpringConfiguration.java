@@ -75,4 +75,12 @@ public class SpringConfiguration {
     public static final Supplier<SpringConfiguration> prod_liquibase = () -> new SpringConfiguration(true);
     public static final Supplier<SpringConfiguration> home = () -> new SpringConfiguration(false, "spring-configuration/home");
     public static final Supplier<SpringConfiguration> home_liquibase = () -> new SpringConfiguration(true, "spring-configuration/home");
+
+    public static final Supplier<SpringConfiguration> docker = () -> new SpringConfiguration(false, "spring-configuration/docker");
+    public static final Supplier<SpringConfiguration> docker_liquibase = () -> new SpringConfiguration(true, "spring-configuration/docker");
+
+    public static final Function<String,Supplier<SpringConfiguration>> profile = profile -> () -> new
+            SpringConfiguration(false, "spring-configuration/" + profile);
+    public static final Function<String,Supplier<SpringConfiguration>> profile_liquibase = profile -> () ->
+            new SpringConfiguration(true, "spring-configuration/" + profile);
 }

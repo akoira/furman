@@ -19,6 +19,7 @@ import by.dak.cutting.swing.store.tree.StoreRootNode;
 import by.dak.ordergroup.OrderGroup;
 import by.dak.ordergroup.swing.wizard.OrderGroupWizardController;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.persistence.entities.predefined.StoreElementStatus;
 import by.dak.report.PriceReportType;
@@ -32,10 +33,9 @@ import by.dak.swing.explorer.ExplorerPanel;
 import by.dak.swing.tree.ATreeNode;
 import by.dak.swing.wizard.DWizardController;
 import by.dak.swing.wizard.WizardDisplayerHelper;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.base.JRBaseParameter;
+import net.sf.jasperreports.engine.design.JRDesignParameter;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.swing.JRViewer;
@@ -57,10 +57,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static by.dak.report.jasper.Constants.MAIN_FACADE;
 
 
 /**
@@ -322,14 +325,16 @@ public class DialogShowers
 
 
     public static void showJasperViewer(final String name, final String reportKey,
-                                        final ResourceMap resourceMap, final String reportPath, final Map parameters)
+                                        final ResourceMap resourceMap, final String reportPath,
+                                        final Map<String, Object> parameters)
     {
         showJasperViewer(null, name, reportKey, resourceMap, reportPath, parameters);
     }
 
 
     public static void showJasperViewer(final Component relatedComponent, final String name, final String reportKey,
-                                        final ResourceMap resourceMap, final String reportPath, final Map parameters)
+                                        final ResourceMap resourceMap, final String reportPath,
+                                        final Map<String, Object> parameters)
     {
         //"by/dak/cutting/def/report/owner.price.jrxml"
         final InputStream[] stream = {null};
@@ -339,35 +344,35 @@ public class DialogShowers
             @Override
             protected Object doInBackground() throws Exception
             {
-                AtomicReference<Runnable> runnable = new AtomicReference<Runnable>(new Runnable()
-                {
-                    @Override
-                    public void run()
+                AtomicReference<Runnable> runnable = new AtomicReference<Runnable>(() -> {
+                    try
                     {
-                        try
-                        {
-                            stream[0] = DialogShowers.class.getClassLoader().getResourceAsStream(reportPath);
-                            JasperDesign jasperDesign = JRXmlLoader.load(stream[0]);
-                            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-                            Connection jdbcConnection = FacadeContext.getJDBCConnection();
-                            jasperPrint[0] = JasperFillManager.fillReport(jasperReport, parameters, jdbcConnection);
-                        }
-                        catch (Exception e)
-                        {
-                            CuttingApp.getApplication().getExceptionHandler().handle(e);
-                        }
-                        finally
-                        {
-                            if (stream[0] != null)
-                                IOUtils.closeQuietly(stream[0]);
-                        }
+                        stream[0] = DialogShowers.class.getClassLoader().getResourceAsStream(reportPath);
+                        JasperDesign jasperDesign = JRXmlLoader.load(stream[0]);
+                        JRDesignParameter mainFacade = new JRDesignParameter();
+                        mainFacade.setName(MAIN_FACADE);
+                        mainFacade.setValueClass(MainFacade.class);
+                        jasperDesign.addParameter(mainFacade);
 
-                        if (jasperPrint[0] != null)
-                        {
-                            JRViewer jrViewer = new JRViewer(jasperPrint[0]);
-                            jrViewer.setName(name);
-                            showBy(jrViewer, relatedComponent, false, resourceMap.getString(reportKey + ".title"));
-                        }
+                        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+                        Connection jdbcConnection = ((MainFacade) parameters.get(MAIN_FACADE)).getJDBCConnection();
+                        jasperPrint[0] = JasperFillManager.fillReport(jasperReport,parameters, jdbcConnection);
+                    }
+                    catch (Exception e)
+                    {
+                        CuttingApp.getApplication().getExceptionHandler().handle(e);
+                    }
+                    finally
+                    {
+                        if (stream[0] != null)
+                            IOUtils.closeQuietly(stream[0]);
+                    }
+
+                    if (jasperPrint[0] != null)
+                    {
+                        JRViewer jrViewer = new JRViewer(jasperPrint[0]);
+                        jrViewer.setName(name);
+                        showBy(jrViewer, relatedComponent, false, resourceMap.getString(reportKey + ".title"));
                     }
                 });
                 SwingUtilities.invokeLater(runnable.get());
@@ -388,7 +393,7 @@ public class DialogShowers
     }
 
 
-    public static void showPriceJasperViewer(final String type)
+    public static void showPriceJasperViewer(final String type, MainFacade mainFacade)
     {
         final ResourceMap resourceMap = Application.getInstance().getContext().getResourceMap(by.dak.cutting.def.report.Constants.class);
 
@@ -397,17 +402,15 @@ public class DialogShowers
         valueTab.setValue(new ReportProperties());
         final ItemSelector itemSelector = (ItemSelector) valueTab.getEditors().get(ReportProperties.PROPERTY_priceReportType);
         final WindowCallback windowCallback = new WindowCallback();
-        itemSelector.getComboBoxItem().addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                windowCallback.dispose();
-                String priceType = ((PriceReportType) itemSelector.getComboBoxItem().getSelectedItem()).name();
-                String reportPath = "by/dak/cutting/def/report/" + type + "/" +
-                        ((PriceReportType) itemSelector.getComboBoxItem().getSelectedItem()).name() + by.dak.cutting.def.report.Constants.REPORT_PRICE_FILE_SUFFIX;
-                showJasperViewer(type + "." + priceType + ".price", type + "." + priceType + ".price", resourceMap, reportPath);
-            }
+        itemSelector.getComboBoxItem().addActionListener(e -> {
+            windowCallback.dispose();
+            Map<String, Object> properties = new HashMap<>();
+            properties.put(MAIN_FACADE, mainFacade);
+
+            String priceType = ((PriceReportType) itemSelector.getComboBoxItem().getSelectedItem()).name();
+            String reportPath = "by/dak/cutting/def/report/" + type + "/" +
+                    ((PriceReportType) itemSelector.getComboBoxItem().getSelectedItem()).name() + by.dak.cutting.def.report.Constants.REPORT_PRICE_FILE_SUFFIX;
+            showJasperViewer(type + "." + priceType + ".price", type + "." + priceType + ".price", resourceMap, reportPath, properties);
         });
         DialogShowers.showBy(valueTab, null, windowCallback, true);
     }

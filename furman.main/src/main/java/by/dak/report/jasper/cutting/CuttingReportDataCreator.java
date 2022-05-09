@@ -2,6 +2,7 @@ package by.dak.report.jasper.cutting;
 
 import by.dak.cutting.cut.guillotine.Segment;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.AOrderBoardDetail;
 import by.dak.report.jasper.*;
@@ -52,9 +53,9 @@ public class CuttingReportDataCreator<D extends AOrderBoardDetail> extends Repor
 
     private CuttedReportData cuttedReportData;
 
-    public CuttingReportDataCreator(CuttedReportData cuttedReportData)
+    public CuttingReportDataCreator(CuttedReportData cuttedReportData, MainFacade mainFacade)
     {
-        super(new DefaultReportDataCreator(REPORT_BUNDLES_PATH));
+        super(new DefaultReportDataCreator(REPORT_BUNDLES_PATH), mainFacade);
         this.cuttedReportData = cuttedReportData;
     }
 

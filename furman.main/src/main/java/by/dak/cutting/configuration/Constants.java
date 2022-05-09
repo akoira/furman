@@ -1,6 +1,12 @@
 package by.dak.cutting.configuration;
 
-import org.jdesktop.application.Application;
+import by.dak.cutting.CuttingApp;
+
+
+import java.io.IOException;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * Класс содержит конфигурационные константы для данного проекта.
@@ -9,26 +15,47 @@ import org.jdesktop.application.Application;
  * Date: 13.03.2009
  * Time: 20:54:16
  */
-public interface Constants
-{
+public interface Constants {
+    static ResourceBundle resourceBundle(Class aClass) {
+        return ResourceBundle.getBundle(aClass.getPackage().getName() + ".resources." + aClass.getSimpleName());
+    }
+    static Properties properties(Class aClass) {
+        Properties properties = new Properties();
+        try {
+            properties.load(aClass.getResourceAsStream("resources/" + aClass.getSimpleName() + ".properties"));
+            return properties;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    static Properties properties() {
+        return properties(CuttingApp.class);
+    }
+
+    static ResourceBundle resourceBundle() {
+        return resourceBundle(CuttingApp.class);
+    }
+
+    Properties properties = properties();
+    ResourceBundle resourceBundle = resourceBundle();
     /**
      * На сколько должен быть увеличин размер составных частей комплексной детали
      */
-    public final static int COMPEXT_FURNITURE_INCREASE = Application.getInstance().getContext().getResourceMap().getInteger("Application.default.OrderFurniture.complex.increas");
+    int COMPEXT_FURNITURE_INCREASE = Integer.parseInt(resourceBundle.getString("Application.default.OrderFurniture.complex.increas"));
 
     /**
      * Used only for tests
      *
      * @deprecated
      */
-    public static final long DEFAULT_SHEET_LENGTH = 2800;
+    long DEFAULT_SHEET_LENGTH = 2800;
 
     /**
      * Used only for tests
      *
      * @deprecated
      */
-    public static final long DEFAULT_SHEET_WIDTH = 2070;
+    long DEFAULT_SHEET_WIDTH = 2070;
 
     /**
      * Дефолтное значение градуса угла
@@ -38,48 +65,48 @@ public interface Constants
     /*
      Дефолтное значение градуса угла
      */
-    public final static String DEFAULT_A45_VALUE = Application.getInstance().getContext().getResourceMap().getString("Application.default.a45.value");
+    String DEFAULT_A45_VALUE = resourceBundle.getString("Application.default.a45.value");
 
 
     /**
      * Минимальная длинна материала
      */
-    public final static int MIN_BORDER_LENGTH = Application.getInstance().getContext().getResourceMap().getInteger("Application.border.length.min.value");
+    int MIN_BORDER_LENGTH = Integer.parseInt(resourceBundle.getString("Application.border.length.min.value"));
 
-    public final static int MIN_MATERIAL_LENGTH = Application.getInstance().getContext().getResourceMap().getInteger("Application.mat.length.min.value");
+    int MIN_MATERIAL_LENGTH = Integer.parseInt(resourceBundle.getString("Application.mat.length.min.value"));
 
-    public final static int MIN_MATERIAL_WIDTH = Application.getInstance().getContext().getResourceMap().getInteger("Application.mat.width.min.value");
+    int MIN_MATERIAL_WIDTH = Integer.parseInt(resourceBundle.getString("Application.mat.width.min.value"));
 
-    public final static int MIN_DETAIL_LENGTH = Application.getInstance().getContext().getResourceMap().getInteger("Application.detail.length.min.value");
+    int MIN_DETAIL_LENGTH = Integer.parseInt(resourceBundle.getString("Application.detail.length.min.value"));
 
-    public final static int MIN_DETAIL_WIDTH = Application.getInstance().getContext().getResourceMap().getInteger("Application.detail.width.min.value");
+    int MIN_DETAIL_WIDTH = Integer.parseInt(resourceBundle.getString("Application.detail.width.min.value"));
 
-    public final static int DETAIL_LENGTH_MAX = Application.getInstance().getContext().getResourceMap().getInteger("Application.detail.length.max.value");
+    int DETAIL_LENGTH_MAX = Integer.parseInt(resourceBundle.getString("Application.detail.length.max.value"));
 
-    public final static int DETAIL_WIDTH_MAX = Application.getInstance().getContext().getResourceMap().getInteger("Application.detail.width.max.value");
+    int DETAIL_WIDTH_MAX = Integer.parseInt(resourceBundle.getString("Application.detail.width.max.value"));
 
 
-    public final static int MAX_COUNT_DETAIL_VALUE = Application.getInstance().getContext().getResourceMap().getInteger("Application.detail.max.count.value");
+    int MAX_COUNT_DETAIL_VALUE = Integer.parseInt(resourceBundle.getString("Application.detail.max.count.value"));
 
-    public final static int MIN_COUNT_DETAIL_VALUE = Application.getInstance().getContext().getResourceMap().getInteger("Application.detail.min.count.value");
+    int MIN_COUNT_DETAIL_VALUE = Integer.parseInt(resourceBundle.getString("Application.detail.min.count.value"));
 
-    public final static String DEFAULT_DETAIL_NAME = Application.getInstance().getContext().getResourceMap().getString("Application.default.OrderFurniture.name");
+    String DEFAULT_DETAIL_NAME = resourceBundle.getString("Application.default.OrderFurniture.name");
 
 
     /**
      * todo перенести в систему настроек
      * Минимальный площать куска материал котрый может использоватся в дальнейшем
      */
-    public final static float MIN_USING_AREA = 700000;
+    float MIN_USING_AREA = 700000;
 
     //todo константа опрделяет вращать или нет лист.
-    public final static boolean ROTATE_SHEET = true;
+    boolean ROTATE_SHEET = true;
 
     //todo время для оптимизации одного листа
     public static long TIME_FOR_STRIP = 15;
 
 
-    boolean IS_PUT_REST_TO_STORE = Application.getInstance().getContext().getResourceMap().getBoolean("Application.default.isPutRestToStore");
+    boolean IS_PUT_REST_TO_STORE = Boolean.parseBoolean(resourceBundle.getString("Application.default.isPutRestToStore"));
 
 
 }

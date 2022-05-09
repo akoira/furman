@@ -3,7 +3,9 @@ package by.dak.cutting.afacade.report;
 import by.dak.cutting.SearchFilter;
 import by.dak.cutting.afacade.AFacade;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
+import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.PriceEntity;
 import by.dak.persistence.entities.Service;
 import by.dak.persistence.entities.predefined.ServiceType;
@@ -25,12 +27,16 @@ public abstract class AFacadeServiceDataConverter<F extends AFacade> implements 
 {
 
     private Class<F> elementClass = GenericUtils.getParameterClass(getClass(), 0);
-    private AOrder order;
+    public final AOrder order;
+    public final MainFacade mainFacade;
+    public final Dailysheet dailysheet;
 
 
-    public AFacadeServiceDataConverter(AOrder order)
+    public AFacadeServiceDataConverter(AOrder order, MainFacade mainFacade)
     {
         this.order = order;
+        this.mainFacade = mainFacade;
+        this.dailysheet = MainFacade.dailysheet.apply(mainFacade).apply(this.order);
     }
 
 
@@ -55,7 +61,7 @@ public abstract class AFacadeServiceDataConverter<F extends AFacade> implements 
             List<PriceEntity> prices = FacadeContext.getPriceFacade().loadAll(searchFilter);
             if (prices.size() > 0)
             {
-                ReportUtils.fillPrice(commonData, prices.get(0));
+                ReportUtils.fillPrice(commonData, prices.get(0), order, mainFacade);
             }
             datas.add(commonData);
         }

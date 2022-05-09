@@ -48,7 +48,7 @@ public class T8693CommonDataUpdater
                             try
                             {
                                 CuttingModel cuttingModel = FacadeContext.getStripsFacade().loadCuttingModel(order).load();
-                                CommonDataCreator commonDataCreator = new CommonDataCreator(cuttingModel);
+                                CommonDataCreator commonDataCreator = new CommonDataCreator(cuttingModel, springConfiguration.getMainFacade());
                                 commonDataCreator.create();
                             }
                             catch (Throwable t)

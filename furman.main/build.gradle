@@ -1,128 +1,131 @@
 dependencies {
-    compile project(':furman.common')
-    compile project(':furman.repository')
-    compile project(':furman.upgrade')
+    api project(':furman.common')
+    api project(':furman.repository')
+    api project(':furman.upgrade')
 
-    //compile files('../lib/appframework-1.03/appframework-1.0.3.jar')
-    compile files('../lib/appframework-1.03/swing-worker.jar')
-    compile files('../lib/asm/asm-all-3.3.1.jar')
-    compile files('../lib/aspectj-1.5.4/aspectjrt-1.5.4.jar')
-    compile files('../lib/aspectj-1.5.4/aspectjweaver-1.5.4.jar')
-    compile files('../lib/aspectj-1.6.5/aspectjrt.jar')
-    compile files('../lib/aspectj-1.6.5/aspectjtools.jar')
-    compile files('../lib/aspectj-1.6.5/aspectjweaver.jar')
-    compile files('../lib/aspectj-1.6.5/org.aspectj.matcher.jar')
+    //api files('../lib/appframework-1.03/appframework-1.0.3.jar')
+    api files('../lib/appframework-1.03/swing-worker.jar')
+    api files('../lib/asm/asm-all-3.3.1.jar')
+    api files('../lib/aspectj-1.5.4/aspectjrt-1.5.4.jar')
+    api files('../lib/aspectj-1.5.4/aspectjweaver-1.5.4.jar')
+    api files('../lib/aspectj-1.6.5/aspectjrt.jar')
+    api files('../lib/aspectj-1.6.5/aspectjtools.jar')
+    api files('../lib/aspectj-1.6.5/aspectjweaver.jar')
+    api files('../lib/aspectj-1.6.5/org.aspectj.matcher.jar')
 
-    compile 'org.jdesktop:beansbinding:1.2.1'
-    compile files('../lib/cutting/AbsoluteLayout.jar')
-    compile files('../lib/cutting/javacsv.jar')
-    compile files('../lib/ehcache/ehcache-core-2.4.2.jar')
-    compile files('../lib/eventbus-1.2/EventBus-1.2.jar')
+    api 'org.jdesktop:beansbinding:1.2.1'
+    api files('../lib/cutting/AbsoluteLayout.jar')
+    api files('../lib/cutting/javacsv.jar')
+    api files('../lib/ehcache/ehcache-core-2.4.2.jar')
+    api files('../lib/eventbus-1.2/EventBus-1.2.jar')
 
-    compile files('../lib/hsqldb/hsqldb.jar')
-    compile files('../lib/hsqldb/sqltool.jar')
-    compile files('../lib/infonode/idw-gpl.jar')
-    compile files('../lib/infonode/ilf-gpl.jar')
-    compile files('../lib/infonode/itp-gpl.jar')
-    compile files('../lib/itext-2.1.0/iText-2.1.0.jar')
-    compile files('../lib/jacob/jacob.jar')
-    //compile files('../lib/jacob-1.18-M1/jacob.jar')
+    api files('../lib/hsqldb/hsqldb.jar')
+    api files('../lib/hsqldb/sqltool.jar')
+    api files('../lib/infonode/idw-gpl.jar')
+    api files('../lib/infonode/ilf-gpl.jar')
+    api files('../lib/infonode/itp-gpl.jar')
+    api files('../lib/itext-2.1.0/iText-2.1.0.jar')
+    api files('../lib/jacob/jacob.jar')
+    //api files('../lib/jacob-1.18-M1/jacob.jar')
 
-    compile files('../lib/jcalendar-1.3.2/jcalendar-1.3.2.jar')
-    compile files('../lib/jcalendar-1.3.2/looks-2.0.1.jar')
-    compile files('../lib/jcr-1.0/jcr-1.0.jar')
-
-
-    compile files('../lib/jgoodies/looks-2.3.1.jar')
-
-    compile 'com.jgoodies:jgoodies-animation:1.4.2'
-    compile 'com.jgoodies:jgoodies-validation:2.4.2'
-    compile 'com.jgoodies:jgoodies-forms:1.6.0'
-    compile 'com.jgoodies:jgoodies-binding:2.7.0'
-
-    compile files('../lib/jhotdraw/jhotdraw.jar')
-
-    compile files('../lib/launch4j/launch4j.jar')
-    compile 'javax.activation:activation:1.1.1'
-
-    compile files('../lib/license3j/bcpg-jdk15-143.jar')
-    compile files('../lib/license3j/bcprov-jdk15-143.jar')
-    compile files('../lib/license3j/jms-1.1.jar')
-    compile files('../lib/license3j/jmxri-1.2.1.jar')
-    compile files('../lib/license3j/jmxtools-1.2.1.jar')
-    compile files('../lib/license3j/license3j-1.0.3.jar')
-    compile files('../lib/license3j/log4j-1.2.15.jar')
-    compile files('../lib/license3j/mail-1.4.jar')
-    compile files('../lib/proguard/proguard.jar')
-
-    compile files('../lib/sqlworkbench/sqlworkbench.jar')
-
-    compile 'org.swinglabs.swingx:swingx-all:1.6.5-1'
-    compile 'org.swinglabs:swing-layout:1.0.3'
-
-    compile files('../lib/swingx_v0203/swingx_v0203.jar')
-    compile files('../lib/tablefilter-swing-3.1.2.jar')
-    compile files('../lib/wizard-1.0/wizard.jar')
-    compile files('../lib/xstream-1.3.1/xstream-1.3.1.jar')
-
-    compile 'org.hibernate:hibernate-core:4.2.21.Final'
-
-    compile 'org.springframework:spring-context:4.0.9.RELEASE'
-    compile 'org.springframework.data:spring-data-jpa:1.4.3.RELEASE'
-    compile 'org.springframework.data:spring-data-mongodb:1.4.3.RELEASE'
-
-    compile 'commons-dbcp:commons-dbcp:1.4'
-    compile 'commons-dbcp:commons-dbcp:1.4'
-    compile 'commons-io:commons-io:2.4'
-    compile 'org.apache.commons:commons-lang3:3.1'
-    compile 'commons-beanutils:commons-beanutils:1.9.2'
-    compile 'commons-logging:commons-logging:1.1.3'
-    compile 'commons-collections:commons-collections:3.2.1'
-    compile 'commons-daemon:commons-daemon:1.0.15'
-    compile 'commons-digester:commons-digester:2.1'
-    compile 'org.apache.commons:commons-exec:1.1'
-    compile 'commons-lang:commons-lang:2.6'
-
-    compile 'com.jidesoft:jide-oss:3.5.3'
-
-    compile files('../lib/java3d/j3dcore.jar')
-    compile files('../lib/java3d/j3dutils.jar')
-    compile files('../lib/java3d/vecmath.jar')
-
-//	compile 'java3d:j3d-core:1.3.1'
-//	compile 'java3d:j3d-core-utils:1.3.1'
-//	compile 'java3d:vecmath:1.3.1'
+    api files('../lib/jcalendar-1.3.2/jcalendar-1.3.2.jar')
+    api files('../lib/jcalendar-1.3.2/looks-2.0.1.jar')
+    api files('../lib/jcr-1.0/jcr-1.0.jar')
 
 
-    compile 'org.apache.logging.log4j:log4j-api:2.4'
-    compile 'org.apache.logging.log4j:log4j-core:2.4'
-    compile 'org.apache.logging.log4j:log4j-1.2-api:2.4'
+    api files('../lib/jgoodies/looks-2.3.1.jar')
 
-    compile 'com.jidesoft:jide-oss:3.5.3'
+    api 'com.jgoodies:jgoodies-animation:1.4.2'
+    api 'com.jgoodies:jgoodies-validation:2.4.2'
+    api 'com.jgoodies:jgoodies-forms:1.6.0'
+    api 'com.jgoodies:jgoodies-binding:2.7.0'
 
-    compile 'com.miglayout:miglayout-swing:4.2'
+    api files('../lib/jhotdraw/jhotdraw.jar')
 
-    compile 'com.lowagie:itext:2.1.7'
-    compile('net.sf.jasperreports:jasperreports:5.2.0') {
+    api files('../lib/launch4j/launch4j.jar')
+    api 'javax.activation:activation:1.1.1'
+
+    api files('../lib/license3j/bcpg-jdk15-143.jar')
+    api files('../lib/license3j/bcprov-jdk15-143.jar')
+    api files('../lib/license3j/jms-1.1.jar')
+    api files('../lib/license3j/jmxri-1.2.1.jar')
+    api files('../lib/license3j/jmxtools-1.2.1.jar')
+    api files('../lib/license3j/license3j-1.0.3.jar')
+    api files('../lib/license3j/log4j-1.2.15.jar')
+    api files('../lib/license3j/mail-1.4.jar')
+    api files('../lib/proguard/proguard.jar')
+
+    api files('../lib/sqlworkbench/sqlworkbench.jar')
+
+    api 'org.swinglabs.swingx:swingx-all:1.6.5-1'
+    api 'org.swinglabs:swing-layout:1.0.3'
+
+    api files('../lib/swingx_v0203/swingx_v0203.jar')
+    api files('../lib/tablefilter-swing-3.1.2.jar')
+    api files('../lib/wizard-1.0/wizard.jar')
+    api files('../lib/xstream-1.3.1/xstream-1.3.1.jar')
+
+    api 'org.hibernate:hibernate-core:4.2.21.Final'
+
+    api 'org.springframework:spring-context:4.0.9.RELEASE'
+    api 'org.springframework.data:spring-data-jpa:1.4.3.RELEASE'
+    api 'org.springframework.data:spring-data-mongodb:1.4.3.RELEASE'
+
+    api 'commons-dbcp:commons-dbcp:1.4'
+    api 'commons-dbcp:commons-dbcp:1.4'
+    api 'commons-io:commons-io:2.4'
+    api 'org.apache.commons:commons-lang3:3.1'
+    api 'commons-beanutils:commons-beanutils:1.9.2'
+    api 'commons-logging:commons-logging:1.1.3'
+    api 'commons-collections:commons-collections:3.2.1'
+    api 'commons-daemon:commons-daemon:1.0.15'
+    api 'commons-digester:commons-digester:2.1'
+    api 'org.apache.commons:commons-exec:1.1'
+    api 'commons-lang:commons-lang:2.6'
+
+    api 'com.jidesoft:jide-oss:3.5.3'
+
+    api files('../lib/java3d/j3dcore.jar')
+    api files('../lib/java3d/j3dutils.jar')
+    api files('../lib/java3d/vecmath.jar')
+
+//	api 'java3d:j3d-core:1.3.1'
+//	api 'java3d:j3d-core-utils:1.3.1'
+//	api 'java3d:vecmath:1.3.1'
+
+
+    api 'org.apache.logging.log4j:log4j-api:2.4'
+    api 'org.apache.logging.log4j:log4j-core:2.4'
+    api 'org.apache.logging.log4j:log4j-1.2-api:2.4'
+
+    api 'com.jidesoft:jide-oss:3.5.3'
+
+    api 'com.miglayout:miglayout-swing:4.2'
+
+    api 'com.lowagie:itext:2.1.7'
+    api('net.sf.jasperreports:jasperreports:6.19.1') {
         exclude group: 'com.lowagie', module: 'itext'
     }
-    compile 'org.codehaus.groovy:groovy-all:2.1.7'
-    compile 'mysql:mysql-connector-java:5.1.49'
+    api 'org.codehaus.groovy:groovy-all:2.1.7'
+    api 'mysql:mysql-connector-java:5.1.49'
 
-    compile 'org.apache.poi:poi:3.9'
-    compile 'org.apache.poi:poi-scratchpad:3.9'
-    compile 'org.apache.poi:poi-ooxml:3.9'
-    compile 'org.apache.poi:poi-ooxml-schemas:3.9'
-    compile 'org.apache.poi:poi-examples:3.9'
+    api 'org.apache.poi:poi:3.9'
+    api 'org.apache.poi:poi-scratchpad:3.9'
+    api 'org.apache.poi:poi-ooxml:3.9'
+    api 'org.apache.poi:poi-ooxml-schemas:3.9'
+    api 'org.apache.poi:poi-examples:3.9'
 
-   compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.21'
 
-    compile "junit:junit:4.+"
+    api "junit:junit:4.+"
+}
+
+tasks.withType(Copy){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 jar {
     manifest {
-        def manifestClasspath = configurations.runtime.collect { it.getName() }.join(' ')
+        def manifestClasspath = configurations.runtimeClasspath.collect { it.getName() }.join(' ')
         attributes 'Class-Path': manifestClasspath
         attributes 'Main-Class': 'by.dak.cutting.CuttingApp'
     }

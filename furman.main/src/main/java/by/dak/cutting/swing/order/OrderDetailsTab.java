@@ -26,32 +26,20 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
     private AdditionalsTab additionalsTab;
     private DesignerTab designerTab;
 
-    private TableModelListener clearListener = new TableModelListener()
-    {
-        @Override
-        public void tableChanged(TableModelEvent e)
-        {
-            firePropertyChange(ClearNextStepObserver.PROPERTY_clearNextStep, null, Boolean.TRUE);
-        }
-    };
+    private TableModelListener clearListener = e -> firePropertyChange(ClearNextStepObserver.PROPERTY_clearNextStep, null, Boolean.TRUE);
 
 
     public OrderDetailsTab()
     {
         setShowOkCancel(false);
-        addPropertyChangeListener("value", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                removeClearNextStep();
-                orderDetailsPanel.setValue(getValue());
-                furnitureLinkPanel.setValue(getValue());
-                additionalsTab.setValue(getValue());
-                additionalsTab.init();
-                designerTab.setValue(getValue());
-                addClearNextStep();
-            }
+        addPropertyChangeListener("value", evt -> {
+            removeClearNextStep();
+            orderDetailsPanel.setValue(getValue());
+            furnitureLinkPanel.setValue(getValue());
+            additionalsTab.setValue(getValue());
+            additionalsTab.init();
+            designerTab.setValue(getValue());
+            addClearNextStep();
         });
         addTabs();
         orderDetailsControl = new OrderDetailsControl(this);
@@ -68,14 +56,10 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
 
     private void addClearNextStep()
     {
-        Runnable runnable = new Runnable()
-        {
-            public void run()
-            {
-                orderDetailsControl.addTableModelListener(clearListener);
-                furnitureLinkPanel.getTable().getModel().addTableModelListener(clearListener);
-                additionalsTab.getListNaviTable().getTable().getModel().addTableModelListener(clearListener);
-            }
+        Runnable runnable = () -> {
+            orderDetailsControl.addTableModelListener(clearListener);
+            furnitureLinkPanel.getTable().getModel().addTableModelListener(clearListener);
+            additionalsTab.getListNaviTable().getTable().getModel().addTableModelListener(clearListener);
         };
         SwingUtilities.invokeLater(runnable);
 
@@ -89,37 +73,16 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
         orderDetailsPanel.setWarningList(getWarningList());
 
         furnitureLinkPanel = new FurnitureLinkPanel();
-        getFurnitureOrderPanel().addPropertyChangeListener("editable", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                getFurnitureOrderPanel().getTable().setEditable(isEditable());
-            }
-        });
+        getFurnitureOrderPanel().addPropertyChangeListener("editable", evt -> getFurnitureOrderPanel().getTable().setEditable(isEditable()));
         addTab(furnitureLinkPanel);
         furnitureLinkPanel.setWarningList(getWarningList());
 
         additionalsTab = new AdditionalsTab();
         addTab(additionalsTab);
         additionalsTab.setWarningList(getWarningList());
-        additionalsTab.addPropertyChangeListener("editable", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                additionalsTab.getListNaviTable().getTable().setEditable(isEditable());
-            }
-        });
+        additionalsTab.addPropertyChangeListener("editable", evt -> additionalsTab.getListNaviTable().getTable().setEditable(isEditable()));
         designerTab = new DesignerTab();
-        designerTab.addPropertyChangeListener("editable", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                designerTab.setEditable(isEditable());
-            }
-        });
+        designerTab.addPropertyChangeListener("editable", evt -> designerTab.setEditable(isEditable()));
         addTab(designerTab);
     }
 

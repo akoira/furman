@@ -18,6 +18,7 @@ import by.dak.ordergroup.swing.OrderGroupsTab;
 import by.dak.persistence.Exporter;
 import by.dak.persistence.FacadeContext;
 import by.dak.persistence.Importer;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.Order;
 import by.dak.persistence.entities.OrderItem;
 import by.dak.persistence.entities.predefined.MaterialType;
@@ -52,9 +53,11 @@ public class CuttingView extends FrameView {
 			this);
 
 	private static final String[] EXPORT_TABLES = StringUtils.split("MANUFACTURER,PROVIDER,FURNITURE_CODE,FURNITURE_TYPE,FURNITURE_TYPE_LINK,FURNITURE_CODE_LINK,PRICE", ',');
+	private final MainFacade mainFacade;
 
 	public CuttingView(SingleFrameApplication app) {
 		super(app);
+		this.mainFacade = FacadeContext.getMainFacade();
 		String title = getContext().getResourceMap().getString("Application.title");
 		JModalFrame frame = new JModalFrame(title);
 		frame.setName("mainFrame");
@@ -301,22 +304,22 @@ public class CuttingView extends FrameView {
 
 	@Action
 	public void showPriceBoardDef() {
-		DialogShowers.showPriceJasperViewer(MaterialType.board.name());
+		DialogShowers.showPriceJasperViewer(MaterialType.board.name(), mainFacade);
 	}
 
 	@Action
 	public void showPriceBorderDef() {
-		DialogShowers.showPriceJasperViewer(MaterialType.border.name());
+		DialogShowers.showPriceJasperViewer(MaterialType.border.name(), mainFacade);
 	}
 
 	@Action
 	public void showPriceFurnitureType() {
-		DialogShowers.showPriceJasperViewer(MaterialType.furniture.name());
+		DialogShowers.showPriceJasperViewer(MaterialType.furniture.name(), mainFacade);
 	}
 
 	@Action
 	public void showPriceService() {
-		DialogShowers.showPriceJasperViewer("service");
+		DialogShowers.showPriceJasperViewer("service", mainFacade);
 	}
 
 
@@ -357,7 +360,7 @@ public class CuttingView extends FrameView {
 
 	@Action
 	public void showStatistics() {
-		StatisticsPanel panel = new StatisticsPanel();
+		StatisticsPanel panel = new StatisticsPanel(mainFacade);
 		DialogShowers.showBy(panel, CuttingApp.getApplication().getMainFrame(), false);
 	}
 
@@ -370,7 +373,7 @@ public class CuttingView extends FrameView {
 
 	@Action
 	public void showDilerOrderStatisticDialog() {
-		DilerOrderStatisticsPanel dilerOrderStatisticsPanel = new DilerOrderStatisticsPanel();
+		DilerOrderStatisticsPanel dilerOrderStatisticsPanel = new DilerOrderStatisticsPanel(mainFacade);
 		IOrderWizardDelegator orderWizardDelegator = new RootOrderTableReloader(((OrderExplorer) archiveOrdersPanel.getPanelResult()).getListNaviTable());
 		dilerOrderStatisticsPanel.setOrderWizardDelegator(orderWizardDelegator);
 		DialogShowers.showBy(dilerOrderStatisticsPanel, CuttingApp.getApplication().getMainFrame(), false);
@@ -394,7 +397,7 @@ public class CuttingView extends FrameView {
 	private void initComponents() {
 
 		mainPanel = new javax.swing.JPanel();
-		archiveOrdersPanel = new by.dak.cutting.swing.archive.ArchiveOrdersPanel();
+		archiveOrdersPanel = new by.dak.cutting.swing.archive.ArchiveOrdersPanel(mainFacade);
 		menuBar = new javax.swing.JMenuBar();
 		javax.swing.JMenu fileMenu = new javax.swing.JMenu();
 		newOrderMenuItem = new javax.swing.JMenuItem();

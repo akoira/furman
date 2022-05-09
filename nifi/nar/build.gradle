@@ -1,0 +1,7 @@
+apply from: "$rootDir/gradle/nifi.nar.impl.gradle"
+
+configurations.api.setCanBeResolved(true)
+dependencies {
+//    api group: rootProject.group, name: 'nifi', version: rootProject.version
+    api project(":nifi")
+}

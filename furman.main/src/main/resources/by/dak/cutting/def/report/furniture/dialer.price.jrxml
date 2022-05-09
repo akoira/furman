@@ -149,7 +149,7 @@ ORDER BY
                     <font size="8"/>
                 </textElement>
                 <textFieldExpression>
-                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE_DEALER},$F{PRICE_CURRENCY_TYPE}))]]></textFieldExpression>
+                    <![CDATA[(by.dak.report.jasper.ReportUtils.getPriceBy($F{PRICE_PRICE_DEALER},$F{PRICE_CURRENCY_TYPE},$P{MAIN_FACADE}))]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement style="Detail" x="5" y="1" width="237" height="10"/>

@@ -3,6 +3,7 @@ package by.dak.template.report;
 import by.dak.cutting.SearchFilter;
 import by.dak.cutting.afacade.report.AFacadeServiceDataConverter;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.BoardDef;
 import by.dak.persistence.entities.PriceEntity;
@@ -23,9 +24,9 @@ import java.util.List;
  */
 public class TemplateFacadeServiceDataConverter extends AFacadeServiceDataConverter<TemplateFacade>
 {
-    public TemplateFacadeServiceDataConverter(AOrder order)
+    public TemplateFacadeServiceDataConverter(AOrder order, MainFacade mainFacade)
     {
-        super(order);
+        super(order, mainFacade);
     }
 
     @Override
@@ -56,9 +57,7 @@ public class TemplateFacadeServiceDataConverter extends AFacadeServiceDataConver
 
                 List<PriceEntity> prices = FacadeContext.getPriceFacade().loadAll(searchFilter);
                 if (prices.size() > 0)
-                {
-                    ReportUtils.fillPrice(commonData, prices.get(0));
-                }
+                    ReportUtils.fillPrice(commonData, prices.get(0), order, mainFacade);
                 datas.add(commonData);
             }
         }

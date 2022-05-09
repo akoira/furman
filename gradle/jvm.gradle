@@ -1,0 +1,17 @@
+import java.nio.charset.StandardCharsets
+
+apply plugin: "java-library"
+
+version = rootProject.version
+ext {
+    encoding = StandardCharsets.UTF_8.name()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = encoding
+    options.debug = true
+}
+
+compileJava.options.debugOptions.debugLevel = "source,lines,vars"
+sourceCompatibility = JavaVersion.VERSION_1_8;
+targetCompatibility = JavaVersion.VERSION_1_8;

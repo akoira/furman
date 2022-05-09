@@ -1,0 +1,15 @@
+/**
+ * Logging dependencies
+ */
+dependencies {
+    api group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4j_version
+    api group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: log4j_version
+    api group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4j_version
+    api group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: log4j_version
+    api group: 'org.apache.logging.log4j', name: 'log4j-jul', version: log4j_version
+
+}
+
+configurations {
+    all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}

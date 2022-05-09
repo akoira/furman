@@ -2,7 +2,7 @@ package by.dak.report.swing;
 
 import by.dak.cutting.swing.BaseTabPanel;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JRViewer;
+import net.sf.jasperreports.swing.JRViewer;
 
 import javax.swing.*;
 import java.awt.*;

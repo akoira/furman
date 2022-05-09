@@ -205,7 +205,7 @@ public abstract class AOrderBoardDetail extends AOrderDetail<BoardDef, TextureEn
      */
     public Boolean isPrimary()
     {
-        return primary;
+        return (primary == null && !isComplex()) || primary;
     }
 
     public Boolean isComplex()

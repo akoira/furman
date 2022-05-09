@@ -2,6 +2,7 @@ package by.dak.cutting.doors.jasper.doorSingle;
 
 import by.dak.cutting.doors.jasper.doorSingle.reportData.DoorDataReport;
 import by.dak.cutting.doors.jasper.doorSingle.reportData.DoorSingleDataReport;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.Order;
 import by.dak.report.jasper.*;
 import net.sf.jasperreports.engine.JRException;
@@ -59,7 +60,7 @@ public class ReportDoorDataCreator extends ReportDataCreatorDecorator
 
     public ReportDoorDataCreator(DoorSingleDataReport doorSingleData)
     {
-        super(new DefaultReportDataCreator(REPORT_BUNDLES_PATH));
+        super(new DefaultReportDataCreator(REPORT_BUNDLES_PATH), new MainFacade());
         this.doorSingleData = doorSingleData;
     }
 

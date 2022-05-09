@@ -5,6 +5,7 @@ import by.dak.cutting.zfacade.ZButtLink;
 import by.dak.cutting.zfacade.ZFacade;
 import by.dak.cutting.zfacade.report.ZFacadeFurnitureDataConverter;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.persistence.entities.FurnitureLink;
 import by.dak.persistence.entities.predefined.OrderItemType;
@@ -37,16 +38,18 @@ public class StoreReportDataCreator extends OrderHeaderReportDataCreator
     private static final String REPORT_BUNDLES_PATH = "by/dak/report/jasper/common/commonReport";
 
     private CommonReportData commonReportData;
+    private final MainFacade mainFacade;
 
-    public StoreReportDataCreator(CommonReportData commonReportData)
+    public StoreReportDataCreator(CommonReportData commonReportData, MainFacade mainFacade)
     {
-        super(commonReportData.getOrder());
+        super(commonReportData.getOrder(), mainFacade);
         this.commonReportData = commonReportData;
+        this.mainFacade = mainFacade;
     }
 
-    public StoreReportDataCreator(AOrder order)
-    {
-        super(order);
+    public StoreReportDataCreator(AOrder order, MainFacade mainFacade) {
+        super(order, mainFacade);
+        this.mainFacade = mainFacade;
     }
 
 
@@ -65,20 +68,20 @@ public class StoreReportDataCreator extends OrderHeaderReportDataCreator
     @Override
     public Collection createCollection()
     {
-        List<FurnitureLink> furnitureLinks = FacadeContext.getFurnitureLinkFacade().loadAllBy(getOrder(),
+        List<FurnitureLink> furnitureLinks = mainFacade.getFurnitureLinkFacade().loadAllBy(getOrder(),
                 Arrays.asList(new OrderItemType[]{OrderItemType.common, OrderItemType.first}));
-        CommonDatas<CommonData> datas = new FurnitureConverter(CommonDataType.furniture, getOrder()).convert(furnitureLinks);
-        furnitureLinks = FacadeContext.getFurnitureLinkFacade().loadAllBy(getOrder(), Arrays.asList(new OrderItemType[]{OrderItemType.zfacade}), ZButtLink.class.getSimpleName());
-        datas.addAll(new FurnitureConverter(CommonDataType.furniture, getOrder()).convert(furnitureLinks));
+        CommonDatas<CommonData> datas = new FurnitureConverter(CommonDataType.furniture, getOrder(), mainFacade).convert(furnitureLinks);
+        furnitureLinks = mainFacade.getFurnitureLinkFacade().loadAllBy(getOrder(), Arrays.asList(new OrderItemType[]{OrderItemType.zfacade}), ZButtLink.class.getSimpleName());
+        datas.addAll(new FurnitureConverter(CommonDataType.furniture, getOrder(), mainFacade).convert(furnitureLinks));
 
-        ZFacadeFurnitureDataConverter zFacadeFurnitureDataConverter = new ZFacadeFurnitureDataConverter(getOrder());
+        ZFacadeFurnitureDataConverter zFacadeFurnitureDataConverter = new ZFacadeFurnitureDataConverter(getOrder(), mainFacade);
         datas.addAll(
-                zFacadeFurnitureDataConverter.convert(FacadeContext.getZFacadeFacade().fillTransients(FacadeContext.getZFacadeFacade().findAllByField(ZFacade.PROPERTY_order, getOrder())))
+                zFacadeFurnitureDataConverter.convert(mainFacade.getzFacadeFacade().fillTransients(mainFacade.getzFacadeFacade().findAllByField(ZFacade.PROPERTY_order, getOrder())))
         );
 
-        AGTFurnitureDataConverter agtFurnitureDataConverter = new AGTFurnitureDataConverter(getOrder());
+        AGTFurnitureDataConverter agtFurnitureDataConverter = new AGTFurnitureDataConverter(getOrder(), mainFacade);
         datas.addAll(
-                agtFurnitureDataConverter.convert(FacadeContext.getAGTFacadeFacade().fillTransients(FacadeContext.getAGTFacadeFacade().findAllByField(ZFacade.PROPERTY_order, getOrder())))
+                agtFurnitureDataConverter.convert(mainFacade.getAgtFacadeFacade().fillTransients(mainFacade.getAgtFacadeFacade().findAllByField(ZFacade.PROPERTY_order, getOrder())))
         );
 
         return datas;

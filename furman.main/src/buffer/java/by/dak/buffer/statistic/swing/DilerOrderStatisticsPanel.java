@@ -4,6 +4,7 @@ import by.dak.buffer.statistic.filter.DilerOrderFilter;
 import by.dak.buffer.statistic.filter.swing.DilerOrderPeriodFilterPanel;
 import by.dak.buffer.statistic.swing.tree.DilerCustomerNodes;
 import by.dak.order.swing.IOrderWizardDelegator;
+import by.dak.persistence.MainFacade;
 import by.dak.swing.AStatisticPanel;
 import by.dak.swing.ActionsPanel;
 import by.dak.swing.explorer.ExplorerPanel;
@@ -25,6 +26,11 @@ import java.beans.PropertyChangeListener;
 public class DilerOrderStatisticsPanel<V> extends AStatisticPanel<V>
 {
     private IOrderWizardDelegator orderWizardDelegator;
+
+    public DilerOrderStatisticsPanel(MainFacade mainFacade)
+    {
+        super(mainFacade);
+    }
 
     public IOrderWizardDelegator getOrderWizardDelegator()
     {

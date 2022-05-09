@@ -4,6 +4,7 @@
  */
 package by.dak.report.jasper;
 
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
@@ -23,9 +24,9 @@ public abstract class OrderHeaderReportDataCreator extends ReportDataCreatorDeco
         return order;
     }
 
-    public OrderHeaderReportDataCreator(AOrder order)
+    public OrderHeaderReportDataCreator(AOrder order, MainFacade mainFacade)
     {
-        super();
+        super(mainFacade);
         setUnderlying(new DefaultReportDataCreator(getReportBundlesPath()));
         this.order = order;
     }

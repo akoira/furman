@@ -19,9 +19,9 @@ public class TStatisticsPanel
 {
     public static void main(String[] args)
     {
-        new SpringConfiguration();
+        SpringConfiguration springConfiguration = new SpringConfiguration();
         CuttingApp.getApplication();
-        StatisticsPanel panel = new StatisticsPanel();
+        StatisticsPanel panel = new StatisticsPanel(springConfiguration.getMainFacade());
 
 
         TestUtils.showFrame(panel, "TStatisticsPanel");

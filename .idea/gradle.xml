@@ -14,6 +14,8 @@
             <option value="$PROJECT_DIR$/furman.repository" />
             <option value="$PROJECT_DIR$/furman.template.import" />
             <option value="$PROJECT_DIR$/furman.upgrade" />
+            <option value="$PROJECT_DIR$/nifi" />
+            <option value="$PROJECT_DIR$/nifi/nar" />
           </set>
         </option>
       </GradleProjectSettings>

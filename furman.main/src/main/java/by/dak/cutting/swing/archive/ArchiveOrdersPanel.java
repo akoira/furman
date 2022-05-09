@@ -1,6 +1,7 @@
 package by.dak.cutting.swing.archive;
 
 import by.dak.cutting.statistics.swing.PeriodFilterPanel;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.Order;
 import by.dak.swing.AStatisticPanel;
 import by.dak.swing.ActionsPanel;
@@ -17,6 +18,10 @@ import java.beans.PropertyChangeListener;
  * Time: 16:32
  */
 public class ArchiveOrdersPanel extends AStatisticPanel<Order> {
+	public ArchiveOrdersPanel(MainFacade mainFacade)
+	{
+		super(mainFacade);
+	}
 	@Override
 	protected void init() {
 

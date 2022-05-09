@@ -1,0 +1,51 @@
+configurations {
+    testImplementation.extendsFrom compileOnly
+}
+
+dependencies {
+    api group: 'org.apache.nifi', name: 'nifi-api', version: nifi_version
+    api group: 'org.apache.nifi', name: 'nifi-utils', version: nifi_version
+    api group: 'org.apache.nifi', name: 'nifi-avro-record-utils', version: nifi_version
+    api group: 'org.apache.nifi', name: 'nifi-aws-service-api', version: nifi_version
+    api group: 'org.apache.nifi', name: 'nifi-record-path', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-ssl-context-service-api', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-livy-controller-service-api', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-schema-registry-service-api', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-kerberos-credentials-service-api', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-record-serialization-service-api', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-distributed-cache-client-service-api', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-ignite-processors', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-standard-processors', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-livy-controller-service', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-livy-processors', version: nifi_version
+
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-kafka-2-0-processors', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-gcp-processors', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-aws-processors', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-record-serialization-services', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-parquet-processors', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-record', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-ssl-context-service', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-hdfs-processors', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-bootstrap', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-runtime', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-jetty-bundle', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-dbcp-service', version: nifi_version
+
+    compileOnly group: 'org.apache.nifi', name: 'nifi-websocket-processors', version: nifi_version
+    compileOnly group: 'org.apache.nifi', name: 'nifi-websocket-services-jetty', version: nifi_version
+
+    testImplementation group: 'org.apache.nifi', name: 'nifi-mock', version: nifi_version
+}

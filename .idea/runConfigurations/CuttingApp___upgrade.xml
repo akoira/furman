@@ -11,7 +11,7 @@
     <option name="VM_PARAMETERS" value="-Dappendedfontpath=$PROJECT_DIR$/reports/fonts -Drepository.baseDir=$USER_HOME$/_tmp" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="by.dak.cutting.*" />
+        <option name="PATTERN" value="by.dak.furman.nifi.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

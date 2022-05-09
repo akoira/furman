@@ -2,6 +2,7 @@ package by.dak.cutting.zfacade.report;
 
 import by.dak.cutting.afacade.report.AFacadeFurnitureDataConverter;
 import by.dak.cutting.zfacade.ZFacade;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.report.jasper.common.data.CommonDataType;
 
@@ -12,8 +13,8 @@ import by.dak.report.jasper.common.data.CommonDataType;
  */
 public class ZFacadeFurnitureDataConverter extends AFacadeFurnitureDataConverter<ZFacade>
 {
-    public ZFacadeFurnitureDataConverter(AOrder order)
+    public ZFacadeFurnitureDataConverter(AOrder order, MainFacade mainFacade)
     {
-        super(CommonDataType.zfacade, order);
+        super(CommonDataType.zfacade, order, mainFacade);
     }
 }

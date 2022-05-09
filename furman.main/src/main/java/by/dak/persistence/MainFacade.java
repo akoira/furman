@@ -28,9 +28,12 @@ import by.dak.cutting.zfacade.facade.ZFacadeFacade;
 import by.dak.cutting.zfacade.facade.ZProfileColorFacade;
 import by.dak.cutting.zfacade.facade.ZProfileTypeFacade;
 import by.dak.ordergroup.facade.OrderGroupFacade;
+import by.dak.persistence.entities.AOrder;
+import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.Employee;
 import by.dak.plastic.facade.DSPPlasticDetailFacade;
 import by.dak.plastic.strips.facade.DSPPlasticStripsFacade;
+import by.dak.report.jasper.DefaultReportCreatorFactory;
 import by.dak.report.jasper.common.facade.CommonDataFacade;
 import by.dak.repository.IReportFacade;
 import by.dak.repository.IRepositoryService;
@@ -44,10 +47,21 @@ import javax.sql.DataSource;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.function.Function;
 
 
 public class MainFacade implements ApplicationContextAware
 {
+    public static final Function<MainFacade, Function<AOrder, Dailysheet>> dailysheet = mf -> order -> {
+        Dailysheet dailysheet =  mf.getDailysheetFacade().loadCurrentDailysheet();
+        if (dailysheet == null)
+            if (order != null)
+                return order.getCreatedDailySheet();
+            else
+                throw new IllegalArgumentException();
+        else
+            return dailysheet;
+    };
 
     private static final String DATA_SOURCE_NAME = "dataSource";
 
@@ -121,6 +135,13 @@ public class MainFacade implements ApplicationContextAware
     private MaterialTypeNodeFactory materialTypeNodeFactory;
     private MaterialTypePanelFactory materialTypePanelFactory;
 
+
+    public final DefaultReportCreatorFactory reportCreatorFactory;
+
+    public MainFacade() {
+        this.reportCreatorFactory = new DefaultReportCreatorFactory(this);
+    }
+
     public static String getDataSourceName()
     {
         return DATA_SOURCE_NAME;
@@ -166,6 +187,10 @@ public class MainFacade implements ApplicationContextAware
             return getFacadeBy0(eClass);
         }
     }
+    public AOrderFacade getOrderFacadeBy(Class aClass)
+    {
+        return (AOrderFacade) getFacadeBy(aClass);
+    }
 
     private BaseFacade getFacadeBy0(Class eClass)
     {
@@ -175,7 +200,7 @@ public class MainFacade implements ApplicationContextAware
 
             Method method = this.getClass().getMethod(name, null);
 
-            return (BaseFacade) method.invoke(null, null);
+            return (BaseFacade) method.invoke(this, null);
         }
         catch (Exception e)
         {

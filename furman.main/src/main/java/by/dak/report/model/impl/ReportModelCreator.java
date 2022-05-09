@@ -12,7 +12,6 @@ import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.AOrder;
 import by.dak.plastic.jasper.data.DSPPlasticCuttedReportDataCreator;
 import by.dak.report.ReportType;
-import by.dak.report.jasper.DefaultReportCreatorFactory;
 import by.dak.report.jasper.JReportData;
 import by.dak.report.jasper.ReportGeneratorImpl;
 import by.dak.report.jasper.common.data.CommonDataCreator;
@@ -36,8 +35,10 @@ import java.util.concurrent.Future;
 
 /**
  * @author admin
+ * @see by.dak.cutting.ReportsCalculate
  */
-public class ReportModelCreator {
+@Deprecated
+public final class ReportModelCreator {
 	private static final Logger LOGGER = Logger.getLogger(ReportModelCreator.class);
 	private ExecutorService service = Executors.newCachedThreadPool();
 
@@ -51,10 +52,12 @@ public class ReportModelCreator {
 
 	private CuttingModel cuttingModel;
 	private CommonReportData commonReportData;
+	private final MainFacade mainFacade;
 
 	public ReportModelCreator(AOrder order, MainFacade mainFacade) {
 		this.order = order;
 		this.createReports = false;
+		this.mainFacade = mainFacade;
 		this.reportFacade = mainFacade.getReportFacade();
 		this.stripsFacade = mainFacade.getStripsFacade();
 		this.exceptionHandler = mainFacade.getExceptionHandler();
@@ -63,6 +66,7 @@ public class ReportModelCreator {
 	public ReportModelCreator(AOrder order, CuttingModel cuttingModel, MainFacade mainFacade) {
 		this.order = order;
 		this.cuttingModel = cuttingModel;
+		this.mainFacade = mainFacade;
 		this.reportFacade = mainFacade.getReportFacade();
 		this.stripsFacade = mainFacade.getStripsFacade();
 		this.exceptionHandler = mainFacade.getExceptionHandler();
@@ -106,7 +110,7 @@ public class ReportModelCreator {
 						}
 						Object reportObject = getReportObjectBy(reportType);
 						if (reportObject != null) {
-							reportsModel.setReportData(reportType, DefaultReportCreatorFactory.getInstance().createReportDataCreator(reportObject, reportType).create());
+							reportsModel.setReportData(reportType, mainFacade.reportCreatorFactory.createReportDataCreator(reportObject, reportType).create());
 
 							reportsModel.setJasperPrint(reportType, getReportBy(reportType, reportsModel.getReportData(reportType)));
 							ReportModelCreator.this.reportFacade.saveReport(order, reportType, reportsModel.getJasperPrint(reportType));
@@ -191,7 +195,7 @@ public class ReportModelCreator {
 			if (order != null) {
 				FacadeContext.getCommonDataFacade().deleteAll(order);
 			}
-			commonReportData = new CommonDataCreator(cuttingModel).create();
+			commonReportData = new CommonDataCreator(cuttingModel, mainFacade).create();
 		}
 		return commonReportData;
 	}

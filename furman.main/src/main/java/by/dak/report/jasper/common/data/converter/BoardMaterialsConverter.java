@@ -4,7 +4,9 @@ import by.dak.cutting.cut.guillotine.Strips;
 import by.dak.cutting.swing.cut.CuttingModel;
 import by.dak.cutting.swing.order.data.TextureBoardDefPair;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.BoardDef;
+import by.dak.persistence.entities.Dailysheet;
 import by.dak.persistence.entities.PriceEntity;
 import by.dak.persistence.entities.TextureEntity;
 import by.dak.report.jasper.ReportUtils;
@@ -34,6 +36,15 @@ public class BoardMaterialsConverter implements Converter<List<TextureBoardDefPa
 
     private SortedMap<String, CommonDatas<CommonData>> boardMaterials = new TreeMap<String, CommonDatas<CommonData>>(new StringComparator());
 
+    public final MainFacade mainFacade;
+    public final Dailysheet dailysheet;
+
+    public BoardMaterialsConverter(CuttingModel cuttingModel, MainFacade facade) {
+        this.cuttingModel = cuttingModel;
+        this.mainFacade =facade;
+        this.dailysheet = MainFacade.dailysheet.apply(this.mainFacade).apply(cuttingModel.getOrder());
+    }
+
     public CommonDatas<CommonData> convert(List<TextureBoardDefPair> textureBoardDefPairs)
     {
         for (TextureBoardDefPair pair : textureBoardDefPairs)
@@ -59,7 +70,7 @@ public class BoardMaterialsConverter implements Converter<List<TextureBoardDefPa
         {
             value = ReportUtils.getPaidValueBy(pair, strips);
             strips.getStripsEntity().setPaidValue(value);
-            FacadeContext.getFacadeBy(strips.getStripsEntity().getClass()).save(strips.getStripsEntity());
+            mainFacade.getFacadeBy(strips.getStripsEntity().getClass()).save(strips.getStripsEntity());
         }
 
 
@@ -92,7 +103,7 @@ public class BoardMaterialsConverter implements Converter<List<TextureBoardDefPa
         CommonDatas<CommonData> datas = boardMaterials.get(key);
         if (datas == null)
         {
-            datas = new CommonDatas<CommonData>(CommonDataType.board, cuttingModel.getOrder());
+            datas = new CommonDatas<>(CommonDataType.board, cuttingModel.getOrder());
         }
 
         CommonData data = CommonData.valueOf(boardDef, texture);
@@ -101,8 +112,8 @@ public class BoardMaterialsConverter implements Converter<List<TextureBoardDefPa
         data.increase(square);
         if (data.isEmptyPrice())
         {
-            PriceEntity price = FacadeContext.getPriceFacade().findUniqueBy(boardDef, texture);
-            ReportUtils.fillPrice(data, price);
+            PriceEntity price = mainFacade.getPriceFacade().findUniqueBy(boardDef, texture);
+            ReportUtils.fillPrice(data, price, cuttingModel.getOrder(), this.mainFacade);
         }
         datas.add(data);
         boardMaterials.put(key, datas);

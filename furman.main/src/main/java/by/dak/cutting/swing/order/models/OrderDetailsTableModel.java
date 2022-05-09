@@ -31,7 +31,7 @@ public class OrderDetailsTableModel extends AbstractTableModel
 
     public OrderDetailsTableModel()
     {
-        this.data = new ArrayList<OrderDetailsDTO>();
+        this.data = new ArrayList<>();
     }
 
     @Override

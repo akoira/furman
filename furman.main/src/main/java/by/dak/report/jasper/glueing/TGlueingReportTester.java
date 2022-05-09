@@ -2,6 +2,7 @@ package by.dak.report.jasper.glueing;
 
 import by.dak.cutting.SpringConfiguration;
 import by.dak.persistence.FinderException;
+import by.dak.persistence.MainFacade;
 import by.dak.persistence.entities.*;
 import by.dak.report.ReportType;
 import by.dak.report.jasper.DefaultReportCreatorFactory;
@@ -24,7 +25,7 @@ public class TGlueingReportTester extends TAbstractReportTester
 
     public static void main(String[] args)
     {
-        new SpringConfiguration();
+        SpringConfiguration springConfiguration = new SpringConfiguration();
         new TGlueingReportTester();
         try
         {
@@ -36,7 +37,7 @@ public class TGlueingReportTester extends TAbstractReportTester
             else
             {
                 compile(TGlueingReportTester.class.getResource("GlueingReport.jrxml").getFile(), null);
-                process(createReportData());
+                process(createReportData(springConfiguration.getMainFacade()));
             }
         }
         catch (Exception e)
@@ -45,7 +46,7 @@ public class TGlueingReportTester extends TAbstractReportTester
         }
     }
 
-    private static JReportData createReportData() throws FinderException
+    private static JReportData createReportData(MainFacade mainFacade) throws FinderException
     {
         Order order = new Order();
         order.setOrderNumber(((long) (Math.random() * 1000)));
@@ -61,6 +62,6 @@ public class TGlueingReportTester extends TAbstractReportTester
         orderItem.setName("Test item");
         orderItem.setDetails(createFurnitures());
         order.addOrderItem(orderItem);
-        return DefaultReportCreatorFactory.getInstance().createReportDataCreator(order, REPORT_TYPE).create();
+        return mainFacade.reportCreatorFactory.createReportDataCreator(order, REPORT_TYPE).create();
     }
 }

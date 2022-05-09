@@ -1,0 +1,25 @@
+apply from: "$rootDir/gradle/nifi.jar.gradle"
+apply from: "$rootDir/gradle/org.apache.nifi.gradle"
+apply from: "$rootDir/gradle/io.reactivex.rxjava2.gradle"
+apply from: "$rootDir/gradle/org.apache.logging.log4j.gradle"
+
+dependencies {
+    api project(':furman.main')
+    implementation('org.springframework:spring-core') {
+        version {
+            strictly spring_version
+        }
+    }
+    implementation('org.springframework:spring-context') {
+        version {
+            strictly spring_version
+        }
+    }
+
+    implementation('org.springframework:spring-beans') {
+        version {
+            strictly spring_version
+        }
+    }
+}
+
