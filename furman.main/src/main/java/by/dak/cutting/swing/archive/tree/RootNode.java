@@ -143,13 +143,17 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
 
         @Override
         public void deleteValue() {
-            if (getSelectedElement() != null) {
-                if (MessageDialog.showConfirmationMessage(MessageDialog.IS_DELETE_RECORD) == JOptionPane.OK_OPTION) {
-                    FacadeContext.getFacadeBy(getEntityClass()).delete(getSelectedElement());
-                    firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, getSelectedElement());
+            try {
+                if (getSelectedElement() != null) {
+                    if (MessageDialog.showConfirmationMessage(MessageDialog.IS_DELETE_RECORD) == JOptionPane.OK_OPTION) {
+                        mainFacade.getFacadeBy(getEntityClass()).delete(getSelectedElement());
+                        firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, getSelectedElement());
+                    }
+                } else {
+                    MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
                 }
-            } else {
-                MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
+            } catch (Exception e ) {
+                mainFacade.getExceptionHandler().handle(e);
             }
         }
 
