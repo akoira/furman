@@ -118,10 +118,7 @@ public final class CuttingApp extends SingleFrameApplication {
 
         Callable callable = () -> {
             try {
-                String profile = Optional.ofNullable(System.getenv().get(FURMAN_PROFILE))
-                        .orElseGet(() -> System.getProperty(FURMAN_PROFILE));
-                Supplier<SpringConfiguration> config = profile == null ? SpringConfiguration.prod : SpringConfiguration.profile.apply(profile);
-                springConfiguration = config.get();
+                springConfiguration = SpringConfiguration.sc().get();
                 return null;
             } catch (Throwable e) {
                 exceptionHandler.handle(e);

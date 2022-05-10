@@ -16,8 +16,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellEditor;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +35,7 @@ public class GlueingSideMenu extends CommonSideMenu
     protected BorderSearchInsertPanel rightBorderCombo;
     protected BorderSearchInsertPanel downBorderCombo;
     //todo maybe refactored and moved default definition  to other place
-    private static BorderDefEntity defaultBorderDefEntity;
+    private BorderDefEntity defaultBorderDefEntity;
 
     public GlueingSideMenu(TableCellEditor tableCellEditor)
     {
@@ -66,26 +64,21 @@ public class GlueingSideMenu extends CommonSideMenu
     private void initBorderCombo(final BorderSearchInsertPanel borderCombo,
                                  final TextureSearchInsertPanel textureCombo)
     {
-        borderCombo.getDComboBox().addItemListener(new ItemListener()
-        {
-            @Override
-            public void itemStateChanged(ItemEvent e)
+        borderCombo.getDComboBox().addItemListener(e -> {
+            BorderDefEntity borderDef = (BorderDefEntity) borderCombo.getDComboBox().getSelectedItem();
+            Vector<TextureEntity> vector = new Vector<>();
+            if (borderDef != null)
             {
-                BorderDefEntity borderDef = (BorderDefEntity) borderCombo.getDComboBox().getSelectedItem();
-                Vector<TextureEntity> vector = new Vector<TextureEntity>();
-                if (borderDef != null)
-                {
-                    List<TextureEntity> textures = FacadeContext.getTextureFacade().findTexturesBy(borderDef);
-                    vector.addAll(textures);
-                }
-                textureCombo.getDComboBox().setModel(new DefaultComboBoxModel(vector));
-                if (borderDef != null)
-                {
-                    textureCombo.getDComboBox().setSelectedItem(getTexture(null, borderDef, getData().getTexture()));
-                }
-                else
-                    textureCombo.getDComboBox().setSelectedItem(null);
+                List<TextureEntity> textures = mainFacade.getTextureFacade().findTexturesBy(borderDef);
+                vector.addAll(textures);
             }
+            textureCombo.getDComboBox().setModel(new DefaultComboBoxModel(vector));
+            if (borderDef != null)
+            {
+                textureCombo.getDComboBox().setSelectedItem(getTexture(null, borderDef, getData().getTexture()));
+            }
+            else
+                textureCombo.getDComboBox().setSelectedItem(null);
         });
     }
 
@@ -227,7 +220,7 @@ public class GlueingSideMenu extends CommonSideMenu
             {
                 return null;
             }
-            return FacadeContext.getTextureFacade().findBy(gluingBorderDef, detailTexture);
+            return mainFacade.getTextureFacade().findBy(gluingBorderDef, detailTexture);
         }
 
     }
@@ -242,7 +235,7 @@ public class GlueingSideMenu extends CommonSideMenu
     private BorderDefEntity getDefault()
     {
         if (defaultBorderDefEntity == null)
-            return FacadeContext.getBorderDefFacade().findDefaultBorderDef();
+            return mainFacade.getBorderDefFacade().findDefaultBorderDef();
         return defaultBorderDefEntity;
     }
 

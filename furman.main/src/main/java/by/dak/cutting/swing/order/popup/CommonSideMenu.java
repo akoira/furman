@@ -3,6 +3,7 @@ package by.dak.cutting.swing.order.popup;
 import by.dak.cutting.swing.order.SideCanvas;
 import by.dak.cutting.swing.order.data.DTO;
 import by.dak.cutting.swing.order.data.OrderDetailsDTO;
+import by.dak.persistence.MainFacade;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 

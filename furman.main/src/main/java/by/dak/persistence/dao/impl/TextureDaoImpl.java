@@ -53,6 +53,8 @@ public class TextureDaoImpl extends GenericDaoImpl<TextureEntity> implements Tex
     @Override
     public TextureEntity findTextureBy(BorderDefEntity gluingBorderDef, TextureEntity detailTexture)
     {
+        if(gluingBorderDef == null || detailTexture == null)
+            return null;
         SQLQuery q = getSession().createSQLQuery("select distinct t.*  from FURNITURE_CODE t inner join PRICE p on p.PRICED_ID = t.ID where p.PRICEAWARE_ID = :borderDefID and (t.ID = :textureID or t.NAME = :name)");
         q.setLong("borderDefID", gluingBorderDef.getId());
         q.setLong("textureID", gluingBorderDef.getId());

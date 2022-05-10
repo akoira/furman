@@ -1,5 +1,7 @@
 package by.dak.cutting.swing.order.popup;
 
+import by.dak.persistence.FacadeContext;
+import by.dak.persistence.MainFacade;
 import com.jidesoft.popup.JidePopup;
 
 import javax.swing.*;
@@ -31,8 +33,12 @@ public abstract class AbstractSideMenu extends JidePopup
     private JComponent component;
 
 
+    protected MainFacade mainFacade;
+
+
     public AbstractSideMenu(TableCellEditor tableCellEditor)
     {
+        this.mainFacade = FacadeContext.getMainFacade();
         this.tableCellEditor = tableCellEditor;
         okButton = new JButton();
         initComponents();

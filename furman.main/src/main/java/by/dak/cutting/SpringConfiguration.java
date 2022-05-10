@@ -8,6 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -83,4 +84,9 @@ public class SpringConfiguration {
             SpringConfiguration(false, "spring-configuration/" + profile);
     public static final Function<String,Supplier<SpringConfiguration>> profile_liquibase = profile -> () ->
             new SpringConfiguration(true, "spring-configuration/" + profile);
+    public static final Supplier<SpringConfiguration> sc() {
+        String profile = Optional.ofNullable(System.getenv().get(CuttingApp.FURMAN_PROFILE))
+                .orElseGet(() -> System.getProperty(CuttingApp.FURMAN_PROFILE));
+        return profile == null ? SpringConfiguration.prod : SpringConfiguration.profile.apply(profile);
+    }
 }
