@@ -18,11 +18,9 @@ import javax.swing.table.TableCellEditor;
 
 public final class PopUpDrillingMenu extends CommonSideMenu {
     private JTextArea noteArea;
-    private JTextField textField;
-
-    private final JXFormattedTextField number = new JXFormattedTextField("к-во");
-    private final JXFormattedTextField numberForLoop = new JXFormattedTextField("к-во");
-    private final JXFormattedTextField numberForHandle= new JXFormattedTextField("к-во");
+    private JXFormattedTextField number;
+    private JXFormattedTextField numberForLoop;
+    private JXFormattedTextField numberForHandle;
 
     public PopUpDrillingMenu(TableCellEditor tableCellEditor) {
         super(tableCellEditor);
@@ -33,60 +31,37 @@ public final class PopUpDrillingMenu extends CommonSideMenu {
         noteArea.setLineWrap(true);
         noteArea.setWrapStyleWord(true);
         noteArea.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        textField = new JTextField();
+        number = new JXFormattedTextField("к-во");
+        numberForLoop = new JXFormattedTextField("к-во");
+        numberForHandle = new JXFormattedTextField("к-во");
     }
+
+
 
     protected void buildView() {
-        ResourceMap resourceMap = ((DrillingCellEditor) getTableCellEditor()).getContext().getResourceMap(PopUpDrillingMenu.class);
-        FormLayout layout = new FormLayout("1dlu, 45dlu, 45dlu, 1dlu", "10dlu, 20dlu, 10dlu, 50dlu, 15dlu");
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-        builder.nextColumn();
-        builder.append(new JLabel(resourceMap.getString("label.pic")), 2);
-        builder.nextLine();
-        builder.nextColumn();
-        builder.append(textField, 2);
-        builder.nextLine();
-        builder.nextColumn();
-        builder.append(new JLabel(resourceMap.getString("label.text")));
-        builder.nextLine();
-        builder.nextColumn();
-        JScrollPane scroll = new JScrollPane();
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scroll.add(noteArea);
-        builder.append(noteArea, 2);
-        builder.nextLine();
-        builder.nextColumn(2);
-        builder.append(getOkButton());
-        JPanel panel = builder.getPanel();
-        panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        add(panel);
-    }
-
-    protected void buildView_1() {
 
         FormLayout layout = new FormLayout(
-                "2dlu, pref, 2dlu, 50dlu, 2dlu, min", // столбцы
-                "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu"); // строки
+                "2dlu, pref, 2dlu, 50dlu, 2dlu", // столбцы
+                "2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, min, 2dlu"); // строки
 
-        layout.setRowGroups(new int[][]{{1, 3, 5}});
+       // layout.setRowGroups(new int[][]{{2, 4, 6, 8, 10}});
         JPanel panel = new JPanel(layout);
         CellConstraints cc = new CellConstraints();
-        panel.add(new JLabel("Присадка"), cc.xy(2, 1));
-        panel.add(new JXFormattedTextField("к-во"), cc.xy(4, 1));
-        panel.add(new JLabel("П-ка под петли"), cc.xy(2, 3));
-        panel.add(new JTextField(), cc.xy(4, 3));
-        panel.add(new JLabel("П-ка под ручки"), cc.xy(2, 5));
-        panel.add(new JTextField(), cc.xy(4, 5));
-        panel.add(new JLabel("Примечание"), cc.xyw(2, 7, 3));
-        panel.add(noteArea, cc.xyw(2, 9, 3));
-//        panel.add(new JButton(), cc.xy (5, 5));
+        panel.add(new JLabel("Присадка"), cc.xy(2, 2));
+        panel.add(number, cc.xy(4, 2));
+        panel.add(new JLabel("П-ка под петли"), cc.xy(2, 4));
+        panel.add(numberForLoop, cc.xy(4, 4));
+        panel.add(new JLabel("П-ка под ручки"), cc.xy(2, 6));
+        panel.add(numberForHandle, cc.xy(4, 6));
+        panel.add(new JLabel("Примечание"), cc.xyw(2, 8, 3));
+        panel.add(noteArea, cc.xyw(2, 10, 3));
+        panel.add(getOkButton(), cc.xy(2,12));
         add(panel);
     }
 
     @Override
     public void updateData() {
         Drilling dto = (Drilling) getDTO();
-        dto.setPicName(textField.getText());
         dto.setNotes(noteArea.getText());
         refreshComponent();
     }
@@ -105,12 +80,11 @@ public final class PopUpDrillingMenu extends CommonSideMenu {
     protected void refreshComponent() {
         if (getComponentToRefresh() == null)
             return;
-        ((JButton) getComponentToRefresh()).setText(StringUtils.isBlank(textField.getText()) ? "NO" : "Yes");
+        ((JButton) getComponentToRefresh()).setText(StringUtils.isBlank(number.getText()) ? "NO" : "Yes");
     }
 
     @Override
     protected void flushComponentValues() {
-        textField.setText("");
         noteArea.setText("");
     }
 
@@ -118,7 +92,6 @@ public final class PopUpDrillingMenu extends CommonSideMenu {
     @Override
     protected void mergeCompAndValues() {
         Drilling drilling = (Drilling) getDTO();
-        textField.setText(drilling.getPicName());
         noteArea.setText(drilling.getNotes());
     }
 }
