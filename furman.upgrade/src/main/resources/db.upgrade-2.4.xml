@@ -20,5 +20,12 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="akoyro" id="11">
+        <addColumn tableName="FURN_ORDER">
+            <column name="LOCKED" type="boolean" defaultValueNumeric="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
 

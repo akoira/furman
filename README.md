@@ -11,6 +11,10 @@
 *  Generated Password [9dbQlVJvYfMwCKYTL2kVIoNqeju5YB7+]
 
 
+#web
+* http://80.249.92.51:36752/Account/Login?ReturnUrl=%2f
+* user: dveri
+
 #deployment
 * in production: 
   * 2.4

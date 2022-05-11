@@ -40,6 +40,8 @@ public abstract class AOrder extends PersistenceEntity
     public static final String PROPERTY_createdDailySheet = "createdDailySheet";
     public static final String PROPERTY_orderGroup = "orderGroup";
 
+    public static final String PROPERTY_locked = "locked";
+
 
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
@@ -72,6 +74,8 @@ public abstract class AOrder extends PersistenceEntity
     @Column(name = "ORDER_NUMBER", nullable = false)
     private Long orderNumber;
 
+    @Column(name = "LOCKED", nullable = false, columnDefinition = "bit default 0")
+    private Boolean locked;
 
     @ManyToOne(cascade =
             {
@@ -266,6 +270,13 @@ public abstract class AOrder extends PersistenceEntity
         this.orderGroup = orderGroup;
     }
 
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
 
     @StringValue(converterClass = OrderNumber.class)
     public static class OrderNumber implements EntityToStringConverter<OrderNumber>

@@ -213,38 +213,33 @@ public class TableEditorsRenders
         public void init()
         {
             button = createButton();
-            button.addActionListener(new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    List<OrderStatus> statuses = orderStatusManager.allowedStatuses(value);
+            button.addActionListener(e -> {
+                List<OrderStatus> statuses = orderStatusManager.allowedStatuses(value);
 
-                    switch (value)
-                    {
-                        case miscalculation:
-                        case webMiscalculation:
-                            value = OrderStatus.design;
-                            break;
-                        case design:
-                        case webDesign:
-                            value = OrderStatus.production;
-                            break;
-                        case production:
-                            value = OrderStatus.made;
-                            break;
-                        case made:
-                            value = OrderStatus.shipped;
-                            break;
-                        case shipped:
-                            value = OrderStatus.archive;
-                            break;
-                        default:
-                            throw new IllegalArgumentException();
-                    }
-                    adjustButton(button, value);
-                    stopCellEditing();
+                switch (value)
+                {
+                    case miscalculation:
+                    case webMiscalculation:
+                        value = OrderStatus.design;
+                        break;
+                    case design:
+                    case webDesign:
+                        value = OrderStatus.production;
+                        break;
+                    case production:
+                        value = OrderStatus.made;
+                        break;
+                    case made:
+                        value = OrderStatus.shipped;
+                        break;
+                    case shipped:
+                        value = OrderStatus.archive;
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
                 }
+                adjustButton(button, value);
+                stopCellEditing();
             });
         }
 
