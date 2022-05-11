@@ -75,7 +75,7 @@ public abstract class AOrder extends PersistenceEntity
     private Long orderNumber;
 
     @Column(name = "LOCKED", nullable = false, columnDefinition = "bit default 0")
-    private Boolean locked;
+    private Boolean locked = false;
 
     @ManyToOne(cascade =
             {

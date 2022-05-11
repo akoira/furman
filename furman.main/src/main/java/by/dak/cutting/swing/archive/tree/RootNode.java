@@ -105,6 +105,7 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
     public class NEDActions extends NewEditDeleteActions<Order> {
 
         public boolean isLocked(Order order) {
+            order = mainFacade.getOrderFacade().findBy(order.getId());
             if (order.getLocked())
                 MessageDialog.showSimpleMessage("Заказ расчитывается ...");
             return order.getLocked();
