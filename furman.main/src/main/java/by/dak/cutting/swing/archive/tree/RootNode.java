@@ -104,6 +104,13 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
 
     public class NEDActions extends NewEditDeleteActions<Order> {
 
+        public boolean isLocked(Order order) {
+            order = mainFacade.getOrderFacade().findBy(order.getId());
+            if (order.getLocked())
+                MessageDialog.showSimpleMessage("Заказ расчитывается ...");
+            return order.getLocked();
+        }
+
         @Override
         public void newValue() {
             CuttingView.OrderCreator orderCreator = new CuttingView.OrderCreator();
@@ -134,8 +141,9 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
 
         @Override
         public void openValue() {
-            if (getSelectedElement() != null) {
-                showWizard(getSelectedElement());
+            if (getSelectedElement() != null ) {
+                if (!isLocked(getSelectedElement()))
+                    showWizard(getSelectedElement());
             } else {
                 MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
             }
@@ -145,9 +153,11 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
         public void deleteValue() {
             try {
                 if (getSelectedElement() != null) {
-                    if (MessageDialog.showConfirmationMessage(MessageDialog.IS_DELETE_RECORD) == JOptionPane.OK_OPTION) {
-                        mainFacade.getFacadeBy(getEntityClass()).delete(getSelectedElement());
-                        firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, getSelectedElement());
+                    if (!isLocked(getSelectedElement())) {
+                        if (MessageDialog.showConfirmationMessage(MessageDialog.IS_DELETE_RECORD) == JOptionPane.OK_OPTION) {
+                            mainFacade.getFacadeBy(getEntityClass()).delete(getSelectedElement());
+                            firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, getSelectedElement());
+                        }
                     }
                 } else {
                     MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
@@ -197,7 +207,7 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
             }
             if (getSelectedElement() != null) {
                 Order order = getSelectedElement();
-                Order newOrder = FacadeContext.getOrderFacade().copy(order, getResourceMap().getString("order.copy.suffix"));
+                Order newOrder = mainFacade.getOrderFacade().copy(order, getResourceMap().getString("order.copy.suffix"));
                 showWizard(newOrder);
             } else {
                 MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
@@ -220,6 +230,8 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
             getSearchFilter().addDescOrder(Order.PROPERTY_createdDailySheet);
             getSearchFilter().addDescOrder(Order.PROPERTY_orderNumber);
         }
+
+
 
         @Override
         public TableCellRenderer getTableCellRenderer(String propertyName) {
