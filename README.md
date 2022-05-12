@@ -7,8 +7,10 @@
 #windows
 * d:\_nifi\nifi-1.16.0\bin\run-nifi.bat
 * sc create "nifi" start=demand displayname= "Nifi" binpath=d:\_nifi\nifi-1.16.0\bin\run-nifi.bat
-* Generated Username [bcc0a3a3-a082-4ceb-a96d-6f97b4b0012f]
-*  Generated Password [9dbQlVJvYfMwCKYTL2kVIoNqeju5YB7+]
+
+Generated Username [59792bac-5f75-4263-8132-06ac9aa0f33d]
+Generated Password [mb3eyuWPVccvgWWEKMs6kf1pf0M5v1v5]
+
 
 
 #web
