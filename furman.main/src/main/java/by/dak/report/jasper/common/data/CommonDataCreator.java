@@ -233,6 +233,8 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         CommonDatas<CommonData> milling = new CommonDatas<>(CommonDataType.milling, order);
         CommonDatas<CommonData> cutoff = new CommonDatas<>(CommonDataType.cutoff, order);
         CommonDatas<CommonData> drilling = new CommonDatas<>(CommonDataType.drilling, order);
+        CommonDatas<CommonData> drillingForLoop = new CommonDatas<>(CommonDataType.drillingForLoop, order);
+        CommonDatas<CommonData> drillingForHandle = new CommonDatas<>(CommonDataType.drillingForHandle, order);
 
         List<OrderFurniture> orderFurnitures = mainFacade.getOrderFurnitureFacade().loadAllBy(order);
         for (OrderFurniture furniture : orderFurnitures) {
@@ -243,7 +245,9 @@ public class CommonDataCreator implements Creator<CommonReportData> {
             countCurveGlueingSection(curveGlueing, furniture);
             countMillingSection(milling, furniture);
             countCutoffSection(cutoff, furniture);
-            countDrillingSection(drilling, furniture);
+            fun.count_drilling.apply(furniture).apply(drilling).accept(this);
+            fun.count_drilling.apply(furniture).apply(drillingForLoop).accept(this);
+            fun.count_drilling.apply(furniture).apply(drillingForHandle).accept(this);
         }
         sort(patch);
         sort(groove);
@@ -253,6 +257,8 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         sort(milling);
         sort(cutoff);
         sort(drilling);
+        sort(drillingForLoop);
+        sort(drillingForHandle);
 
         increaseEachEntryByExtraPercent(directGlueing);
         increaseEachEntryByExtraPercent(curveGlueing);
@@ -272,6 +278,8 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         setAndSave(reportData, groove);
         setAndSave(reportData, milling);
         setAndSave(reportData, drilling);
+        setAndSave(reportData, drillingForLoop);
+        setAndSave(reportData, drillingForHandle);
     }
 
     private void setAndSave(CommonReportDataImpl reportData, CommonDatas<CommonData> commonDatas) {
@@ -317,9 +325,6 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         }
     }
 
-    private void countDrillingSection(CommonDatas<CommonData> datas, OrderFurniture furniture) {
-        fun.count_drilling.apply(ServiceType.drilling).apply(furniture).apply(datas).accept(this);
-    }
 
     private void countDirectGlueingSection(List<CommonData> glueingDatas, OrderFurniture furniture) {
         if (furniture.getGlueing() != null && furniture.isPrimary()) {
@@ -435,12 +440,11 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     }
 
     public interface fun {
-        Function<ServiceType,
-                Function<OrderFurniture,
+        Function<OrderFurniture,
                         Function<CommonDatas<CommonData>,
-                                Consumer<CommonDataCreator>>>> count_drilling = type -> furniture -> datas -> creator -> {
+                                Consumer<CommonDataCreator>>> count_drilling = furniture -> datas -> creator -> {
 
-
+            ServiceType type = (ServiceType) datas.getCommonDataType().getParentType();
             String field;
             switch (type) {
                 case drilling:
@@ -453,7 +457,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
                     field = "numberForHandle";
                     break;
                 default:
-                    throw new IllegalArgumentException(type.name());
+                    throw new IllegalArgumentException(datas.getCommonDataType().name());
             }
             try {
                 if (furniture.getDrilling() != null && (!furniture.isComplex() || furniture.isPrimary())) {
@@ -461,7 +465,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
                     if (drilling != null) {
                         Integer value = (Integer) BeanUtilsBean2.getInstance().getPropertyUtils().getProperty(drilling, field);
                         if (value != null)
-                            creator.updateCommonDatas(datas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), type, value);
+                            creator.updateCommonDatas(datas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), type , value);
                     }
                 }
             } catch (Exception e) {
