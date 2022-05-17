@@ -23,6 +23,8 @@ public enum ServiceType implements Named
     zfacade(MaterialType.zprofile), //zfacade
     agtfacade(MaterialType.agtprofile), //agtfacade
     drilling(MaterialType.board), //drilling
+    drillingForLoop(MaterialType.board), //drillingForLoop
+    drillingForHandle(MaterialType.board), //drillingForHandle
     plasticPatch(MaterialType.board); //склейка пластиком
 
     private MaterialType materialType;

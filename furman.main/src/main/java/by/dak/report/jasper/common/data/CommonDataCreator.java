@@ -33,12 +33,14 @@ import by.dak.report.jasper.common.data.converter.FurnitureConverter;
 import by.dak.template.TemplateFacade;
 import by.dak.template.report.TemplateFacadeServiceDataConverter;
 import by.dak.utils.Creator;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.beanutils.BeanUtilsBean2;
 import org.jhotdraw.draw.Figure;
 
 import java.awt.*;
 import java.util.List;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static by.dak.report.jasper.ReportUtils.calcLinear;
 import static by.dak.report.jasper.ReportUtils.calcSquare;
@@ -98,7 +100,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         List<AGTFacade> agtFacades = mainFacade.getAgtFacadeFacade().findAllByField(AGTFacade.PROPERTY_order, order);
         mainFacade.getAgtFacadeFacade().fillTransients(agtFacades);
 
-        List<TemplateFacade> templateFacades =  mainFacade.getTemplateFacadeFacade().findAllByField(TemplateFacade.PROPERTY_order, order);
+        List<TemplateFacade> templateFacades = mainFacade.getTemplateFacadeFacade().findAllByField(TemplateFacade.PROPERTY_order, order);
 
         fillFacadeServicesData(reportData, zFacades, agtFacades, templateFacades);
 
@@ -241,7 +243,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
             countCurveGlueingSection(curveGlueing, furniture);
             countMillingSection(milling, furniture);
             countCutoffSection(cutoff, furniture);
-            countDriliingSection(drilling, furniture);
+            countDrillingSection(drilling, furniture);
         }
         sort(patch);
         sort(groove);
@@ -315,14 +317,8 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         }
     }
 
-    private void countDriliingSection(CommonDatas<CommonData> datas, OrderFurniture furniture) {
-        if (furniture.getDrilling() != null && (!furniture.isComplex() || furniture.isPrimary())) {
-            Drilling drilling = (Drilling) XstreamHelper.getInstance().fromXML(furniture.getDrilling());
-            String value = drilling.getNote();
-            if (StringUtils.isNumeric(value)) {
-                updateCommonDatas(datas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), ServiceType.drilling, Integer.valueOf(value));
-            }
-        }
+    private void countDrillingSection(CommonDatas<CommonData> datas, OrderFurniture furniture) {
+        fun.count_drilling.apply(ServiceType.drilling).apply(furniture).apply(datas).accept(this);
     }
 
     private void countDirectGlueingSection(List<CommonData> glueingDatas, OrderFurniture furniture) {
@@ -436,5 +432,41 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         public Map<Gluieng, Double> getMap() {
             return map;
         }
+    }
+
+    public interface fun {
+        Function<ServiceType,
+                Function<OrderFurniture,
+                        Function<CommonDatas<CommonData>,
+                                Consumer<CommonDataCreator>>>> count_drilling = type -> furniture -> datas -> creator -> {
+
+
+            String field;
+            switch (type) {
+                case drilling:
+                    field = "number";
+                    break;
+                case drillingForLoop:
+                    field = "numberForLoop";
+                    break;
+                case drillingForHandle:
+                    field = "numberForHandle";
+                    break;
+                default:
+                    throw new IllegalArgumentException(type.name());
+            }
+            try {
+                if (furniture.getDrilling() != null && (!furniture.isComplex() || furniture.isPrimary())) {
+                    Drilling drilling = (Drilling) XstreamHelper.getInstance().fromXML(furniture.getDrilling());
+                    if (drilling != null) {
+                        Integer value = (Integer) BeanUtilsBean2.getInstance().getPropertyUtils().getProperty(drilling, field);
+                        if (value != null)
+                            creator.updateCommonDatas(datas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), type, value);
+                    }
+                }
+            } catch (Exception e) {
+                throw new IllegalArgumentException(e);
+            }
+        };
     }
 }
