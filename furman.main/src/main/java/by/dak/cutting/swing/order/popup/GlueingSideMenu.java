@@ -242,7 +242,7 @@ public class GlueingSideMenu extends CommonSideMenu
     @Override
     protected void createRules()
     {
-        rules = new HashMap<JCheckBox, JComponent[]>();
+        rules = new HashMap<>();
         rules.put(upChBox, new JComponent[]{upTextureCombo, upBorderCombo});
         rules.put(downChBox, new JComponent[]{downTextureCombo, downBorderCombo});
         rules.put(rightChBox, new JComponent[]{rightTextureCombo, rightBorderCombo});

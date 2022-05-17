@@ -19,9 +19,6 @@ import java.util.EventObject;
 
 public class ComplexCell extends AbstractCellEditor implements TableCellEditor
 {
-
-//    protected java.util.List<JPanel> editors = new ArrayList<JPanel>();
-//    protected java.util.List<ViewControl> controls = new ArrayList<ViewControl>();
     protected ViewControl control;
 
     public ComplexCell()
@@ -78,9 +75,6 @@ public class ComplexCell extends AbstractCellEditor implements TableCellEditor
                 case 10:
                     paramDTo = dto.getGlueing();
                     break;
-                case 12:
-//                    paramDTo = dto.getDrilling();
-                    break;
                 case 13:
                     paramDTo = dto.getGroove();
                     break;
@@ -92,11 +86,7 @@ public class ComplexCell extends AbstractCellEditor implements TableCellEditor
         if (paramDTo != null && component instanceof JButton)
         {
             Icon icon = ((JButton) component).getIcon();
-            if (icon == null)
-            {
-//                ((JButton) component).setText(StringUtils.isBlank(((Drilling) paramDTo).getPicName()) ? "NO" : "Yes");
-            }
-            else if (icon instanceof SideCanvas)
+            if (icon instanceof SideCanvas)
             {
                 SideCanvas canvas = (SideCanvas) icon;
                 canvas.setDown(paramDTo.isDown());
@@ -107,24 +97,4 @@ public class ComplexCell extends AbstractCellEditor implements TableCellEditor
             component.repaint();
         }
     }
-
-//    public List<JPanel> getEditors()
-//    {
-//        return editors;
-//    }
-//
-//    public void setEditors(List<JPanel> editors)
-//    {
-//        this.editors = editors;
-//    }
-//
-//    public List<ViewControl> getControls()
-//    {
-//        return controls;
-//    }
-//
-//    public void setControls(List<ViewControl> controls)
-//    {
-//        this.controls = controls;
-//    }
 }

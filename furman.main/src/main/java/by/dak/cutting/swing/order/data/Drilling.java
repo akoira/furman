@@ -2,18 +2,17 @@ package by.dak.cutting.swing.order.data;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 @XStreamAlias("drilling")
-public final class Drilling
-{
+public final class Drilling {
     private Integer number;
     private Integer numberForLoop;
     private Integer numberForHandle;
     private String note;
 
     @Override
-    public Object clone()
-    {
+    public Object clone() {
         Drilling drilling = new Drilling();
         drilling.number = this.number;
         drilling.numberForLoop = this.numberForLoop;
@@ -23,18 +22,14 @@ public final class Drilling
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (obj == null)
-        {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        if (obj == this)
-        {
+        if (obj == this) {
             return true;
         }
-        if (obj.getClass() != getClass())
-        {
+        if (obj.getClass() != getClass()) {
             return false;
         }
         Drilling drilling = (Drilling) obj;
@@ -76,5 +71,12 @@ public final class Drilling
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public boolean isEmpty() {
+        return (number == null || number < 1) &&
+                (numberForLoop == null || numberForLoop < 1) &&
+                (numberForHandle == null || numberForHandle < 1) &&
+                StringUtils.isBlank(note);
     }
 }

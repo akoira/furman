@@ -2,9 +2,10 @@ package by.dak.cutting.swing.order;
 
 import by.dak.cutting.swing.BaseTable;
 import by.dak.cutting.swing.order.cellcomponents.editors.*;
-import by.dak.cutting.swing.order.cellcomponents.renderers.ButtonCellRenderer;
+import by.dak.cutting.swing.order.cellcomponents.renderers.DTOCellRenderer;
 import by.dak.cutting.swing.order.cellcomponents.renderers.CutoffCheckBoxProvider;
 import by.dak.cutting.swing.order.cellcomponents.renderers.MillingCheckBoxProvider;
+import by.dak.cutting.swing.order.cellcomponents.renderers.DrillingCellRenderer;
 import by.dak.cutting.swing.order.models.OrderDetailsTableModel;
 import by.dak.cutting.swing.order.models.OrderTableColumn;
 import by.dak.cutting.swing.order.popup.CommonSideMenu;
@@ -84,7 +85,7 @@ public class OrderTable extends BaseTable
                 case glueing:
                     cellComp = new ComplexCell();
                     tableColumn.setCellEditor(cellComp);
-                    tableColumn.setCellRenderer(new ButtonCellRenderer(true));
+                    tableColumn.setCellRenderer(new DTOCellRenderer(true));
                     break;
                 case milling:
 					millingCellEditor = new MillingCellEditor();
@@ -95,17 +96,17 @@ public class OrderTable extends BaseTable
                     DrillingCellEditor editor = new DrillingCellEditor();
                     editor.setContext(context);
                     tableColumn.setCellEditor(editor);
-                    tableColumn.setCellRenderer(new ButtonCellRenderer(false));
+                    tableColumn.setCellRenderer(new DrillingCellRenderer());
                     break;
                 case groove:
                     cellComp = new CommonCellEditor();
                     tableColumn.setCellEditor(cellComp);
-                    tableColumn.setCellRenderer(new ButtonCellRenderer(true));
+                    tableColumn.setCellRenderer(new DTOCellRenderer(true));
                     break;
                 case a45:
                     cellComp = new TextSideCellEditor();
                     tableColumn.setCellEditor(cellComp);
-                    tableColumn.setCellRenderer(new ButtonCellRenderer(true));
+                    tableColumn.setCellRenderer(new DTOCellRenderer(true));
                     break;
                 case cutoff:
                     tableColumn.setCellEditor(new PopupEditor(new CutoffComponentProvider()));

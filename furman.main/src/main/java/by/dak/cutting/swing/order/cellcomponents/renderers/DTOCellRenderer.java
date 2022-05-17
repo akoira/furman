@@ -16,13 +16,13 @@ import java.util.ArrayList;
  * @depricated todo должен использоватся ButtonCellRenderer из swing пакета
  */
 
-public class ButtonCellRenderer implements TableCellRenderer
+public class DTOCellRenderer implements TableCellRenderer
 {
 
     private java.util.List<JButton> renderers = new ArrayList<JButton>();
     private boolean needIcon;
 
-    public ButtonCellRenderer(boolean needIcon)
+    public DTOCellRenderer(boolean needIcon)
     {
         this.needIcon = needIcon;
     }

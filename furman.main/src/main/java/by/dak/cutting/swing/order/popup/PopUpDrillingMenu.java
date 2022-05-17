@@ -1,23 +1,32 @@
 package by.dak.cutting.swing.order.popup;
 
+import by.dak.cutting.swing.order.data.Drilling;
 import by.dak.cutting.swing.order.data.OrderDetailsDTO;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import org.apache.commons.lang.StringUtils;
 import org.jdesktop.swingx.JXFormattedTextField;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellEditor;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
+import java.util.function.Function;
 
 
 public final class PopUpDrillingMenu extends AbstractSideMenu {
+    public interface fun {
+        Function<JXFormattedTextField, Integer> to_int = field ->
+                field.getValue() != null ? ((Number) field.getValue()).intValue() : 0;
+    }
+
     private JTextArea noteArea;
     private JXFormattedTextField number;
     private JXFormattedTextField numberForLoop;
     private JXFormattedTextField numberForHandle;
 
     private OrderDetailsDTO data;
+    private Drilling drilling;
 
     public PopUpDrillingMenu(TableCellEditor tableCellEditor) {
         super(tableCellEditor);
@@ -29,6 +38,7 @@ public final class PopUpDrillingMenu extends AbstractSideMenu {
         noteArea.setWrapStyleWord(true);
         noteArea.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         number = new JXFormattedTextField("к-во");
+        number.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
         numberForLoop = new JXFormattedTextField("к-во");
         numberForHandle = new JXFormattedTextField("к-во");
     }
@@ -36,8 +46,7 @@ public final class PopUpDrillingMenu extends AbstractSideMenu {
 
     protected void buildView() {
 
-        FormLayout layout = new FormLayout(
-                "2dlu, pref, 2dlu, 50dlu, 2dlu", // столбцы
+        FormLayout layout = new FormLayout("2dlu, pref, 2dlu, 50dlu, 2dlu", // столбцы
                 "2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, min, 2dlu"); // строки
 
         // layout.setRowGroups(new int[][]{{2, 4, 6, 8, 10}});
@@ -57,18 +66,26 @@ public final class PopUpDrillingMenu extends AbstractSideMenu {
 
     @Override
     public void updateData() {
+        this.drilling.setNumber(fun.to_int.apply(number));
+        this.drilling.setNumberForLoop(fun.to_int.apply(numberForLoop));
+        this.drilling.setNumberForHandle(fun.to_int.apply(numberForHandle));
+        this.drilling.setNote(noteArea.getText());
+        this.data.setDrilling(this.drilling);
+        refreshComponent();
     }
 
 
-    protected void refreshComponent() {
-        if (getComponentToRefresh() == null)
-            return;
-        ((JButton) getComponentToRefresh()).setText(StringUtils.isBlank(number.getText()) ? "NO" : "Yes");
+    private void refreshComponent() {
+        if (getComponentToRefresh() != null)
+            ((JButton) getComponentToRefresh()).setText(drilling.isEmpty() ? "NO" : "Yes");
     }
 
     @Override
     protected void flushComponentValues() {
-        noteArea.setText("");
+        number.setValue(null);
+        numberForLoop.setValue(null);
+        numberForHandle.setValue(null);
+        noteArea.setText(null);
     }
 
 
@@ -78,11 +95,15 @@ public final class PopUpDrillingMenu extends AbstractSideMenu {
 
     @Override
     protected void refreshCompState() {
-
+        refreshComponent();
     }
 
     @Override
     protected void beforeVisible() {
+        number.setValue(this.drilling.getNumber());
+        numberForLoop.setValue(this.drilling.getNumberForLoop());
+        numberForHandle.setValue(this.drilling.getNumberForHandle());
+        noteArea.setText(this.drilling.getNote());
         refreshCompState();
     }
 
@@ -92,5 +113,6 @@ public final class PopUpDrillingMenu extends AbstractSideMenu {
 
     public void setData(OrderDetailsDTO data) {
         this.data = data;
+        this.drilling = data.getDrilling() == null ? new Drilling() : data.getDrilling();
     }
 }
