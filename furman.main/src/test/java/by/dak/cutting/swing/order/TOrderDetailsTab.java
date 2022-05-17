@@ -7,13 +7,16 @@ import by.dak.persistence.entities.OrderItem;
 import by.dak.test.ATestApplication;
 
 import javax.swing.*;
+import java.util.EventObject;
 
 /**
  * User: akoyro
  * Date: 06.08.2009
  * Time: 22:26:42
  */
-public class TOrderDetailsTab extends ATestApplication {
+public final class TOrderDetailsTab extends ATestApplication {
+	private OrderItem item;
+	private OrderDetailsPanel panel;
 	public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
 		TOrderDetailsTab.launch(TOrderDetailsTab.class, args);
 	}
@@ -22,9 +25,13 @@ public class TOrderDetailsTab extends ATestApplication {
 	public JComponent getMainComponent() {
 		OrderItem item = mainFacade.getOrderItemFacade().loadAll().get(0);
 
-		OrderDetailsPanel panel = new OrderDetailsPanel(this.getContext());
+		panel = new OrderDetailsPanel(getContext());
 		panel.setEnabled(true);
 		panel.setValue(item);
 		return panel;
+	}
+
+	@Override
+	public void exit(EventObject event) {
 	}
 }
