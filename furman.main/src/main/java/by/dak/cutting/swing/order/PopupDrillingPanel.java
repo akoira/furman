@@ -1,6 +1,7 @@
 package by.dak.cutting.swing.order;
 
 import by.dak.cutting.swing.order.data.OrderDetailsDTO;
+import by.dak.cutting.swing.order.popup.AbstractSideMenu;
 import by.dak.cutting.swing.order.popup.CommonSideMenu;
 import by.dak.cutting.swing.order.popup.PopUpDrillingMenu;
 import org.jdesktop.application.ApplicationContext;
@@ -21,12 +22,10 @@ public class PopupDrillingPanel extends AbstractPopupPanel<OrderDetailsDTO, Orde
     }
 
     @Override
-    public CommonSideMenu getSideMenu()
+    public PopUpDrillingMenu getSideMenu()
     {
         if (drillingMenu == null)
-        {
             drillingMenu = new PopUpDrillingMenu(getTableCellEditor());
-        }
         return drillingMenu;
     }
 
