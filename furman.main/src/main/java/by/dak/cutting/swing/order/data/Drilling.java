@@ -3,6 +3,7 @@ package by.dak.cutting.swing.order.data;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @XStreamAlias("drilling")
 public final class Drilling {
@@ -78,5 +79,10 @@ public final class Drilling {
                 (numberForLoop == null || numberForLoop < 1) &&
                 (numberForHandle == null || numberForHandle < 1) &&
                 StringUtils.isBlank(note);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
