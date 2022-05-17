@@ -20,7 +20,7 @@ import java.awt.image.BufferedImage;
  * @introduced [Furniture constructor | Iteration 1]
  * @since 1.0.0
  */
-public class GlueingReportConverter implements Converter<OrderFurniture, OrderDetailsData>
+public class GluingReportConverter implements Converter<OrderFurniture, OrderDetailsData>
 {
 
     public OrderDetailsData convert(OrderFurniture source)
@@ -52,7 +52,7 @@ public class GlueingReportConverter implements Converter<OrderFurniture, OrderDe
                 glueing != null && glueing.isRight() ? ReportUtils.formatGlueingValue(glueing.getRightBorderDef().getName(), glueing.getRightTexture()) : EMPTY_STRING,
                 milling != null ? ReportUtils.getFurnitureName(source) : EMPTY_STRING,
                 EMPTY_STRING,
-                drilling != null ? drilling.getNote() : EMPTY_STRING,
+                EMPTY_STRING,
                 drilling != null && drilling.getNote() != null ? drilling.getNote() : EMPTY_STRING);
     }
 

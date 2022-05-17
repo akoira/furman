@@ -50,16 +50,9 @@ public class GlueingReportDataCreator extends OrderHeaderReportDataCreator
     private List<OrderDetailsData> createGlueingData()
     {
         ListConverter<OrderFurniture, OrderDetailsData> converter = new ListConverter<OrderFurniture, OrderDetailsData>(
-                new GlueingReportConverter(),
-                new Validator<OrderFurniture>()
-                {
-                    @Override
-                    public boolean validate(OrderFurniture source)
-                    {
-                        return (!source.isComplex() || source.isPrimary())
-                                && (source.getDrilling() != null || source.getGlueing() != null || source.getMilling() != null);
-                    }
-                });
+                new GluingReportConverter(),
+                source -> (!source.isComplex() || source.isPrimary())
+                        && (source.getDrilling() != null || source.getGlueing() != null || source.getMilling() != null));
 
         List<OrderFurniture> orderFurnitures = FacadeContext.getOrderFurnitureFacade().loadAllBy(getOrder());
         return converter.convert(orderFurnitures);

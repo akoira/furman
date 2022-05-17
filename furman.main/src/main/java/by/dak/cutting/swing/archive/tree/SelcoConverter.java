@@ -136,8 +136,8 @@ public class SelcoConverter {
                     value.add("SR");
                 if (dto.getOrderFurnitureEntity().isComplex())
                     value.add("SKL");
-//                if (dto.getDrilling() != null && StringUtils.isNotBlank(dto.getDrilling().getNotes()))
-//                    value.add(StringUtils.trim(dto.getDrilling().getNotes()));
+                if (dto.getDrilling() != null && StringUtils.isNotBlank(dto.getDrilling().getNote()))
+                    value.add(StringUtils.trim(dto.getDrilling().getNote()));
                 if (value.size() > 0)
                     cell.setCellValue(String.join("/", value));
             });
