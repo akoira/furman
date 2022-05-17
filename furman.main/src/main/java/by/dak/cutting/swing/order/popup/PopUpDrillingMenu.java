@@ -12,12 +12,19 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 
 public final class PopUpDrillingMenu extends AbstractSideMenu {
     public interface fun {
         Function<JXFormattedTextField, Integer> to_int = field ->
                 field.getValue() != null ? ((Number) field.getValue()).intValue() : 0;
+        Supplier<JXFormattedTextField> field = () -> {
+            JXFormattedTextField field = new JXFormattedTextField("к-во");
+            field.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
+            field.setFocusLostBehavior(JFormattedTextField.COMMIT);
+            return field;
+        };
     }
 
     private JTextArea noteArea;
@@ -37,10 +44,9 @@ public final class PopUpDrillingMenu extends AbstractSideMenu {
         noteArea.setLineWrap(true);
         noteArea.setWrapStyleWord(true);
         noteArea.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        number = new JXFormattedTextField("к-во");
-        number.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
-        numberForLoop = new JXFormattedTextField("к-во");
-        numberForHandle = new JXFormattedTextField("к-во");
+        number = fun.field.get();
+        numberForLoop = fun.field.get();
+        numberForHandle =fun.field.get();
     }
 
 
