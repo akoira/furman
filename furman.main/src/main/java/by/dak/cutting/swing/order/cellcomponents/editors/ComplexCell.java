@@ -79,7 +79,7 @@ public class ComplexCell extends AbstractCellEditor implements TableCellEditor
                     paramDTo = dto.getGlueing();
                     break;
                 case 12:
-                    paramDTo = dto.getDrilling();
+//                    paramDTo = dto.getDrilling();
                     break;
                 case 13:
                     paramDTo = dto.getGroove();
@@ -94,7 +94,7 @@ public class ComplexCell extends AbstractCellEditor implements TableCellEditor
             Icon icon = ((JButton) component).getIcon();
             if (icon == null)
             {
-                ((JButton) component).setText(StringUtils.isBlank(((Drilling) paramDTo).getPicName()) ? "NO" : "Yes");
+//                ((JButton) component).setText(StringUtils.isBlank(((Drilling) paramDTo).getPicName()) ? "NO" : "Yes");
             }
             else if (icon instanceof SideCanvas)
             {

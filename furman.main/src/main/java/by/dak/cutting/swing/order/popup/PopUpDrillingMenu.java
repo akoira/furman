@@ -61,19 +61,20 @@ public final class PopUpDrillingMenu extends CommonSideMenu {
 
     @Override
     public void updateData() {
-        Drilling dto = (Drilling) getDTO();
-        dto.setNotes(noteArea.getText());
-        refreshComponent();
+//        Drilling dto = (Drilling) getDTO();
+//        dto.setNote(noteArea.getText());
+//        refreshComponent();
     }
 
     @Override
     protected DTO getDTO() {
-        Drilling dto = getData().getDrilling();
-        if (dto == null) {
-            dto = new Drilling();
-            getData().setDrilling(dto);
-        }
-        return dto;
+//        Drilling dto = getData().getDrilling();
+//        if (dto == null) {
+//            dto = new Drilling();
+//            getData().setDrilling(dto);
+//        }
+//        return dto;
+        return null;
     }
 
     @Override
@@ -91,7 +92,7 @@ public final class PopUpDrillingMenu extends CommonSideMenu {
 
     @Override
     protected void mergeCompAndValues() {
-        Drilling drilling = (Drilling) getDTO();
-        noteArea.setText(drilling.getNotes());
+//        Drilling drilling = (Drilling) getDTO();
+//        noteArea.setText(drilling.getNotes());
     }
 }

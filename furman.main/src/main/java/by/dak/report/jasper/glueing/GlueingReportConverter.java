@@ -52,8 +52,8 @@ public class GlueingReportConverter implements Converter<OrderFurniture, OrderDe
                 glueing != null && glueing.isRight() ? ReportUtils.formatGlueingValue(glueing.getRightBorderDef().getName(), glueing.getRightTexture()) : EMPTY_STRING,
                 milling != null ? ReportUtils.getFurnitureName(source) : EMPTY_STRING,
                 EMPTY_STRING,
-                drilling != null ? drilling.getPicName() : EMPTY_STRING,
-                drilling != null && drilling.getNotes() != null ? drilling.getNotes() : EMPTY_STRING);
+                drilling != null ? drilling.getNote() : EMPTY_STRING,
+                drilling != null && drilling.getNote() != null ? drilling.getNote() : EMPTY_STRING);
     }
 
     private Image createImage(DTO dto, long length, long width)

@@ -13,10 +13,10 @@ public class DTOUtils
     {
         if (dto == null)
             return false;
-        if (dto instanceof Drilling)
-        {
-            return !StringUtils.isBlank(((Drilling) dto).getPicName()) || !StringUtils.isBlank(((Drilling) dto).getNotes());
-        }
+//        if (dto instanceof Drilling)
+//        {
+//            return !StringUtils.isBlank(((Drilling) dto).getPicName()) || !StringUtils.isBlank(((Drilling) dto).getNotes());
+//        }
         return dto.isDown() || dto.isLeft() || dto.isUp() || dto.isRight();
     }
 

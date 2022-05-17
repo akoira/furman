@@ -4,30 +4,21 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 @XStreamAlias("drilling")
-public class Drilling extends DTODecorator
+public final class Drilling
 {
-    public Drilling()
-    {
-        super(new DefaultDTO());
-    }
-
-    public Drilling(String picName, String notes)
-    {
-        super(new DefaultDTO(picName, notes));
-    }
+    private Integer number;
+    private Integer numberForLoop;
+    private Integer numberForHandle;
+    private String note;
 
     @Override
     public Object clone()
     {
         Drilling drilling = new Drilling();
-        if (getPicName() != null)
-        {
-            drilling.setPicName(new String(getPicName()));
-        }
-        if (getNotes() != null)
-        {
-            drilling.setNotes(new String(getNotes()));
-        }
+        drilling.number = this.number;
+        drilling.numberForLoop = this.numberForLoop;
+        drilling.numberForHandle = this.numberForHandle;
+        drilling.note = this.note;
         return drilling;
     }
 
@@ -48,8 +39,42 @@ public class Drilling extends DTODecorator
         }
         Drilling drilling = (Drilling) obj;
         return new EqualsBuilder()
-                .append(getPicName(), drilling.getPicName())
-                .append(getNotes(), drilling.getNotes())
+                .append(this.number, drilling.number)
+                .append(this.numberForLoop, drilling.numberForLoop)
+                .append(this.numberForHandle, drilling.numberForHandle)
+                .append(this.note, drilling.note)
                 .isEquals();
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Integer getNumberForLoop() {
+        return numberForLoop;
+    }
+
+    public void setNumberForLoop(Integer numberForLoop) {
+        this.numberForLoop = numberForLoop;
+    }
+
+    public Integer getNumberForHandle() {
+        return numberForHandle;
+    }
+
+    public void setNumberForHandle(Integer numberForHandle) {
+        this.numberForHandle = numberForHandle;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

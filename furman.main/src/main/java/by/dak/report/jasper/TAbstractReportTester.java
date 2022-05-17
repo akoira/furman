@@ -101,12 +101,12 @@ public class TAbstractReportTester
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(false, false, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(false, false, true, true, "", "", "45", "45")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D1", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
         furnitures.add(new TestOrderFurnitureEntity(2L, "1", board1, texture1, 600L, 2370L, 1, false,
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(false, false, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(false, false, true, true, "", "", "45", "45")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D1", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
 
         glueing = new Glueing(true, false, true, false, texture2, texture2, texture2, texture2);
         glueing.setUpBorderDef(border2);
@@ -117,7 +117,7 @@ public class TAbstractReportTester
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, false, true, false)),
                 XstreamHelper.getInstance().toXML(new A45(true, false, true, false, "50", "", "50", "")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D2", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
 
         glueing = new Glueing(true, true, true, true, texture2, texture2, texture2, texture2);
         glueing.setUpBorderDef(border3);
@@ -128,7 +128,7 @@ public class TAbstractReportTester
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, true, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(true, true, true, true, "35", "35", "35", "35")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D3", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
 
         glueing = new Glueing(true, false, true, true, texture2, texture2, texture2, texture2);
         glueing.setUpBorderDef(border4);
@@ -139,7 +139,7 @@ public class TAbstractReportTester
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, false, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(true, false, true, true, "60", "", "45", "25")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D4", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
 
         glueing = new Glueing(true, false, true, true, texture1, texture1, texture1, texture1);
         glueing.setUpBorderDef(border1);
@@ -150,12 +150,12 @@ public class TAbstractReportTester
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, false, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(true, false, true, true, "60", "", "45", "25")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D5", "Комментарий Комментарий Комментарий Комментарий Комментарий")));
+                XstreamHelper.getInstance().toXML(new Drilling()));
         TestOrderFurnitureEntity second = new TestOrderFurnitureEntity(7L, "6", board3.getSimpleType2(), texture1, 600L, 2370L, 1, false,
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, false, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(true, false, true, true, "60", "", "45", "25")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D5", "Комментарий Комментарий Комментарий Комментарий Комментарий")));
+                XstreamHelper.getInstance().toXML(new Drilling()));
         first.setSecond(second);
         second.setSecond(first);
         first.setPrimary(true);
@@ -174,7 +174,7 @@ public class TAbstractReportTester
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, false, true, false)),
                 XstreamHelper.getInstance().toXML(new A45(true, false, true, false, "50", "", "50", "")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D7", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
 
         glueing = new Glueing(true, true, true, true, texture2, texture2, texture2, texture2);
         glueing.setUpBorderDef(border3);
@@ -186,7 +186,7 @@ public class TAbstractReportTester
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, true, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(true, true, true, true, "35", "35", "35", "35")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D8", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
 
         glueing = new Glueing(true, false, true, true, texture2, texture2, texture2, texture2);
         glueing.setUpBorderDef(border4);
@@ -197,13 +197,13 @@ public class TAbstractReportTester
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, false, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(true, false, true, true, "60", "", "45", "25")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D9", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
 
         furnitures.add(new TestOrderFurnitureEntity(11L, "10", board2, texture2, 700L, 350L, 2, false,
                 XstreamHelper.getInstance().toXML(glueing),
                 XstreamHelper.getInstance().toXML(new Groove(true, false, true, true)),
                 XstreamHelper.getInstance().toXML(new A45(true, false, true, true, "60", "", "45", "25")),
-                XstreamHelper.getInstance().toXML(new Drilling("Рисунок D9", "Комментарий Комментарий Комментарий Комментарий Комментарий"))));
+                XstreamHelper.getInstance().toXML(new Drilling())));
 
         return furnitures;
     }

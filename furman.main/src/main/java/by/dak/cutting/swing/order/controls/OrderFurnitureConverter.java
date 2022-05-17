@@ -102,7 +102,7 @@ public class OrderFurnitureConverter
         orderFurniture.setOrderItem(orderItem);
         //todo конвертацию сделать на уровне Hibernate
         orderFurniture.setAngle45(DTOUtils.isValueSet(dto.getA45()) ? XstreamHelper.getInstance().toXML(dto.getA45()) : null);
-        orderFurniture.setDrilling(DTOUtils.isValueSet(dto.getDrilling()) ? XstreamHelper.getInstance().toXML(dto.getDrilling()) : null);
+//        orderFurniture.setDrilling(DTOUtils.isValueSet(dto.getDrilling()) ? XstreamHelper.getInstance().toXML(dto.getDrilling()) : null);
         orderFurniture.setGlueing(DTOUtils.isValueSet(dto.getGlueing()) ? XstreamHelper.getInstance().toXML(dto.getGlueing()) : null);
         orderFurniture.setGroove(DTOUtils.isValueSet(dto.getGroove()) ? XstreamHelper.getInstance().toXML(dto.getGroove()) : null);
 

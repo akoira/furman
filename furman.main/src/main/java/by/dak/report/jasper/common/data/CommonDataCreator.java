@@ -318,7 +318,7 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     private void countDriliingSection(CommonDatas<CommonData> datas, OrderFurniture furniture) {
         if (furniture.getDrilling() != null && (!furniture.isComplex() || furniture.isPrimary())) {
             Drilling drilling = (Drilling) XstreamHelper.getInstance().fromXML(furniture.getDrilling());
-            String value = drilling.getPicName();
+            String value = drilling.getNote();
             if (StringUtils.isNumeric(value)) {
                 updateCommonDatas(datas, furniture.isComplex() ? furniture.getComlexBoardDef() : furniture.getBoardDef(), ServiceType.drilling, Integer.valueOf(value));
             }

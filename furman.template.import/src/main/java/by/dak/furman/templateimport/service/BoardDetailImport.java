@@ -171,7 +171,7 @@ public class BoardDetailImport
             if (holes != null)
             {
                 Drilling drilling = new Drilling();
-                drilling.setPicName(holes);
+//                drilling.setPicName(holes);
                 return XstreamHelper.getInstance().toXML(drilling);
             }
         }
