@@ -80,6 +80,11 @@ public class FacadeContext
         return (DesignerFacade) applicationContext.getBean("designerFacade");
     }
 
+    public static CashIncomeFacade getCashIncomeFacade()
+    {
+        return (CashIncomeFacade) applicationContext.getBean("cashIncomeFacade");
+    }
+
     public static ShiftFacade getShiftFacade()
     {
         return (ShiftFacade) applicationContext.getBean("shiftFacade");

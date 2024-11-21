@@ -219,6 +219,8 @@ public class OrderStatusManager
 
         List<OrderFurniture> list = FacadeContext.getOrderFurnitureFacade().loadOrderedByNumber(order);
 
+        //TODO: УЧЕСТЬ, ЧТО ЛИМИТ ДИЛЕРА МОЖЕТ БЫТЬ РАВЕН 0
+
 //        return dealer.Limit == 0 || Convert.ToDecimal(arrear + order.TotalCost.GetValueOrDefault()) <= dealer.Limit;
 
 //        if (list.size() > 0 &&

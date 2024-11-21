@@ -345,6 +345,13 @@
         </property>
     </bean>
 
+    <bean id="cashIncomeDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.CashIncomeDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.CashIncomeDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
 
     <!--new Profile end -->
 
