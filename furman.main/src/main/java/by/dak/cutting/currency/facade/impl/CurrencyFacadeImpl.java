@@ -6,10 +6,14 @@ import by.dak.cutting.currency.persistence.entity.Currency;
 import by.dak.cutting.currency.persistence.entity.CurrencyType;
 import by.dak.cutting.facade.BaseFacadeImpl;
 import by.dak.cutting.facade.DailysheetFacade;
+import by.dak.persistence.FacadeContext;
 import by.dak.persistence.entities.Dailysheet;
+import by.dak.utils.convert.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.naming.Context;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,6 +59,13 @@ public class CurrencyFacadeImpl extends BaseFacadeImpl<Currency> implements Curr
 			}
 		}
 		return currency;
+	}
+
+	@Override
+	public Currency findCurrentBy(CurrencyType currencyType, Date date) {
+		Dailysheet dailysheet = FacadeContext.getDailysheetFacade()
+				.findAllByField("date", TimeUtils.getDayTimestamp(date)).get(0);
+		return findCurrentBy(currencyType, dailysheet, true);
 	}
 
 	public void setSelected(Currency currency) {

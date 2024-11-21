@@ -1,6 +1,7 @@
 package by.dak.persistence.entities;
 
 
+import by.dak.cutting.currency.persistence.entity.Currency;
 import by.dak.persistence.convert.CashIncome2StringConverter;
 import by.dak.utils.convert.StringValue;
 
@@ -20,15 +21,16 @@ public class CashIncome extends PersistenceEntity {
     @Column(name = "REASON_ID", nullable = false)
     private Long reasonId;
 
-    @Column(name = "CURRENCY_ID", nullable = true)
-    private Long currencyId;
-
     @Column(name = "AMOUNT", nullable = false)
     private BigDecimal amount;
 
     @ManyToOne(targetEntity = Customer.class)
     @JoinColumns({@JoinColumn(name = "CUSTOMER_ID", nullable = true, referencedColumnName = "ID")})
     private Customer customer;
+
+    @ManyToOne(targetEntity = Currency.class)
+    @JoinColumns({@JoinColumn(name = "CURRENCY_ID", nullable = true, referencedColumnName = "ID")})
+    private Currency currency;
 
     public Date getDate() {
         return date;
@@ -46,14 +48,6 @@ public class CashIncome extends PersistenceEntity {
         this.reasonId = reasonId;
     }
 
-    public Long getCurrencyId() {
-        return currencyId;
-    }
-
-    public void setCurrencyId(Long currencyId) {
-        this.currencyId = currencyId;
-    }
-
     public BigDecimal getAmount() {
         return amount;
     }
@@ -68,5 +62,13 @@ public class CashIncome extends PersistenceEntity {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }
