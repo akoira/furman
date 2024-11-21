@@ -212,6 +212,25 @@ public class OrderStatusManager
         return true;
     }
 
+    public boolean canDesignOrder(Order order)
+    {
+        SearchFilter filter = new SearchFilter();
+        filter.eq(StripsEntity.PROPERTY_order, order);
+
+        List<OrderFurniture> list = FacadeContext.getOrderFurnitureFacade().loadOrderedByNumber(order);
+
+//        return dealer.Limit == 0 || Convert.ToDecimal(arrear + order.TotalCost.GetValueOrDefault()) <= dealer.Limit;
+
+//        if (list.size() > 0 &&
+//                FacadeContext.getStripsFacade().getCount(filter) < 1)
+//        {
+//            String message = Application.getInstance().getContext().getResourceMap(OrderStatusManager.class).getString("message.warn.limit.exceeded");
+//            JOptionPane.showMessageDialog(relatedComponent, message, message, JOptionPane.WARNING_MESSAGE);
+//            return false;
+//        }
+        return true;
+    }
+
     private boolean isLinearCuttingDone(Order order)
     {
         OrderGroup orderGroup = order.getOrderGroup();

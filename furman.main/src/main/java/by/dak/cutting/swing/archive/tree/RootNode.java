@@ -286,7 +286,7 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
                             return null;
                         } else if (value == OrderStatus.made && orderStatusManager.canMadeOrder(order)) {
                             return null;
-                        } else if (value == OrderStatus.design) {
+                        } else if (value == OrderStatus.design && orderStatusManager.canDesignOrder(order)) {
                             return null;
                         }
                         return new Validator.Result(null, null);

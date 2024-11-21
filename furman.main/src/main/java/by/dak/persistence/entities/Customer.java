@@ -6,6 +6,7 @@ import by.dak.utils.convert.Converter;
 import by.dak.utils.convert.StringValue;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * @author Denis Koyro
@@ -76,6 +77,9 @@ public class Customer extends PersistenceEntity
 
     @Column(name = "DISCOUNT", nullable = false)
     private Double discount;
+
+    @Column(name = "limit", nullable = true)
+    private BigDecimal limit;
 
     public void setName(String name)
     {
@@ -148,6 +152,14 @@ public class Customer extends PersistenceEntity
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    public BigDecimal getLimit() {
+        return limit;
+    }
+
+    public void setLimit(BigDecimal limit) {
+        this.limit = limit;
     }
 
     public static Customer valueOf(String name) {
