@@ -19,6 +19,10 @@ public class CurrencyService {
                 .collect(Collectors.toList());
     }
 
+    public BigDecimal getSum(List<CashIncome> allIncomes) {
+        return allIncomes.stream().map(CashIncome::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
     public CashIncome factor(CashIncome income, Date date, CurrencyType to) {
         CurrencyType from = getCurrencyFromName(income.getCurrency().getType().name());
         if (from.equals(to)) return income;
