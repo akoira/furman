@@ -148,6 +148,12 @@ public class OrderFacadeImpl extends AOrderFacadeImpl<Order> implements OrderFac
         return ((OrderDao) dao).findAllByStatus(orderStatus);
     }
 
+    @Override
+    public List<Order> findAllByCustomerStatusesDate(Customer customer, java.util.Date from, List<OrderStatus> statuses)
+    {
+        return ((OrderDao) dao).findAllByCustomerStatusesDate(customer, from, statuses);
+    }
+
 
     public static SearchFilter getNotGroupedFilter()
     {

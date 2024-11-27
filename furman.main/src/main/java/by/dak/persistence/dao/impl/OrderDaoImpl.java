@@ -11,6 +11,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.hibernate.criterion.Restrictions.eq;
 
@@ -114,5 +115,16 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao
     public List<Order> findAllByStatus(OrderStatus orderStatus)
     {
         return getSession().getNamedQuery("allByStatus").setParameter("status", orderStatus).list();
+    }
+
+    @Override
+    public List<Order> findAllByCustomerStatusesDate(Customer customer, Date from, List<OrderStatus> statuses)
+    {
+
+        return getSession().getNamedQuery("allByCustomerStatusesDate")
+                .setParameter("customer", customer)
+                .setParameterList("statuses", statuses)
+                .setParameter("dateFrom", from)
+                .list();
     }
 }

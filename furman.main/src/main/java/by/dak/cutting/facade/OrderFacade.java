@@ -33,4 +33,6 @@ public interface OrderFacade extends AOrderFacade<Order>
     public List<Order> findAllByStatus(OrderStatus orderStatus);
 
     String getOrdersStringBy(OrderGroup orderGroup);
+
+    List<Order> findAllByCustomerStatusesDate(Customer customer, Date from, List<OrderStatus> statuses);
 }

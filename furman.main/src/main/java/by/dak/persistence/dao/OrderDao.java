@@ -6,6 +6,7 @@ import by.dak.persistence.entities.Order;
 import by.dak.persistence.entities.OrderStatus;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -26,4 +27,6 @@ public interface OrderDao extends GenericDao<Order>
     List<java.util.Date> getDateBy(Customer customer);
 
     public List<Order> findAllByStatus(OrderStatus orderStatus);
+
+    List<Order> findAllByCustomerStatusesDate(Customer customer, Date from, List<OrderStatus> statuses);
 }
