@@ -351,6 +351,12 @@
             <bean class="by.dak.persistence.dao.impl.CashIncomeDaoImpl" parent="commonDAO"/>
         </property>
     </bean>
+    <bean id="discountsDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.DiscountsDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.DiscountsDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
 
 
     <!--new Profile end -->

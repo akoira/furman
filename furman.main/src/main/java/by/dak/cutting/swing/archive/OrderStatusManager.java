@@ -21,8 +21,10 @@ import org.jdesktop.beansbinding.BindingListener;
 
 import javax.swing.*;
 import java.beans.PropertyChangeSupport;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * User: akoyro
@@ -214,23 +216,31 @@ public class OrderStatusManager
 
     public boolean canDesignOrder(Order order)
     {
-        SearchFilter filter = new SearchFilter();
-        filter.eq(StripsEntity.PROPERTY_order, order);
-
-        List<OrderFurniture> list = FacadeContext.getOrderFurnitureFacade().loadOrderedByNumber(order);
+//        List<OrderFurniture> list = FacadeContext.getOrderFurnitureFacade().loadOrderedByNumber(order);
+//        List<CashIncome> cashIncomes = FacadeContext.getCashIncomeFacade().findAllBy(customer);
+//        Customer cashIncomeList = order.getCustomer();
+//
+//        List<CashIncome> filteredCashIncomeList = cashIncomeList.stream()
+//                .filter(c -> reasonIds.contains(c.getReasonId()))
+//                .collect(Collectors.toList());
 
         //TODO: УЧЕСТЬ, ЧТО ЛИМИТ ДИЛЕРА МОЖЕТ БЫТЬ РАВЕН 0
 
-//        return dealer.Limit == 0 || Convert.ToDecimal(arrear + order.TotalCost.GetValueOrDefault()) <= dealer.Limit;
-
-//        if (list.size() > 0 &&
-//                FacadeContext.getStripsFacade().getCount(filter) < 1)
-//        {
+//        if (!list.isEmpty() && isArrear(order)) {
 //            String message = Application.getInstance().getContext().getResourceMap(OrderStatusManager.class).getString("message.warn.limit.exceeded");
 //            JOptionPane.showMessageDialog(relatedComponent, message, message, JOptionPane.WARNING_MESSAGE);
 //            return false;
 //        }
         return true;
+    }
+
+
+    //TODO: перенести реализацию установления задолженности в фасад customer или куда-то туда!
+    private boolean isArrear(Order order, BigDecimal cashIncomeSum, BigDecimal ordersSum) {
+        BigDecimal limit = order.getCustomer().getLimit();
+        BigDecimal arrear = cashIncomeSum.subtract(ordersSum);
+        return limit.compareTo(BigDecimal.ZERO) != 0 || BigDecimal.valueOf(order.getDialerCost()).add(arrear)
+                .compareTo(limit) != 1;
     }
 
     private boolean isLinearCuttingDone(Order order)

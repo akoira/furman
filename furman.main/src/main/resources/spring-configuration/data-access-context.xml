@@ -44,6 +44,7 @@
 				<value>by.dak.persistence.entities.Cutter</value>
 				<value>by.dak.persistence.entities.Delivery</value>
 				<value>by.dak.persistence.entities.CashIncome</value>
+				<value>by.dak.persistence.entities.Discounts</value>
 				<value>by.dak.ordergroup.OrderGroup</value>
 				<value>by.dak.persistence.cutting.entities.StripsEntity</value>
 				<!-- new for DoorMechDef start -->
