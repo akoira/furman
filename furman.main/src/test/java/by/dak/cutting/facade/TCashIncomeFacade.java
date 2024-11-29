@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,11 +49,11 @@ public class TCashIncomeFacade {
 
         List<Long> reasonIds = new ArrayList<>(Arrays.asList(1L, 2L, 12L, 13L));
 
-        List<CashIncome> cashIncomeList = FacadeContext.getCashIncomeFacade().findAllBy(customer);
-        List<CashIncome> filteredCashIncomeList = cashIncomeList.stream()
-                .filter(c -> reasonIds.contains(c.getReasonId()))
-                .collect(Collectors.toList());
+        // should be 143 items for 27 dealer pos
+        List<CashIncome> cashIncomes = FacadeContext.getCashIncomeFacade().getAllIncomesForArrear(customer);
 
-        System.out.println(filteredCashIncomeList);
+        cashIncomes.stream().map(CashIncome::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        System.out.println(cashIncomes);
     }
 }

@@ -11,6 +11,13 @@ import java.util.Date;
 
 @Entity
 @Table(name = "cash_income")
+@NamedQueries(value =
+        {
+                @NamedQuery(name = "allByCustomerReasons",
+                        query = "from CashIncome c where c.customer = :customer " +
+                                "and c.reasonId in (:reasons)")
+        }
+)
 @StringValue(converterClass = CashIncome2StringConverter.class)
 public class CashIncome extends PersistenceEntity {
     public static final String PROPERTY_customer = "customer";

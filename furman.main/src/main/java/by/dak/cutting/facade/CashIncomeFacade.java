@@ -10,5 +10,6 @@ import java.util.List;
 @Transactional
 public interface CashIncomeFacade extends BaseFacade<CashIncome> {
     List<CashIncome> findAllBy(Customer customer);
-    BigDecimal getSum(List<CashIncome> allIncomes);
+    List<CashIncome> getAllIncomesBy(Customer customer, List<Long> reasons);
+    List<CashIncome> getAllIncomesForArrear(Customer customer);
 }
