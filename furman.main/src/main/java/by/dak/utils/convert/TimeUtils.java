@@ -1,6 +1,8 @@
 package by.dak.utils.convert;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,5 +33,14 @@ public class TimeUtils
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         return calendar.getTime();
+    }
+
+    public static Date parseDateFromString(String dateString, String pattern) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.parse(dateString);
+    }
+
+    public static Date parseDateFromString(String dateString) throws ParseException {
+        return parseDateFromString(dateString, "dd-MM-yyyy");
     }
 }

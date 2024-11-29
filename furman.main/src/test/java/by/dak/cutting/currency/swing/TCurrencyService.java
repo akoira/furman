@@ -37,7 +37,7 @@ public class TCurrencyService {
         Customer customer = customers.get(27);
         List<CashIncome> cashIncomeList = FacadeContext.getCashIncomeFacade().findAllBy(customer);
 
-        BigDecimal convertedCashIncomes = currencyService.getSum(cashIncomeList);
+        BigDecimal convertedCashIncomes = FacadeContext.getCashIncomeFacade().getSum(cashIncomeList);
         assertEquals(0, BigDecimal.valueOf(382185.47).compareTo(convertedCashIncomes));
     }
 }

@@ -6,6 +6,7 @@ import by.dak.cutting.facade.CashIncomeFacade;
 import by.dak.persistence.entities.CashIncome;
 import by.dak.persistence.entities.Customer;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CashIncomeFacadeImpl extends BaseFacadeImpl<CashIncome> implements CashIncomeFacade {
@@ -16,5 +17,9 @@ public class CashIncomeFacadeImpl extends BaseFacadeImpl<CashIncome> implements 
         filter.eq(CashIncome.PROPERTY_customer, customer);
 
         return super.loadAll(filter);
+    }
+
+    public BigDecimal getSum(List<CashIncome> allIncomes) {
+        return allIncomes.stream().map(CashIncome::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

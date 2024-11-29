@@ -29,4 +29,6 @@ public interface OrderDao extends GenericDao<Order>
     public List<Order> findAllByStatus(OrderStatus orderStatus);
 
     List<Order> findAllByCustomerStatusesDate(Customer customer, Date from, List<OrderStatus> statuses);
+
+    List<Order> getAllForArrear(Customer customer, java.util.Date from, List<OrderStatus> statuses);
 }

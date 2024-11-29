@@ -8,7 +8,7 @@ import org.hibernate.annotations.Proxy;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author Denis Koyro
@@ -84,8 +84,59 @@ public class Order extends AOrder
     @OneToOne(mappedBy = "order")
     private Discounts discount;
 
-    public void setWorkedDailySheet(Dailysheet workedDailySheet)
-    {
+    @Column(name = "DOORS_DEALER_COST")
+    private Double doorsDealerCost;
+
+    @Column(name = "TOTAL_PRICE")
+    private Double totalPrice;
+
+    @Column(name = "SALE_PRICE")
+    private Double salePrice;
+
+    @Transient
+    private Double totalCost;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Double getDoorsDealerCost() {
+        return doorsDealerCost;
+    }
+
+    public void setDoorsDealerCost(Double doorsDealerCost) {
+        this.doorsDealerCost = doorsDealerCost;
+    }
+
+    public Discounts getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discounts discount) {
+        this.discount = discount;
+    }
+
+    public Double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public void setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setWorkedDailySheet(Dailysheet workedDailySheet) {
         Dailysheet old = this.workedDailySheet;
         this.workedDailySheet = workedDailySheet;
         support.firePropertyChange("workedDailySheet", old, workedDailySheet);
@@ -106,6 +157,11 @@ public class Order extends AOrder
         result.setCustomer(order.getCustomer());
         result.setDesigner(order.getDesigner());
         result.setStatus(order.getStatus());
+        result.setDialerCost(order.getDialerCost());
+        result.setDoorsDealerCost(order.getDoorsDealerCost());
+        result.setDiscount(order.getDiscount());
+        result.setTotalPrice(order.getTotalPrice());
+        result.setSalePrice(order.getSalePrice());
         return result;
     }
 
@@ -153,6 +209,12 @@ public class Order extends AOrder
     {
         return OrderStatus.miscalculation == this.getStatus() ||
                 OrderStatus.webMiscalculation == this.getStatus();
+    }
+
+    public Date getCurrencyDate() {
+        return super.getModified() != null ? super.getModified() :
+                super.getCreated() != null ? super.getCreated() :
+                        new Date();
     }
 
 }

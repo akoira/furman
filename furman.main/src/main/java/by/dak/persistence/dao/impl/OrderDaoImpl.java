@@ -5,6 +5,7 @@ import by.dak.persistence.dao.OrderDao;
 import by.dak.persistence.entities.Customer;
 import by.dak.persistence.entities.Order;
 import by.dak.persistence.entities.OrderStatus;
+import by.dak.utils.convert.UsdToBynConverter;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
@@ -126,5 +127,13 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao
                 .setParameterList("statuses", statuses)
                 .setParameter("dateFrom", from)
                 .list();
+    }
+
+    @Override
+    public List<Order> getAllForArrear(Customer customer, java.util.Date from, List<OrderStatus> statuses) {
+        List<Order> orders = findAllByCustomerStatusesDate(customer, from, statuses);
+        return orders.stream()
+                .map(UsdToBynConverter::convertAndCalculateTotalCost)
+                .collect(Collectors.toList());
     }
 }

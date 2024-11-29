@@ -14,16 +14,12 @@ import java.util.stream.Collectors;
 
 public class CurrencyService {
 
-    public List<CashIncome> convertAllIncomes(List<CashIncome> allIncomes) {
+    public static List<CashIncome> convertAllIncomes(List<CashIncome> allIncomes) {
         return allIncomes.stream().map(income -> factor(income, income.getDate() != null ? income.getDate() : new Date(), CurrencyType.BYR))
                 .collect(Collectors.toList());
     }
 
-    public BigDecimal getSum(List<CashIncome> allIncomes) {
-        return allIncomes.stream().map(CashIncome::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public CashIncome factor(CashIncome income, Date date, CurrencyType to) {
+    public static CashIncome factor(CashIncome income, Date date, CurrencyType to) {
         CurrencyType from = getCurrencyFromName(income.getCurrency().getType().name());
         if (from.equals(to)) return income;
 
@@ -33,7 +29,7 @@ public class CurrencyService {
         return income;
     }
 
-    public BigDecimal factor(BigDecimal value, Date date, CurrencyType from, CurrencyType to, boolean round) {
+    public static BigDecimal factor(BigDecimal value, Date date, CurrencyType from, CurrencyType to, boolean round) {
         BigDecimal srcFactor = getCurrencyValue(from, date).orElse(BigDecimal.ONE);
         BigDecimal destFactor = getCurrencyValue(to, date).orElse(BigDecimal.ONE);
 
@@ -41,16 +37,20 @@ public class CurrencyService {
         return round ? result.setScale(2, RoundingMode.HALF_UP) : result;
     }
 
-    public BigDecimal factor(BigDecimal value, Date date, CurrencyType from, CurrencyType to) {
+    public static BigDecimal factor(BigDecimal value, Date date, CurrencyType from, CurrencyType to) {
         return factor(value, date, from, to, false);
     }
 
-    private Optional<BigDecimal> getCurrencyValue(CurrencyType type, Date date) {
+    public static double factor(Double value, Date date, CurrencyType from, CurrencyType to) {
+        return factor(BigDecimal.valueOf(value), date, from, to, false).doubleValue();
+    }
+
+    private static Optional<BigDecimal> getCurrencyValue(CurrencyType type, Date date) {
         Currency currency = FacadeContext.getCurrencyFacade().findCurrentBy(type, date);
         return Optional.of(BigDecimal.valueOf(currency.getPrice()));
     }
 
-    private CurrencyType getCurrencyFromName(String name) {
+    private static CurrencyType getCurrencyFromName(String name) {
         switch (name.toUpperCase()) {
             case "EUR":
                 return CurrencyType.EUR;
