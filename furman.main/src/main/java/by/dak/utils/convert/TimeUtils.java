@@ -35,12 +35,16 @@ public class TimeUtils
         return calendar.getTime();
     }
 
-    public static Date parseDateFromString(String dateString, String pattern) throws ParseException {
+    public static Date parseDateFromString(String dateString, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        return sdf.parse(dateString);
+        try {
+            return sdf.parse(dateString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static Date parseDateFromString(String dateString) throws ParseException {
+    public static Date parseDateFromString(String dateString)  {
         return parseDateFromString(dateString, "dd-MM-yyyy");
     }
 }

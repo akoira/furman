@@ -22,9 +22,15 @@ import org.jdesktop.beansbinding.BindingListener;
 import javax.swing.*;
 import java.beans.PropertyChangeSupport;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static by.dak.utils.convert.TimeUtils.parseDateFromString;
 
 /**
  * User: akoyro
@@ -214,33 +220,34 @@ public class OrderStatusManager
         return true;
     }
 
-    public boolean canDesignOrder(Order order)
-    {
-//        List<OrderFurniture> list = FacadeContext.getOrderFurnitureFacade().loadOrderedByNumber(order);
-//        List<CashIncome> cashIncomes = FacadeContext.getCashIncomeFacade().findAllBy(customer);
-//        Customer cashIncomeList = order.getCustomer();
-//
-//        List<CashIncome> filteredCashIncomeList = cashIncomeList.stream()
-//                .filter(c -> reasonIds.contains(c.getReasonId()))
-//                .collect(Collectors.toList());
+    public boolean canDesignOrder(Order order) {
+        BigDecimal limit = order.getCustomer().getLimit();
+        Double dialerCost = order.getDialerCost();
+        Date dateFrom = parseDateFromString("01-01-2019");
+        List<OrderStatus> statuses = new ArrayList<>(Arrays.asList(OrderStatus.design, OrderStatus.production, OrderStatus.webDesign));
 
-        //TODO: УЧЕСТЬ, ЧТО ЛИМИТ ДИЛЕРА МОЖЕТ БЫТЬ РАВЕН 0
+        if (limit.compareTo(BigDecimal.ZERO) == 0)
+            return true;
 
-//        if (!list.isEmpty() && isArrear(order)) {
-//            String message = Application.getInstance().getContext().getResourceMap(OrderStatusManager.class).getString("message.warn.limit.exceeded");
-//            JOptionPane.showMessageDialog(relatedComponent, message, message, JOptionPane.WARNING_MESSAGE);
-//            return false;
-//        }
+        List<Order> orders = FacadeContext.getOrderFacade().getAllForArrear(order.getCustomer(), dateFrom, statuses);
+        List<CashIncome> cashIncomes = FacadeContext.getCashIncomeFacade().getAllIncomesForArrear(order.getCustomer());
+
+        BigDecimal ordersSum = BigDecimal.valueOf(orders.stream().mapToDouble(Order::getTotalCost).sum());
+        BigDecimal cashIncomeSum = cashIncomes.stream().map(CashIncome::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        if (isLimitReached(limit, dialerCost, ordersSum, cashIncomeSum)) {
+            String message = Application.getInstance().getContext().getResourceMap(OrderStatusManager.class).getString("message.warn.limit.exceeded");
+            JOptionPane.showMessageDialog(relatedComponent, message, message, JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
         return true;
     }
 
+    private boolean isLimitReached(BigDecimal limit, Double dialerCost, BigDecimal ordersSum, BigDecimal cashIncomeSum) {
+        BigDecimal arrear = ordersSum.subtract(cashIncomeSum);
+        BigDecimal totalArrear = arrear.add(BigDecimal.valueOf(dialerCost));
 
-    //TODO: перенести реализацию установления задолженности в фасад customer или куда-то туда!
-    private boolean isArrear(Order order, BigDecimal cashIncomeSum, BigDecimal ordersSum) {
-        BigDecimal limit = order.getCustomer().getLimit();
-        BigDecimal arrear = cashIncomeSum.subtract(ordersSum);
-        return limit.compareTo(BigDecimal.ZERO) != 0 || BigDecimal.valueOf(order.getDialerCost()).add(arrear)
-                .compareTo(limit) != 1;
+        return totalArrear.compareTo(limit) > 0;
     }
 
     private boolean isLinearCuttingDone(Order order)

@@ -132,7 +132,7 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao
     @Override
     public List<Order> getAllForArrear(Customer customer, java.util.Date from, List<OrderStatus> statuses) {
         List<Order> orders = findAllByCustomerStatusesDate(customer, from, statuses);
-        return orders.stream()
+        return orders.parallelStream()
                 .map(UsdToBynConverter::convertAndCalculateTotalCost)
                 .collect(Collectors.toList());
     }
