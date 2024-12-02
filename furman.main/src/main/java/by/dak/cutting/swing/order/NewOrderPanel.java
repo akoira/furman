@@ -22,6 +22,8 @@ import java.beans.Beans;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static by.dak.cutting.facade.impl.helper.CustomerLimitChecker.isCustomerLimitReached;
+
 /**
  * @author admin
  */
@@ -231,6 +233,9 @@ public class NewOrderPanel extends CleanModPanel implements IOrderStepDelegator<
             if (oiTab.getCustomerValue().getComboBoxItem().getSelectedIndex() == -1)
             {
                 validationResult.addError(rsMap.getString("validator.customer"));
+            }
+            if (isCustomerLimitReached(order.getCustomer())) {
+                validationResult.addError(rsMap.getString("validator.limit"));
             }
 
             validationResultModel.setResult(validationResult);

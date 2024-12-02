@@ -2,7 +2,6 @@ package by.dak.cutting.swing.archive;
 
 import by.dak.common.swing.ExceptionHandler;
 import by.dak.cutting.SearchFilter;
-import by.dak.cutting.facade.impl.OrderFacadeImpl.OrderDto;
 import by.dak.cutting.linear.LinearCuttingModel;
 import by.dak.cutting.linear.entity.LinearStripsEntity;
 import by.dak.ordergroup.OrderGroup;
@@ -22,14 +21,8 @@ import org.jdesktop.beansbinding.BindingListener;
 
 import javax.swing.*;
 import java.beans.PropertyChangeSupport;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static by.dak.cutting.facade.impl.helper.CustomerLimitChecker.isCustomerLimitReached;
 import static by.dak.utils.convert.TimeUtils.parseDateFromString;
@@ -222,7 +215,7 @@ public class OrderStatusManager
         return true;
     }
 
-    public boolean canDesignOrder(Order order) {
+    public boolean canProcessOrder(Order order) {
         if (isCustomerLimitReached(order)) {
             String message = Application.getInstance().getContext().getResourceMap(OrderStatusManager.class).getString("message.warn.limit.exceeded");
             JOptionPane.showMessageDialog(relatedComponent, message, message, JOptionPane.WARNING_MESSAGE);

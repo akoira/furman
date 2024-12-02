@@ -44,6 +44,8 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static by.dak.cutting.facade.impl.helper.CustomerLimitChecker.isCustomerLimitReached;
+
 /**
  * User: akoyro
  * Date: 05.04.11
@@ -207,6 +209,9 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
             }
             if (getSelectedElement() != null) {
                 Order order = getSelectedElement();
+                if (!orderStatusManager.canProcessOrder(order)) {
+                    return;
+                }
                 Order newOrder = mainFacade.getOrderFacade().copy(order, getResourceMap().getString("order.copy.suffix"));
                 showWizard(newOrder);
             } else {
@@ -286,7 +291,9 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
                             return null;
                         } else if (value == OrderStatus.made && orderStatusManager.canMadeOrder(order)) {
                             return null;
-                        } else if (value == OrderStatus.design && orderStatusManager.canDesignOrder(order)) {
+                        } else if (value == OrderStatus.design && orderStatusManager.canProcessOrder(order)) {
+                            return null;
+                        } else if (value == OrderStatus.webMiscalculation && orderStatusManager.canProcessOrder(order)) {
                             return null;
                         }
                         return new Validator.Result(null, null);
