@@ -2,6 +2,7 @@ package by.dak.cutting.swing.archive;
 
 import by.dak.common.swing.ExceptionHandler;
 import by.dak.cutting.SearchFilter;
+import by.dak.cutting.facade.impl.OrderFacadeImpl.OrderDto;
 import by.dak.cutting.linear.LinearCuttingModel;
 import by.dak.cutting.linear.entity.LinearStripsEntity;
 import by.dak.ordergroup.OrderGroup;
@@ -221,19 +222,19 @@ public class OrderStatusManager
     }
 
     public boolean canDesignOrder(Order order) {
-        BigDecimal limit = order.getCustomer().getLimit();
-        Double dialerCost = order.getDialerCost();
+        double limit = order.getCustomer().getLimit().doubleValue();
+        Double dialerCost = order.getDialerCost() != null ? order.getDialerCost() : 0.0;
         Date dateFrom = parseDateFromString("01-01-2019");
         List<OrderStatus> statuses = new ArrayList<>(Arrays.asList(OrderStatus.design, OrderStatus.production, OrderStatus.webDesign));
 
-        if (limit.compareTo(BigDecimal.ZERO) == 0)
+        if (limit == 0)
             return true;
 
-        List<Order> orders = FacadeContext.getOrderFacade().getAllForArrear(order.getCustomer(), dateFrom, statuses);
+        List<OrderDto> orders = FacadeContext.getOrderFacade().getAllForArrear(order.getCustomer(), dateFrom, statuses);
         List<CashIncome> cashIncomes = FacadeContext.getCashIncomeFacade().getAllIncomesForArrear(order.getCustomer());
 
-        BigDecimal ordersSum = BigDecimal.valueOf(orders.stream().mapToDouble(Order::getTotalCost).sum());
-        BigDecimal cashIncomeSum = cashIncomes.stream().map(CashIncome::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        Double ordersSum = orders.stream().mapToDouble(OrderDto::getTotalCost).sum();
+        Double cashIncomeSum = cashIncomes.stream().mapToDouble(income -> income.getAmount().doubleValue()).sum();
 
         if (isLimitReached(limit, dialerCost, ordersSum, cashIncomeSum)) {
             String message = Application.getInstance().getContext().getResourceMap(OrderStatusManager.class).getString("message.warn.limit.exceeded");
@@ -243,11 +244,9 @@ public class OrderStatusManager
         return true;
     }
 
-    private boolean isLimitReached(BigDecimal limit, Double dialerCost, BigDecimal ordersSum, BigDecimal cashIncomeSum) {
-        BigDecimal arrear = ordersSum.subtract(cashIncomeSum);
-        BigDecimal totalArrear = arrear.add(BigDecimal.valueOf(dialerCost));
-
-        return totalArrear.compareTo(limit) > 0;
+    private boolean isLimitReached(Double limit, Double dialerCost, Double ordersSum, Double cashIncomeSum) {
+        double totalArrear = ordersSum - cashIncomeSum + dialerCost;
+        return totalArrear > limit;
     }
 
     private boolean isLinearCuttingDone(Order order)

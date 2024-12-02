@@ -9,11 +9,13 @@ import by.dak.persistence.dao.OrderDao;
 import by.dak.persistence.entities.*;
 import by.dak.persistence.entities.predefined.OrderItemType;
 import by.dak.utils.convert.StringValueAnnotationProcessor;
+import by.dak.utils.convert.OrderCostCalculator;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderFacadeImpl extends AOrderFacadeImpl<Order> implements OrderFacade
 {
@@ -154,12 +156,6 @@ public class OrderFacadeImpl extends AOrderFacadeImpl<Order> implements OrderFac
         return ((OrderDao) dao).findAllByCustomerStatusesDate(customer, from, statuses);
     }
 
-    @Override
-    public List<Order> getAllForArrear(Customer customer, java.util.Date from, List<OrderStatus> statuses) {
-        return ((OrderDao) dao).getAllForArrear(customer, from, statuses);
-    }
-
-
     public static SearchFilter getNotGroupedFilter()
     {
         SearchFilter filter = SearchFilter.instanceUnbound();
@@ -188,6 +184,52 @@ public class OrderFacadeImpl extends AOrderFacadeImpl<Order> implements OrderFac
             }
         }
         return buffer.toString();
+
+    }
+
+    @Override
+    public List<OrderDto> getAllForArrear(Customer customer, java.util.Date from, List<OrderStatus> statuses) {
+        List<Order> orders = ((OrderDao) dao).findAllByCustomerStatusesDate(customer, from, statuses);
+
+        return orders.parallelStream()
+                .map(OrderCostCalculator::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public static class OrderDto {
+        private Double doorsDealerCost;
+        private Double totalPrice;
+        private Double totalCost;
+
+        public OrderDto(Double doorsDealerCost, Double totalPrice, Double totalCost) {
+            this.doorsDealerCost = doorsDealerCost;
+            this.totalPrice = totalPrice;
+            this.totalCost = totalCost;
+        }
+
+        public Double getDoorsDealerCost() {
+            return doorsDealerCost;
+        }
+
+        public void setDoorsDealerCost(Double doorsDealerCost) {
+            this.doorsDealerCost = doorsDealerCost;
+        }
+
+        public Double getTotalPrice() {
+            return totalPrice;
+        }
+
+        public void setTotalPrice(Double totalPrice) {
+            this.totalPrice = totalPrice;
+        }
+
+        public Double getTotalCost() {
+            return totalCost;
+        }
+
+        public void setTotalCost(Double totalCost) {
+            this.totalCost = totalCost;
+        }
 
     }
 }

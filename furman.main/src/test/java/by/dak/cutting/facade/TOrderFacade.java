@@ -2,6 +2,7 @@ package by.dak.cutting.facade;
 
 import by.dak.cutting.SearchFilter;
 import by.dak.cutting.SpringConfiguration;
+import by.dak.cutting.facade.impl.OrderFacadeImpl;
 import by.dak.persistence.FacadeContext;
 import by.dak.persistence.entities.*;
 import org.junit.Test;
@@ -41,9 +42,9 @@ public class TOrderFacade {
 
         List<OrderStatus> statuses = new ArrayList<>(Arrays.asList(OrderStatus.design, OrderStatus.production, OrderStatus.webDesign));
 
-        List<Order> orders = FacadeContext.getOrderFacade().getAllForArrear(customer, dateFrom, statuses);
+        List<OrderFacadeImpl.OrderDto> orders = FacadeContext.getOrderFacade().getAllForArrear(customer, dateFrom, statuses);
 
-        Double ordersSum = orders.stream().mapToDouble(Order::getTotalCost).sum();
+        Double ordersSum = orders.stream().mapToDouble(OrderFacadeImpl.OrderDto::getTotalCost).sum();
 
         System.out.println(ordersSum);
     }

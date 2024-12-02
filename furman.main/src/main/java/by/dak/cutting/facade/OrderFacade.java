@@ -1,5 +1,6 @@
 package by.dak.cutting.facade;
 
+import by.dak.cutting.facade.impl.OrderFacadeImpl.OrderDto;
 import by.dak.ordergroup.OrderGroup;
 import by.dak.persistence.entities.Customer;
 import by.dak.persistence.entities.Order;
@@ -36,5 +37,5 @@ public interface OrderFacade extends AOrderFacade<Order>
 
     List<Order> findAllByCustomerStatusesDate(Customer customer, Date from, List<OrderStatus> statuses);
 
-    List<Order> getAllForArrear(Customer customer, java.util.Date from, List<OrderStatus> statuses);
+    List<OrderDto> getAllForArrear(Customer customer, java.util.Date from, List<OrderStatus> statuses);
 }
