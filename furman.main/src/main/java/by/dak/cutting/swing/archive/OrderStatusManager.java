@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static by.dak.cutting.facade.impl.helper.CustomerLimitChecker.isCustomerLimitReached;
 import static by.dak.utils.convert.TimeUtils.parseDateFromString;
 
 /**
@@ -222,31 +223,12 @@ public class OrderStatusManager
     }
 
     public boolean canDesignOrder(Order order) {
-        double limit = order.getCustomer().getLimit().doubleValue();
-        Double dialerCost = order.getDialerCost() != null ? order.getDialerCost() : 0.0;
-        Date dateFrom = parseDateFromString("01-01-2019");
-        List<OrderStatus> statuses = new ArrayList<>(Arrays.asList(OrderStatus.design, OrderStatus.production, OrderStatus.webDesign));
-
-        if (limit == 0)
-            return true;
-
-        List<OrderDto> orders = FacadeContext.getOrderFacade().getAllForArrear(order.getCustomer(), dateFrom, statuses);
-        List<CashIncome> cashIncomes = FacadeContext.getCashIncomeFacade().getAllIncomesForArrear(order.getCustomer());
-
-        Double ordersSum = orders.stream().mapToDouble(OrderDto::getTotalCost).sum();
-        Double cashIncomeSum = cashIncomes.stream().mapToDouble(income -> income.getAmount().doubleValue()).sum();
-
-        if (isLimitReached(limit, dialerCost, ordersSum, cashIncomeSum)) {
+        if (isCustomerLimitReached(order)) {
             String message = Application.getInstance().getContext().getResourceMap(OrderStatusManager.class).getString("message.warn.limit.exceeded");
             JOptionPane.showMessageDialog(relatedComponent, message, message, JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
-    }
-
-    private boolean isLimitReached(Double limit, Double dialerCost, Double ordersSum, Double cashIncomeSum) {
-        double totalArrear = ordersSum - cashIncomeSum + dialerCost;
-        return totalArrear > limit;
     }
 
     private boolean isLinearCuttingDone(Order order)
