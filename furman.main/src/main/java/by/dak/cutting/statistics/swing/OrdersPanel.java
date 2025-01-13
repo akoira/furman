@@ -97,7 +97,7 @@ public class OrdersPanel extends AListTab<Order, StatisticFilter>
                     searchFilter.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
                 }
             }
-            searchFilter.in(Order.PROPERTY_orderStatus, Arrays.asList(OrderStatus.notEditables()));
+            searchFilter.in(Order.PROPERTY_orderStatus, Arrays.asList(OrderStatus.made));
             searchFilter.addAscOrder(AOrder.PROPERTY_createdDailySheet + "." + PersistenceEntity.PROPERTY_id);
             searchFilter.addAscOrder(Order.PROPERTY_orderNumber);
             setSearchFilter(searchFilter);

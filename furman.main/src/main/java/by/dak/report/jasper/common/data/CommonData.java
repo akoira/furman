@@ -37,7 +37,8 @@ import javax.persistence.*;
                                 "cd.order.id >= :startOrderId and " +
                                 "cd.order.id <= :endOrderId and " +
                                 "cd.commonDataType = :commonDataType and " +
-                                "cd.order.status in ( :status ) " +
+                                "cd.order.status in ( :status ) and " +
+                                "cd.order.deleted = false " +
                                 "group by cd.service, cd.name " +
                                 "order by cd.service, cd.name")
 

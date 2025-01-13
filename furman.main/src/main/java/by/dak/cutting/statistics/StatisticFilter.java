@@ -138,7 +138,7 @@ public class StatisticFilter extends AbstractBean implements EntityToStringConve
         parameters.add(NamedQueryParameter.getDateParameter("start", getStart() != null ? getStart() : new Date(0l)));
         parameters.add(NamedQueryParameter.getDateParameter("end", getEnd() != null ? getEnd() : Calendar.getInstance().getTime()));
 
-        parameters.add(NamedQueryParameter.getParameterListParameter("status", OrderStatus.notEditables()));
+        parameters.add(NamedQueryParameter.getObjectParameter("status", OrderStatus.made));
         namedQueryDefinition.setParameterList(parameters);
 
         return namedQueryDefinition;
