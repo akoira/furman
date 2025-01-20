@@ -1,26 +1,26 @@
 package by.dak.utils.convert;
 
+import by.dak.cutting.currency.persistence.entity.Currency;
 import by.dak.cutting.currency.persistence.entity.CurrencyType;
 import by.dak.cutting.facade.impl.OrderFacadeImpl.OrderDto;
 import by.dak.persistence.entities.Order;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Date;
+import java.util.Map;
 
 import static by.dak.cutting.currency.CurrencyService.factor;
 
 public final class OrderCostCalculator {
 
-    public static OrderDto convertToDto(Order order) {
-        Date date = order.getCurrencyDate();
+    public static OrderDto convertToDto(Order order, Map<CurrencyType, Currency> orderCurrency) {
 
         Double doorsDealerCost = order.getDoorsDealerCost() != null
-                ? factor(order.getDoorsDealerCost(), date, CurrencyType.USD, CurrencyType.BYR)
+                ? factor(order.getDoorsDealerCost(), orderCurrency, CurrencyType.USD, CurrencyType.BYR)
                 : null;
 
         Double totalPrice = order.getTotalPrice() != null
-                ? factor(order.getTotalPrice(), date, CurrencyType.USD, CurrencyType.BYR)
+                ? factor(order.getTotalPrice(), orderCurrency, CurrencyType.USD, CurrencyType.BYR)
                 : null;
 
         Double totalCost = BigDecimal.valueOf(calculateTotalCost(order, doorsDealerCost, totalPrice))

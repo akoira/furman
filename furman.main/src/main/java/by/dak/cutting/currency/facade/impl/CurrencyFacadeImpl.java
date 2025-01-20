@@ -8,14 +8,13 @@ import by.dak.cutting.facade.BaseFacadeImpl;
 import by.dak.cutting.facade.DailysheetFacade;
 import by.dak.persistence.FacadeContext;
 import by.dak.persistence.entities.Dailysheet;
+import by.dak.persistence.entities.PersistenceEntity;
 import by.dak.utils.convert.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.naming.Context;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * User: akoyro
@@ -66,6 +65,16 @@ public class CurrencyFacadeImpl extends BaseFacadeImpl<Currency> implements Curr
 		Dailysheet dailysheet = FacadeContext.getDailysheetFacade()
 				.findAllByField("date", TimeUtils.getDayTimestamp(date)).get(0);
 		return findCurrentBy(currencyType, dailysheet, true);
+	}
+
+	@Override
+	public List<Currency> findAllByTypesAndDates(List<CurrencyType> types, List<Dailysheet> dates) {
+        List<Long> dailySheetIds = dates.stream().map(PersistenceEntity::getId).collect(Collectors.toList());
+
+		SearchFilter filter = SearchFilter.instanceUnbound();
+		filter.in("type", types);
+		filter.in("dailysheet.id", dailySheetIds);
+		return super.loadAll(filter);
 	}
 
 	public void setSelected(Currency currency) {

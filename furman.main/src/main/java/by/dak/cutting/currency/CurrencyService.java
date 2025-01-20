@@ -9,57 +9,30 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CurrencyService {
 
-    public static List<CashIncome> convertAllIncomes(List<CashIncome> allIncomes) {
-        return allIncomes.stream().map(income -> factor(income, income.getDate() != null ? income.getDate() : new Date(), CurrencyType.BYR))
-                .collect(Collectors.toList());
-    }
-
-    public static CashIncome factor(CashIncome income, Date date, CurrencyType to) {
-        CurrencyType from = getCurrencyFromName(income.getCurrency().getType().name());
-        if (from.equals(to)) return income;
-
-        BigDecimal newAmount = factor(income.getAmount(), date, from, to);
-        income.setAmount(newAmount);
-        income.getCurrency().setType(to);
-        return income;
-    }
-
-    public static BigDecimal factor(BigDecimal value, Date date, CurrencyType from, CurrencyType to, boolean round) {
-        BigDecimal srcFactor = getCurrencyValue(from, date).orElse(BigDecimal.ONE);
-        BigDecimal destFactor = getCurrencyValue(to, date).orElse(BigDecimal.ONE);
+    public static BigDecimal factor(BigDecimal value, Map<CurrencyType, Currency> orderCurrency, CurrencyType from, CurrencyType to, boolean round) {
+        BigDecimal srcFactor = getCurrencyValue(from, orderCurrency).orElse(BigDecimal.ONE);
+        BigDecimal destFactor = getCurrencyValue(to, orderCurrency).orElse(BigDecimal.ONE);
 
         BigDecimal result = destFactor.multiply(value).divide(srcFactor, RoundingMode.HALF_UP);
         return round ? result.setScale(2, RoundingMode.HALF_UP) : result;
     }
 
-    public static BigDecimal factor(BigDecimal value, Date date, CurrencyType from, CurrencyType to) {
-        return factor(value, date, from, to, false);
+    public static BigDecimal factor(BigDecimal value, Map<CurrencyType, Currency> orderCurrency, CurrencyType from, CurrencyType to) {
+        return factor(value, orderCurrency, from, to, false);
     }
 
-    public static double factor(Double value, Date date, CurrencyType from, CurrencyType to) {
-        return factor(BigDecimal.valueOf(value), date, from, to, false).doubleValue();
+    public static double factor(Double value, Map<CurrencyType, Currency> orderCurrency, CurrencyType from, CurrencyType to) {
+        return factor(BigDecimal.valueOf(value), orderCurrency, from, to, false).doubleValue();
     }
 
-    private static Optional<BigDecimal> getCurrencyValue(CurrencyType type, Date date) {
-        Currency currency = FacadeContext.getCurrencyFacade().findCurrentBy(type, date);
+    private static Optional<BigDecimal> getCurrencyValue(CurrencyType type, Map<CurrencyType, Currency> orderCurrency) {
+        Currency currency = orderCurrency.get(type);
         return Optional.of(BigDecimal.valueOf(currency.getPrice()));
-    }
-
-    private static CurrencyType getCurrencyFromName(String name) {
-        switch (name.toUpperCase()) {
-            case "EUR":
-                return CurrencyType.EUR;
-            case "RUB":
-                return CurrencyType.RUB;
-            case "USD":
-                return CurrencyType.USD;
-            default:
-                return CurrencyType.BYR;
-        }
     }
 }

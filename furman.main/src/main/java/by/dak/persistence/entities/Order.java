@@ -39,10 +39,15 @@ query = "from Order order where order.id = (  select max(oe.id) from Order as oe
                         query = "select month(ds.date),year(ds.date) from Order o inner join " +
                                 "o.createdDailySheet ds where o.customer=:customer group by month(ds.date), year(ds.date)"),
                 @NamedQuery(name = "allByCustomerStatusesDate",
-                        query = "from Order o where o.customer = :customer " +
-                                "and o.status in (:statuses) " +
-                                "and o.created > :dateFrom " +
-                                "and o.deleted = false ")
+                        query = "SELECT o FROM Order o " +
+                                "JOIN FETCH o.customer " +
+                                "LEFT JOIN FETCH o.workedDailySheet " +
+                                "LEFT JOIN FETCH o.discount " +
+                                "LEFT JOIN FETCH o.orderGroup " +
+                                "WHERE o.customer = :customer " +
+                                "AND o.deleted = false " +
+                                "AND o.status IN (:statuses) " +
+                                "AND o.created > :dateFrom")
         }
 )
 

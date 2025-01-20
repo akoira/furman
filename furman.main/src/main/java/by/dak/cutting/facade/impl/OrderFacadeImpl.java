@@ -2,6 +2,8 @@ package by.dak.cutting.facade.impl;
 
 import by.dak.additional.Additional;
 import by.dak.cutting.SearchFilter;
+import by.dak.cutting.currency.persistence.entity.Currency;
+import by.dak.cutting.currency.persistence.entity.CurrencyType;
 import by.dak.cutting.facade.OrderFacade;
 import by.dak.ordergroup.OrderGroup;
 import by.dak.persistence.FacadeContext;
@@ -12,9 +14,7 @@ import by.dak.utils.convert.StringValueAnnotationProcessor;
 import by.dak.utils.convert.OrderCostCalculator;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class OrderFacadeImpl extends AOrderFacadeImpl<Order> implements OrderFacade
@@ -189,10 +189,20 @@ public class OrderFacadeImpl extends AOrderFacadeImpl<Order> implements OrderFac
 
     @Override
     public List<OrderDto> getAllForArrear(Customer customer, java.util.Date from, List<OrderStatus> statuses) {
+        final List<CurrencyType> types = new ArrayList<>(Arrays.asList(CurrencyType.BYR, CurrencyType.USD));
         List<Order> orders = ((OrderDao) dao).findAllByCustomerStatusesDate(customer, from, statuses);
 
-        return orders.parallelStream()
-                .map(OrderCostCalculator::convertToDto)
+        Set<java.util.Date> uniqueDates = orders.stream().map(Order::getCurrencyDate).collect(Collectors.toSet());
+
+        List<Dailysheet> dailySheets = FacadeContext.getDailysheetFacade().findAllByDates(uniqueDates);
+        List<Currency> currencies = FacadeContext.getCurrencyFacade().findAllByTypesAndDates(types, dailySheets);
+
+        Map<String, Map<CurrencyType, Currency>> currenciesMap = currencies.stream()
+                .collect(Collectors.groupingBy(currency -> currency.getDailysheet().getDate().toString(),
+                        Collectors.toMap(Currency::getType, currency -> currency, (existing, curr) -> curr)));
+
+        return orders.stream()
+                .map(order -> OrderCostCalculator.convertToDto(order, currenciesMap.get(new java.sql.Date(order.getCurrencyDate().getTime()).toString())))
                 .collect(Collectors.toList());
     }
 

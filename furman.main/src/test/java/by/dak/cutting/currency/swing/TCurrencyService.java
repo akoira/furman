@@ -19,8 +19,6 @@ public class TCurrencyService {
         List<Customer> customers = FacadeContext.getCustomerFacade().loadAll();
         Customer customer = customers.get(88);
         List<CashIncome> cashIncomeList = FacadeContext.getCashIncomeFacade().findAllBy(customer);
-
-        List<CashIncome> convertedCashIncomes = currencyService.convertAllIncomes(cashIncomeList);
     }
 
     @Test

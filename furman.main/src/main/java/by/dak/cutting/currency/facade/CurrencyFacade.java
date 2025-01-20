@@ -13,6 +13,8 @@ import java.util.List;
 public interface CurrencyFacade extends BaseFacade<Currency> {
 	Currency findCurrentBy(CurrencyType currencyType, Date date);
 
+	List<Currency> findAllByTypesAndDates(List<CurrencyType> types, List<Dailysheet> dates);
+
 	Currency findCurrentBy(CurrencyType currencyType, Dailysheet dailysheet);
 
 	Currency findCurrentBy(CurrencyType currencyType, Dailysheet dailysheet, boolean loadFromBase);
