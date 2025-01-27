@@ -20,6 +20,7 @@ public class MessageDialog
 {
     public static final String NO_ROW_SELECTED = "MessageDialog.NO_ROW_SELECTED";
     public static final String IS_DELETE_RECORD = "MessageDialog.IS_DELETE_RECORD";
+    public static final String IS_CHANGE_STATUS = "MessageDialog.IS_CHANGE_STATUS";
     private static ResourceMap resourceMap = Application.getInstance(
             CuttingApp.class).getContext().getResourceMap(MessageDialog.class);
 

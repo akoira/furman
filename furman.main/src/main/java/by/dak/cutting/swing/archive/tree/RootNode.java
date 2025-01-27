@@ -79,7 +79,7 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
         listUpdater.setResourceMap(getResourceMap());
         listUpdater.setVisibleProperties(VisibleProperties);
         listUpdater.setEditableProperties(EditableProperties);
-        listUpdater.setActions("exportOrder", "copyOrder", "createTemplate");
+        listUpdater.setActions("exportOrder", "copyOrder", "createTemplate", "forceOrderStatusToMade");
         listUpdater.setActionMap(nedActions.getActionMap());
 
 
@@ -223,6 +223,31 @@ public class RootNode extends ATreeNode implements ListUpdaterProvider<Order> {
         public void createTemplate() {
             CreateTemplateAction createTemplateAction = new CreateTemplateAction(getSelectedElement().getId());
             createTemplateAction.action();
+        }
+
+        @Action
+        public void forceOrderStatusToMade() {
+            try {
+                if (getSelectedElement() != null) {
+                    Order order = getSelectedElement();
+
+                    if (!order.getStatus().equals(OrderStatus.production)) {
+                        MessageDialog.showSimpleMessage(getResourceMap().getString("message.warn.order.not.allowed.to.made"));
+                        return;
+                    }
+
+                    if (MessageDialog.showConfirmationMessage(MessageDialog.IS_CHANGE_STATUS) == JOptionPane.OK_OPTION) {
+                        order.setStatus(OrderStatus.made);
+                        mainFacade.getFacadeBy(getEntityClass()).update(order);
+                        firePropertyChange(AEntityNEDActions.PROPERTY_updateGui, null, getSelectedElement());
+                    }
+
+                } else {
+                    MessageDialog.showSimpleMessage(MessageDialog.NO_ROW_SELECTED);
+                }
+            } catch (Exception e ) {
+                mainFacade.getExceptionHandler().handle(e);
+            }
         }
 
 

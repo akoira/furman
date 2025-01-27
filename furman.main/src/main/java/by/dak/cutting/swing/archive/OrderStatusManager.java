@@ -257,8 +257,7 @@ public class OrderStatusManager
         filter.addCriterion(new SearchFilter.DCriterion<Criterion>("order", Restrictions.eq("order", order)));
         filter.addCriterion(new SearchFilter.DCriterion<Criterion>("status", Restrictions.eq("status", StoreElementStatus.order)));
         if (FacadeContext.getBoardFacade().getCount(filter) > 0 ||
-                FacadeContext.getBorderFacade().getCount(filter) > 0 ||
-                FacadeContext.getFurnitureFacade().getCount(filter) > 0
+                FacadeContext.getBorderFacade().getCount(filter) > 0
                 )
         {
             String message = Application.getInstance().getContext().getResourceMap(OrderStatusManager.class).getString("message.warn.order.has.order.board");
