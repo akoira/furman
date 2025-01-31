@@ -59,6 +59,7 @@ public class ReportsModelImpl implements ReportsModel
         ArrayList<ReportType> reportTypes = new ArrayList<ReportType>();
         reportTypes.add(ReportType.production_common);
         reportTypes.add(ReportType.common);
+        reportTypes.add(ReportType.simple_common);
         reportTypes.add(ReportType.cutting);
         reportTypes.add(ReportType.cutoff);
         reportTypes.add(ReportType.milling);

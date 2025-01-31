@@ -10,6 +10,7 @@ public enum ReportType
     doorscommon,
     common,
     production_common, //себестоймость
+    simple_common, // отчет без цен и материалов
     cutting,
     glueing,
     cutoff,

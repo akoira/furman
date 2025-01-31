@@ -7,6 +7,7 @@ import by.dak.persistence.entities.AOrder;
 import by.dak.report.ReportType;
 import by.dak.report.jasper.common.CommonReportDataCreator;
 import by.dak.report.jasper.common.DialerCommonReportDataCreator;
+import by.dak.report.jasper.common.SimpleCommonReportDataCreator;
 import by.dak.report.jasper.common.data.CommonReportData;
 import by.dak.report.jasper.common.data.CommonReportDataImpl;
 import by.dak.report.jasper.cutoff.CutoffReportDataCreator;
@@ -57,6 +58,8 @@ public final class DefaultReportCreatorFactory implements ReportCreatorFactory
                 return new ZFacadeReportDataCreator((AOrder) reportObject);
             case agtfacade:
                 return new AGTFacadeReportDataCreator((AOrder) reportObject);
+            case simple_common:
+                return new SimpleCommonReportDataCreator((CommonReportData) reportObject, mainFacade);
             default:
                 assert false : "Unknown report type is specified!";
                 return ReportDataCreator.UNKNOWN;

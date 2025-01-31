@@ -135,6 +135,7 @@ public final class ReportModelCreator {
 		switch (reportType) {
 			case common:
 			case production_common:
+			case simple_common:
 				return getCommonReportData();
 			case cutting:
 				return new CuttedReportDataCreator(cuttingModel).create();
@@ -162,6 +163,7 @@ public final class ReportModelCreator {
 			case doorscommon:
 			case common:
 			case production_common:
+			case simple_common:
 			case cutting:
 			case glueing:
 			case cutoff:

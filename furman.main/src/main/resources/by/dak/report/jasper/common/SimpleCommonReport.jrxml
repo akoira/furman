@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CommonReport" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="525" leftMargin="50" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ffe068b-2e1a-4a64-bbea-283f9d61f22c">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="zerocolor" forecolor="#000000" backcolor="#FFFFFF" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean ($F{price}.equals( new Double(0) ))]]></conditionExpression>
+			<style forecolor="#FF0000" fontName="Arial" fontSize="10" isBold="true" isItalic="true" isUnderline="true" isStrikeThrough="true"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="customer" class="java.lang.String"/>
+	<parameter name="deadline" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="orderNumber" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="commonCost" class="java.lang.Double"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\projects\\cutting\\src\\cutting\\src\\by\\dak\\report\\jasper\\common\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="subreportService" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="subreportDatasourceService" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="subreportAdditional" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="subreportDatasourceAdditional" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="service" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="count" class="java.lang.Double"/>
+	<field name="price" class="java.lang.Double"/>
+	<field name="last" class="java.lang.Boolean"/>
+	<field name="cost" class="java.lang.Double"/>
+	<field name="additional" class="java.lang.String"/>
+	<group name="subs">
+		<groupExpression><![CDATA[$F{additional}]]></groupExpression>
+		<groupFooter>
+			<band height="5">
+				<subreport isUsingCache="false">
+					<reportElement key="subreport-1" x="0" y="0" width="516" height="0" uuid="0820d93e-de61-4c31-b127-64db8abb3d06"/>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<dataSourceExpression><![CDATA[$P{subreportDatasourceService}]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$P{subreportService}]]></subreportExpression>
+				</subreport>
+			</band>
+			<band height="5">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<subreport isUsingCache="false">
+					<reportElement key="subreport-2" x="5" y="5" width="516" height="0" uuid="f1dcec60-56e7-41e1-9a66-2cbec8ebaad6"/>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<dataSourceExpression><![CDATA[$P{subreportDatasourceAdditional}]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$P{subreportAdditional}]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="18" splitType="Prevent">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-9" x="244" y="0" width="257" height="12" uuid="89c73a96-fd3d-4352-866e-cc9eed510d93"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{title}+"  "+$R{page}+" "+$V{PAGE_NUMBER}+" "+$R{from}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-10" x="501" y="0" width="17" height="12" uuid="65e71ebd-c462-4662-93ab-9007ab5c9a26"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</background>
+	<title>
+		<band height="35">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-7" x="0" y="12" width="35" height="20" uuid="7b03b817-4ae9-468f-ab25-148c0004e7dc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{custom}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-11" x="148" y="12" width="53" height="20" uuid="434c874a-ce41-4426-b52e-2a6cfd3b20ee"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{customer}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-12" x="387" y="12" width="70" height="20" uuid="8e4852b8-9de5-4ab7-81f8-03cf88c58ade"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{deadline}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-14" x="201" y="12" width="110" height="20" uuid="e15e80f7-4e16-4a62-ad8a-f2221163cb0e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isItalic="true" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customer}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-15" x="457" y="12" width="61" height="20" uuid="b528e3a6-f528-4f53-bf26-b72947d2f46a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isItalic="true" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{deadline}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="35" y="12" width="84" height="20" uuid="27fff635-ffc1-4271-9951-8981993e372b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{orderNumber}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="31" width="518" height="1" uuid="ace90632-b4b2-4ee0-b814-45f82c0b68fc"/>
+			</line>
+		</band>
+	</title>
+	<summary>
+		<band height="21">
+			<line>
+				<reportElement x="1" y="0" width="518" height="1" uuid="0094de88-3ba8-4d93-804a-2ccaae3e689c"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>
