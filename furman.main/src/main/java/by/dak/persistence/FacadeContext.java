@@ -257,6 +257,11 @@ public class FacadeContext
         return (FurnitureLinkFacade) applicationContext.getBean("furnitureLinkFacade");
     }
 
+    public static ServiceLinkFacade getServiceLinkFacade()
+    {
+        return (ServiceLinkFacade) applicationContext.getBean("serviceLinkFacade");
+    }
+
     public static OrderGroupFacade getOrderGroupFacade()
     {
         return (OrderGroupFacade) applicationContext.getBean("orderGroupFacade");

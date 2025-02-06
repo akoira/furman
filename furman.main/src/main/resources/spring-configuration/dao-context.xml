@@ -240,6 +240,13 @@
         </property>
     </bean>
 
+    <bean id="serviceLinkDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.persistence.dao.ServiceLinkDao"/>
+        <property name="target">
+            <bean class="by.dak.persistence.dao.impl.ServiceLinkDaoImpl" parent="commonDAO"/>
+        </property>
+    </bean>
+
     <bean id="orderGroupDao" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="proxyInterfaces" value="by.dak.ordergroup.dao.OrderGroupDao"/>
         <property name="target">

@@ -358,6 +358,16 @@
 
     </bean>
 
+    <bean id="serviceLinkFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="by.dak.cutting.facade.ServiceLinkFacade"/>
+        <property name="target">
+            <bean class="by.dak.cutting.facade.impl.ServiceLinkFacadeImpl">
+                <property name="dao" ref="serviceLinkDao"/>
+            </bean>
+        </property>
+
+    </bean>
+
     <bean id="orderGroupFacade" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="proxyInterfaces" value="by.dak.ordergroup.facade.OrderGroupFacade"/>
         <property name="target">

@@ -67,6 +67,7 @@
 				<!--<value>by.dak.cutting.swing.dictionaries.B</value>-->
 				<value>by.dak.persistence.entities.StorageElementLink</value>
 				<value>by.dak.persistence.entities.FurnitureLink</value>
+				<value>by.dak.persistence.entities.ServiceLink</value>
 				<value>by.dak.cutting.currency.persistence.entity.Currency</value>
 				<value>by.dak.additional.Additional</value>
 

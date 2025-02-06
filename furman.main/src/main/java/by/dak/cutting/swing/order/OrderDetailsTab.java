@@ -23,6 +23,7 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
     private OrderDetailsControl orderDetailsControl;
     private OrderDetailsPanel orderDetailsPanel;
     private FurnitureLinkPanel furnitureLinkPanel;
+    private ServiceLinkPanel serviceLinkPanel;
     private AdditionalsTab additionalsTab;
     private DesignerTab designerTab;
 
@@ -36,6 +37,7 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
             removeClearNextStep();
             orderDetailsPanel.setValue(getValue());
             furnitureLinkPanel.setValue(getValue());
+            serviceLinkPanel.setValue(getValue());
             additionalsTab.setValue(getValue());
             additionalsTab.init();
             designerTab.setValue(getValue());
@@ -51,6 +53,7 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
         orderDetailsControl.remoteTableModelListener(clearListener);
         furnitureLinkPanel.getTable().getModel().removeTableModelListener(clearListener);
         additionalsTab.getListNaviTable().getTable().getModel().removeTableModelListener(clearListener);
+        serviceLinkPanel.getTable().getModel().removeTableModelListener(clearListener);
 
     }
 
@@ -60,6 +63,7 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
             orderDetailsControl.addTableModelListener(clearListener);
             furnitureLinkPanel.getTable().getModel().addTableModelListener(clearListener);
             additionalsTab.getListNaviTable().getTable().getModel().addTableModelListener(clearListener);
+            serviceLinkPanel.getTable().getModel().addTableModelListener(clearListener);
         };
         SwingUtilities.invokeLater(runnable);
 
@@ -81,6 +85,12 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
         addTab(additionalsTab);
         additionalsTab.setWarningList(getWarningList());
         additionalsTab.addPropertyChangeListener("editable", evt -> additionalsTab.getListNaviTable().getTable().setEditable(isEditable()));
+
+        serviceLinkPanel = new ServiceLinkPanel();
+        getServiceOrderPanel().addPropertyChangeListener("editable", evt -> getServiceOrderPanel().getTable().setEditable(isEditable()));
+        addTab(serviceLinkPanel);
+        serviceLinkPanel.setWarningList(getWarningList());
+
         designerTab = new DesignerTab();
         designerTab.addPropertyChangeListener("editable", evt -> designerTab.setEditable(isEditable()));
         addTab(designerTab);
@@ -129,6 +139,16 @@ public class OrderDetailsTab extends DModPanel<OrderItem> implements ClearNextSt
     public void setFurnitureOrderPanel(FurnitureLinkPanel furnitureLinkPanel)
     {
         this.furnitureLinkPanel = furnitureLinkPanel;
+    }
+
+    public ServiceLinkPanel getServiceOrderPanel()
+    {
+        return serviceLinkPanel;
+    }
+
+    public void setServiceOrderPanel(ServiceLinkPanel serviceLinkPanel)
+    {
+        this.serviceLinkPanel = serviceLinkPanel;
     }
 
     public OrderDetailsControl getOrderDetailsControl()
