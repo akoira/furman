@@ -19,8 +19,9 @@ public class ServiceLinkValidator extends AServiceLinkValidator<ServiceLink> {
             result.addError(resourceMap.getString("validator.code"));
         }
 
-        if (serviceLink.getAmount() == null) {
-            result.addError(resourceMap.getString("validator.amount"));
+        if (ValidationUtils.isLessThan(0.001, serviceLink.getSize()))
+        {
+            result.addError(resourceMap.getString("validator.size"));
         }
 
         return result;

@@ -22,16 +22,17 @@ public class ServiceLink extends AServiceDetail {
 
     public ServiceLink() {
         super();
+        setAmount(1);
     }
 
     public ServiceLink(String name) {
         setName(name);
+        setAmount(1);
     }
 
     public static ServiceLink valueOf(ServiceLink serviceLink) {
         ServiceLink newFurnitureLink = new ServiceLink();
         newFurnitureLink.setSize(serviceLink.getSize());
-        newFurnitureLink.setAmount(serviceLink.getAmount());
         newFurnitureLink.setName(serviceLink.getName());
         newFurnitureLink.setNumber(serviceLink.getNumber());
         newFurnitureLink.setService(serviceLink.getService());

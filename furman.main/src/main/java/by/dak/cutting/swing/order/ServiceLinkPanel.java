@@ -186,9 +186,9 @@ public class ServiceLinkPanel extends BaseTabPanel<OrderItem> {
         columnBinding.setColumnClass(Unit.class);
         columnBinding.setEditable(false);
 
-        columnBinding = jTableBinding.addColumnBinding(ELProperty.create("${amount}"), "amount");
+        columnBinding = jTableBinding.addColumnBinding(ELProperty.create("${size}"), "size");
         columnBinding.setColumnName(resourceMap.getString("table.column.amount"));
-        columnBinding.setColumnClass(Integer.class);
+        columnBinding.setColumnClass(Double.class);
         columnBinding.setEditable(true);
 
 

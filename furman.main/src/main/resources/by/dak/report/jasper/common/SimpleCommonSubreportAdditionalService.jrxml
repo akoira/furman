@@ -28,6 +28,7 @@
     <field name="price" class="java.lang.Double"/>
     <field name="last" class="java.lang.Boolean"/>
     <field name="cost" class="java.lang.Double"/>
+    <field name="sizeAsDouble" class="java.lang.Double"/>
     <variable name="subs_COUNT" class="java.lang.Integer"/>
     <columnHeader>
         <band height="54">
@@ -98,7 +99,7 @@
                 <textElement textAlignment="Right" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false" isItalic="false" pdfFontName="Arial" pdfEncoding="Cp1251"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{sizeAsDouble}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
                 <reportElement key="textField-2" x="1" y="0" width="179" height="16" uuid="412e2195-0bc0-4db2-8541-4b1bbfa201e1"/>
