@@ -1,11 +1,14 @@
 package by.dak.cutting.statistics.swing.tree;
 
 import by.dak.cutting.SearchFilter;
+import by.dak.cutting.facade.BaseFacade;
 import by.dak.cutting.statistics.ServiceStatistics;
 import by.dak.cutting.statistics.StatisticFilter;
 import by.dak.persistence.FacadeContext;
+import by.dak.persistence.convert.ServiceType2StringConverter;
 import by.dak.persistence.entities.PriceAware;
 import by.dak.persistence.entities.Service;
+import by.dak.persistence.entities.ServiceLink;
 import by.dak.persistence.entities.predefined.ServiceType;
 import by.dak.report.jasper.common.data.CommonDataType;
 import by.dak.report.jasper.common.facade.CommonDataFacade;
@@ -22,7 +25,9 @@ import java.util.List;
  */
 public class ServiceTypeNode extends AStatisticsNode implements ListUpdaterProvider<ServiceStatistics>
 {
+    public static final String BRACKETED_DATA = "\\s*\\([^)]*\\)";
     private List<ServiceStatistics> cacheStatistics = new ArrayList<ServiceStatistics>();
+    
 
     protected ServiceTypeNode(StatisticFilter filter, ServiceType serviceType)
     {
@@ -72,6 +77,8 @@ public class ServiceTypeNode extends AStatisticsNode implements ListUpdaterProvi
                     List<CommonDataFacade.Statistic> list = FacadeContext.getCommonDataFacade().getCommanDataMap(getFilter(), CommonDataType.valueOf((ServiceType) getUserObject()));
                     for (CommonDataFacade.Statistic statistic : list)
                     {
+                        statistic.setName(statistic.getName().replaceAll(BRACKETED_DATA, "").trim());
+
                         ServiceStatistics serviceStatistics = new ServiceStatistics();
                         ServiceType serviceType = (ServiceType) getUserObject();
                         serviceStatistics.setCode(FacadeContext.getServiceFacade().findUniqueByField(Service.PROPERTY_serviceType, serviceType));
