@@ -26,10 +26,7 @@ import by.dak.persistence.entities.predefined.Side;
 import by.dak.plastic.DSPPlasticDetail;
 import by.dak.plastic.jasper.converter.DSPPlasticDirectSawCutConverter;
 import by.dak.report.jasper.ReportUtils;
-import by.dak.report.jasper.common.data.converter.BoardMaterialsConverter;
-import by.dak.report.jasper.common.data.converter.BorderMaterialsConverter;
-import by.dak.report.jasper.common.data.converter.DirectSawCutConverter;
-import by.dak.report.jasper.common.data.converter.FurnitureConverter;
+import by.dak.report.jasper.common.data.converter.*;
 import by.dak.template.TemplateFacade;
 import by.dak.template.report.TemplateFacadeServiceDataConverter;
 import by.dak.utils.Creator;
@@ -122,6 +119,14 @@ public class CommonDataCreator implements Creator<CommonReportData> {
         reportData.setCommonDatas(furnitureData);
     }
 
+    private void fillAdditionalServiceData(CommonReportDataImpl reportData) {
+        List<ServiceLink> serviceLinks = mainFacade.getServiceLinkFacade().loadAllBy(order);
+
+        CommonDatas<CommonData> serviceData = new ServiceConverter(order, mainFacade)
+                .convert(serviceLinks);
+        reportData.setCommonDatas(serviceData);
+    }
+
     private void fillFacadeDialerData(CommonReportDataImpl reportData, List<ZFacade> zFacades, List<AGTFacade> agtFacades) {
         CommonDatas<CommonData> zfacadeDatas = new ZFacadeFurnitureDataConverter(order, mainFacade).convert(zFacades);
         CommonDatas<CommonData> agtDatas = new AGTFurnitureDataConverter(order, mainFacade).convert(agtFacades);
@@ -196,6 +201,8 @@ public class CommonDataCreator implements Creator<CommonReportData> {
     private void fillServicesData(CommonReportDataImpl reportData) {
         fillOrderFurnitureServicesData(reportData);
         fillDSPPlasticServicesData(reportData);
+
+        fillAdditionalServiceData(reportData);
     }
 
     private void fillDSPPlasticServicesData(CommonReportDataImpl reportData) {

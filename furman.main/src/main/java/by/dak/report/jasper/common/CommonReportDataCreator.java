@@ -38,7 +38,8 @@ public class CommonReportDataCreator extends ReportDataCreatorDecorator
         Sheet,
         Railing,
         Sellotape,
-        Additional;
+        Additional,
+        AdditionalService;
 
         private static final String PREFIX = "CommonSubreport";
         private static final String SUFFIX = ".jasper";
@@ -101,6 +102,7 @@ public class CommonReportDataCreator extends ReportDataCreatorDecorator
             fillSubreport(Railing, parameters);
             fillSubreport(Sellotape, parameters);
             fillSubreport(Additional, parameters);
+            fillSubreport(AdditionalService, parameters);
 
             URL definitionPath = CommonReportDataCreator.class.getResource(JASPER_REPORT_PATH);
             return new JReportDataImpl(new JREmptyDataSource(), parameters, definitionPath, getResourceBundle(), getLocale());
@@ -132,6 +134,9 @@ public class CommonReportDataCreator extends ReportDataCreatorDecorator
                 break;
             case Additional:
                 subreportValue.setData(commonReportData.getCommonDatas(CommonDataType.additional));
+                break;
+            case AdditionalService:
+                subreportValue.setData(commonReportData.getCommonDatas(CommonDataType.additionalService));
                 break;
             default:
                 throw new IllegalArgumentException();

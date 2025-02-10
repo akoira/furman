@@ -33,6 +33,7 @@ public class SimpleCommonReportDataCreator extends ReportDataCreatorDecorator
     static enum SubreportKey
     {
         Service,
+        AdditionalService,
         Additional;
 
         private static final String PREFIX = "SimpleCommonSubreport";
@@ -83,6 +84,7 @@ public class SimpleCommonReportDataCreator extends ReportDataCreatorDecorator
             parameters.put(JRParameter.REPORT_CONTEXT, Constants.DUMMY_REPORT_CONTEXT);
 
             fillSubreport(Service, parameters);
+            fillSubreport(AdditionalService, parameters);
             fillSubreport(Additional, parameters);
 
             URL definitionPath = SimpleCommonReportDataCreator.class.getResource(JASPER_REPORT_PATH);
@@ -103,6 +105,9 @@ public class SimpleCommonReportDataCreator extends ReportDataCreatorDecorator
         {
             case Service:
                 subreportValue.setData(commonReportData.getServicesData());
+                break;
+            case AdditionalService:
+                subreportValue.setData(commonReportData.getCommonDatas(CommonDataType.additionalService));
                 break;
             case Additional:
                 subreportValue.setData(commonReportData.getCommonDatas(CommonDataType.additional));

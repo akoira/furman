@@ -32,7 +32,8 @@ public enum CommonDataType
     zfacade(MaterialType.zprofile),
     agtfacade(MaterialType.agtprofile),
     additional(null),
-    plasticPatch(ServiceType.plasticPatch);
+    plasticPatch(ServiceType.plasticPatch),
+    additionalService(null);
 
     private Named parentType;
 

@@ -26,6 +26,8 @@
 	<parameter name="subreportDatasourceService" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="subreportAdditional" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="subreportDatasourceAdditional" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="subreportAdditionalService" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="subreportDatasourceAdditionalService" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<field name="service" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="count" class="java.lang.Double"/>
@@ -42,6 +44,14 @@
 					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
 					<dataSourceExpression><![CDATA[$P{subreportDatasourceService}]]></dataSourceExpression>
 					<subreportExpression><![CDATA[$P{subreportService}]]></subreportExpression>
+				</subreport>
+			</band>
+			<band height="5">
+				<subreport isUsingCache="false">
+					<reportElement key="subreport-3" x="5" y="5" width="516" height="0" uuid="3e8ff0d1-4e35-45c2-8290-dfae64012318"/>
+					<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+					<dataSourceExpression><![CDATA[$P{subreportDatasourceAdditionalService}]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$P{subreportAdditionalService}]]></subreportExpression>
 				</subreport>
 			</band>
 			<band height="5">

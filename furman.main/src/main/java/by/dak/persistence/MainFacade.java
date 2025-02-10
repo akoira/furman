@@ -104,6 +104,7 @@ public class MainFacade implements ApplicationContextAware
     private FurnitureFacade furnitureFacade;
     private DeliveryFacade deliveryFacade;
     private FurnitureLinkFacade furnitureLinkFacade;
+    private ServiceLinkFacade serviceLinkFacade;
     private OrderGroupFacade orderGroupFacade;
     private ZProfileTypeFacade zProfileTypeFacade;
     private OrderDetailFacade orderDetailFacade;
@@ -607,6 +608,16 @@ public class MainFacade implements ApplicationContextAware
     public void setFurnitureLinkFacade(FurnitureLinkFacade furnitureLinkFacade)
     {
         this.furnitureLinkFacade = furnitureLinkFacade;
+    }
+
+    public ServiceLinkFacade getServiceLinkFacade()
+    {
+        return serviceLinkFacade;
+    }
+
+    public void setServiceLinkFacade(ServiceLinkFacade serviceLinkFacade)
+    {
+        this.serviceLinkFacade = serviceLinkFacade;
     }
 
     public OrderGroupFacade getOrderGroupFacade()

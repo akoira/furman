@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CommonSubreportService" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dec069f9-671a-4cd6-b5ec-78c6ee76646c">
+    <property name="ireport.zoom" value="2.0"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+    <style name="zerocolor" forecolor="#000000" backcolor="#FFFFFF" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+        <conditionalStyle>
+            <conditionExpression><![CDATA[new Boolean ($F{price}.equals( new Double(0) ))]]></conditionExpression>
+            <style forecolor="#FF0000" fontName="Arial" fontSize="10" isBold="true" isItalic="true" isUnderline="true" isStrikeThrough="true"/>
+        </conditionalStyle>
+    </style>
+    <parameter name="customer" class="java.lang.String"/>
+    <parameter name="deadline" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="orderNumber" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="subreportSheet" class="net.sf.jasperreports.engine.JasperReport"/>
+    <parameter name="subreportDatasourceSheet" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="commonCost" class="java.lang.Double"/>
+    <parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+        <defaultValueExpression><![CDATA["D:\\projects\\cutting\\src\\cutting\\src\\by\\dak\\report\\jasper\\common\\"]]></defaultValueExpression>
+    </parameter>
+    <field name="service" class="java.lang.String"/>
+    <field name="name" class="java.lang.String"/>
+    <field name="count" class="java.lang.Double"/>
+    <field name="price" class="java.lang.Double"/>
+    <field name="last" class="java.lang.Boolean"/>
+    <field name="cost" class="java.lang.Double"/>
+    <variable name="subs_COUNT" class="java.lang.Integer"/>
+    <columnHeader>
+        <band height="54">
+            <line>
+                <reportElement key="line-12" x="179" y="38" width="1" height="16" uuid="1ddfd99b-9a1c-47c4-9ebd-9be467764430"/>
+            </line>
+            <line>
+                <reportElement key="line-11" x="0" y="38" width="1" height="16" uuid="313d9206-8706-47b1-838f-ebd900d2874b"/>
+            </line>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField" x="180" y="39" width="149" height="15" backcolor="#CCFFCC" uuid="3e429c57-7092-44ae-ac0b-51b3aa458c07">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false" pdfFontName="Arial" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$R{name}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line-13" x="329" y="38" width="1" height="16" uuid="38ac71da-f7fe-405f-b6f3-0e5c326a824d"/>
+            </line>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField" x="1" y="39" width="177" height="14" backcolor="#CCFFCC" uuid="8b2329a7-e4f8-4614-b5ce-bd7807990c14">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$R{service}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line-3" x="0" y="38" width="441" height="1" uuid="365c8446-8ea5-4cad-975b-0e779a78aaf4"/>
+                <graphicElement fill="Solid">
+                    <pen lineWidth="1.0"/>
+                </graphicElement>
+            </line>
+            <line>
+                <reportElement key="line-10" x="440" y="38" width="1" height="16" uuid="2dc83eec-8c3c-4ef5-92a3-8c94bcb8269b"/>
+            </line>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField" x="330" y="39" width="110" height="14" backcolor="#CCFFCC" uuid="392fa2a1-325d-4cb3-b23b-a476948aa6ba">
+                    <property name="net.sf.jasperreports.export.pdf.tag.th" value=""/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="true" isItalic="true" isStrikeThrough="false" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$R{count}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line" mode="Opaque" x="1" y="53" width="440" height="1" uuid="b81add99-eb2e-4b5f-9102-f11a5323502b"/>
+            </line>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-13" x="160" y="23" width="159" height="16" uuid="33bcd735-feae-43dc-b068-89c882a867df"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="12" isBold="true" isStrikeThrough="false" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$R{additionalServices}]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="16">
+            <line>
+                <reportElement key="line-9" x="0" y="0" width="1" height="16" uuid="c6aaefa6-0150-4da2-8660-6fc834e2e0f1"/>
+            </line>
+            <textField pattern="#,##0.00" isBlankWhenNull="false">
+                <reportElement key="textField-3" x="330" y="0" width="110" height="15" uuid="ff3537cb-0cf1-4b97-8c97-5d0499da45d7"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="false" isItalic="false" pdfFontName="Arial" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="false">
+                <reportElement key="textField-2" x="1" y="0" width="179" height="16" uuid="412e2195-0bc0-4db2-8541-4b1bbfa201e1"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="false" isItalic="false" pdfFontName="Helvetica-BoldOblique" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line-16" x="180" y="15" width="261" height="1" uuid="2385e0d1-71d5-4c7a-88d2-179a441f7940"/>
+            </line>
+            <line>
+                <reportElement key="line-8" x="440" y="0" width="1" height="16" uuid="0aa4ecef-6703-43d0-9007-bf4ca4a2a3b1"/>
+            </line>
+            <line>
+                <reportElement isPrintRepeatedValues="false" mode="Opaque" x="1" y="15" width="179" height="1" uuid="9e6d1959-9ed4-4c78-bd9f-bdd25febe17b">
+                    <printWhenExpression><![CDATA[$F{last}]]></printWhenExpression>
+                </reportElement>
+            </line>
+            <line>
+                <reportElement key="line-6" x="329" y="0" width="1" height="16" uuid="4b0eba89-20ed-4b20-8361-ac899289b210"/>
+            </line>
+            <line>
+                <reportElement key="line-7" x="179" y="0" width="1" height="16" uuid="f5f55045-99bf-4b81-9a7a-839dcb7e0f56"/>
+            </line>
+            <textField isBlankWhenNull="true">
+                <reportElement key="textField-1" isPrintRepeatedValues="false" x="179" y="0" width="150" height="15" uuid="806fede1-017c-40cb-9f54-83ef8ca80c52"/>
+                <box>
+                    <pen lineWidth="1.0"/>
+                    <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" pdfFontName="Helvetica-BoldOblique" pdfEncoding="Cp1251"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{service}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <summary>
+        <band height="1">
+            <subreport>
+                <reportElement key="subreport-1" x="0" y="0" width="517" height="0" uuid="77360442-3588-4115-ba6a-68abc3404c85"/>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <dataSourceExpression><![CDATA[$P{subreportDatasourceSheet}]]></dataSourceExpression>
+                <subreportExpression><![CDATA[$P{subreportSheet}]]></subreportExpression>
+            </subreport>
+        </band>
+    </summary>
+</jasperReport>
