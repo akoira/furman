@@ -1,19 +1,18 @@
 package by.dak.report.jasper.common.data.converter;
 
 import by.dak.persistence.MainFacade;
+import by.dak.persistence.convert.ServiceType2StringConverter;
 import by.dak.persistence.entities.*;
 import by.dak.report.jasper.ReportUtils;
 import by.dak.report.jasper.common.data.CommonData;
 import by.dak.report.jasper.common.data.CommonDataType;
 import by.dak.report.jasper.common.data.CommonDatas;
 import by.dak.report.jasper.common.data.ServiceCommonData;
+import by.dak.report.jasper.common.facade.CommonDataFacade;
 import by.dak.utils.convert.Converter;
 import by.dak.utils.convert.StringValueAnnotationProcessor;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  *
@@ -25,6 +24,7 @@ public class ServiceConverter implements Converter<List<ServiceLink>, List<Commo
     private AOrder order;
     private final Dailysheet dailysheet;
     private final MainFacade mainFacade;
+    private static final ServiceType2StringConverter serviceType2StringConverter = new ServiceType2StringConverter();
 
     private SortedMap<String, CommonDatas<CommonData>> commonDatas = new TreeMap<String, CommonDatas<CommonData>>(new StringComparator());
 
@@ -107,6 +107,20 @@ public class ServiceConverter implements Converter<List<ServiceLink>, List<Commo
             sorted.addAll(materials);
         }
         return sorted;
+    }
+
+    public static List<CommonDataFacade.Statistic> convertToStatistic(List<ServiceLink> source) {
+        List<CommonDataFacade.Statistic> statistics = new ArrayList<>();
+
+        for (ServiceLink link : source) {
+            CommonDataFacade.Statistic statistic = new CommonDataFacade.Statistic();
+            statistic.setService(serviceType2StringConverter.convert(link.getPriced().getServiceType()));
+            statistic.setName(link.getName());
+            statistic.setAmount(link.getSize());
+
+            statistics.add(statistic);
+        }
+        return statistics;
     }
 
 }

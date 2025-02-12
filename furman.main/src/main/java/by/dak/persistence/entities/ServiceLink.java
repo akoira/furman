@@ -8,6 +8,8 @@ import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 
 @Entity
@@ -17,6 +19,26 @@ import javax.persistence.Entity;
 
 @StringValue(converterClass = FurnitureLink2StringConverter.class)
 @Validator(validatorClass = ServiceLinkValidator.class)
+
+@NamedQueries(value =
+        {
+                @NamedQuery(name = "statServices",
+                        query = "select sl.priced as service, sl.priceAware.name as name, sum(sl.size) as size " +
+                                "from ServiceLink sl " +
+                                "where " +
+                                "sl.orderItem.order.readyDate >= :start and " +
+                                "sl.orderItem.order.readyDate <= :end and " +
+                                "sl.orderItem.order.customer.id >= :startCustomerId and " +
+                                "sl.orderItem.order.customer.id <= :endCustomerId and " +
+                                "sl.orderItem.order.id >= :startOrderId and " +
+                                "sl.orderItem.order.id <= :endOrderId and " +
+                                "sl.priced.name = :serviceType and " +
+                                "sl.orderItem.order.status in ( :status ) and " +
+                                "sl.orderItem.order.deleted = false " +
+                                "group by sl.priced.name, sl.priceAware.name " +
+                                "order by sl.priced.name, sl.priceAware.name")
+        }
+)
 
 public class ServiceLink extends AServiceDetail {
 

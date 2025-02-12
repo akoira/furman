@@ -1,22 +1,21 @@
 package by.dak.cutting.statistics.swing.tree;
 
 import by.dak.cutting.SearchFilter;
-import by.dak.cutting.facade.BaseFacade;
 import by.dak.cutting.statistics.ServiceStatistics;
 import by.dak.cutting.statistics.StatisticFilter;
 import by.dak.persistence.FacadeContext;
-import by.dak.persistence.convert.ServiceType2StringConverter;
 import by.dak.persistence.entities.PriceAware;
 import by.dak.persistence.entities.Service;
 import by.dak.persistence.entities.ServiceLink;
 import by.dak.persistence.entities.predefined.ServiceType;
 import by.dak.report.jasper.common.data.CommonDataType;
+import by.dak.report.jasper.common.data.converter.ServiceConverter;
 import by.dak.report.jasper.common.facade.CommonDataFacade;
 import by.dak.swing.table.AListUpdater;
 import by.dak.swing.table.ListUpdaterProvider;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * User: akoyro
@@ -73,12 +72,21 @@ public class ServiceTypeNode extends AStatisticsNode implements ListUpdaterProvi
             {
                 if (cacheStatistics.size() == 0)
                 {
-
                     List<CommonDataFacade.Statistic> list = FacadeContext.getCommonDataFacade().getCommanDataMap(getFilter(), CommonDataType.valueOf((ServiceType) getUserObject()));
-                    for (CommonDataFacade.Statistic statistic : list)
-                    {
-                        statistic.setName(statistic.getName().replaceAll(BRACKETED_DATA, "").trim());
+                    List<CommonDataFacade.Statistic> changedlist = list.stream()
+                            .map(s -> {
+                                s.setName(s.getName().replaceAll(BRACKETED_DATA, "").trim());
+                                return s;
+                            }).collect(Collectors.toList());
 
+                    List<ServiceLink> additionalServices = FacadeContext.getServiceLinkFacade().loadAllBy(getFilter(), ((ServiceType) getUserObject()).name());
+
+                    if (!additionalServices.isEmpty()) {
+                        changedlist.addAll(ServiceConverter.convertToStatistic(additionalServices));
+                        changedlist = groupStatisticData(changedlist);
+                    }
+
+                    changedlist.forEach(statistic -> {
                         ServiceStatistics serviceStatistics = new ServiceStatistics();
                         ServiceType serviceType = (ServiceType) getUserObject();
                         serviceStatistics.setCode(FacadeContext.getServiceFacade().findUniqueByField(Service.PROPERTY_serviceType, serviceType));
@@ -86,7 +94,7 @@ public class ServiceTypeNode extends AStatisticsNode implements ListUpdaterProvi
                         serviceStatistics.setSize(statistic.getAmount());
                         serviceStatistics.setPrice(FacadeContext.getPriceFacade().findUniqueBy(serviceStatistics.getType(), serviceStatistics.getCode()));
                         cacheStatistics.add(serviceStatistics);
-                    }
+                    });
                 }
                 getList().clear();
                 getList().addAll(cacheStatistics);
@@ -103,5 +111,19 @@ public class ServiceTypeNode extends AStatisticsNode implements ListUpdaterProvi
         return listUpdater;
     }
 
-
+    private static List<CommonDataFacade.Statistic> groupStatisticData(List<CommonDataFacade.Statistic> changedlist) {
+        return changedlist.stream()
+                .collect(Collectors.groupingBy(
+                        stat -> new AbstractMap.SimpleEntry<>(stat.getService(), stat.getName()),
+                        LinkedHashMap::new,
+                        Collectors.summingDouble(CommonDataFacade.Statistic::getAmount)
+                )).entrySet().stream()
+                .map(entry -> {
+                    CommonDataFacade.Statistic stat = new CommonDataFacade.Statistic();
+                    stat.setService(entry.getKey().getKey());
+                    stat.setName(entry.getKey().getValue());
+                    stat.setAmount(entry.getValue());
+                    return stat;
+                }).collect(Collectors.toList());
+    }
 }
