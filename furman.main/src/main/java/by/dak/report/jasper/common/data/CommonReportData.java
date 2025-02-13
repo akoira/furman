@@ -16,6 +16,8 @@ public interface CommonReportData
 
     public List<CommonData> getServicesData();
 
+    public List<CommonData> getAdditionalServicesData();
+
     public List<CommonData> getMaterialsData();
 
     public List<CommonData> getFurnitureData();

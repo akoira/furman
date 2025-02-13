@@ -10,12 +10,8 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 
-import java.io.File;
 import java.net.URL;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,7 +103,7 @@ public class SimpleCommonReportDataCreator extends ReportDataCreatorDecorator
                 subreportValue.setData(commonReportData.getServicesData());
                 break;
             case AdditionalService:
-                subreportValue.setData(commonReportData.getCommonDatas(CommonDataType.additionalService));
+                subreportValue.setData(commonReportData.getAdditionalServicesData());
                 break;
             case Additional:
                 subreportValue.setData(commonReportData.getCommonDatas(CommonDataType.additional));

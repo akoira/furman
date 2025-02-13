@@ -66,6 +66,14 @@ public class CommonReportDataImpl implements CommonReportData
         return getBy(CommonDataType.serviceTypes());
     }
 
+    @Override
+    public List<CommonData> getAdditionalServicesData()
+    {
+        List<CommonData> commonDatas =  getBy(new CommonDataType[]{CommonDataType.additionalService});
+        commonDatas = addEmptyAdditionalServiceCommonData(commonDatas);
+        return commonDatas;
+    }
+
     private List<CommonData> getBy(CommonDataType[] commonDataTypes)
     {
         List<CommonData> result = new ArrayList<CommonData>();
@@ -99,6 +107,16 @@ public class CommonReportDataImpl implements CommonReportData
         if (commonDatas == null || commonDatas.size() < 1)
         {
             CommonData commonData = new FurnitureCommonData();
+            commonDatas = Collections.singletonList(commonData);
+        }
+        return commonDatas;
+    }
+
+    private List<CommonData> addEmptyAdditionalServiceCommonData(List<CommonData> commonDatas)
+    {
+        if (commonDatas == null || commonDatas.isEmpty())
+        {
+            CommonData commonData = new ServiceCommonData();
             commonDatas = Collections.singletonList(commonData);
         }
         return commonDatas;

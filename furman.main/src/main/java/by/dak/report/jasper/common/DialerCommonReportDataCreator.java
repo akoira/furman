@@ -7,6 +7,7 @@ import by.dak.report.jasper.common.data.CommonDataType;
 import by.dak.report.jasper.common.data.CommonReportData;
 import by.dak.report.jasper.common.data.CommonReportDataImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +32,11 @@ public final class DialerCommonReportDataCreator extends CommonReportDataCreator
             public List<CommonData> getServicesData()
             {
                 return CommonReportDataImpl.convertForDialer(commonReportData.getServicesData());
+            }
+
+            @Override
+            public List<CommonData> getAdditionalServicesData() {
+                return CommonReportDataImpl.convertForDialer(commonReportData.getAdditionalServicesData());
             }
 
             @Override

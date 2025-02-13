@@ -136,7 +136,7 @@ public class CommonReportDataCreator extends ReportDataCreatorDecorator
                 subreportValue.setData(commonReportData.getCommonDatas(CommonDataType.additional));
                 break;
             case AdditionalService:
-                subreportValue.setData(commonReportData.getCommonDatas(CommonDataType.additionalService));
+                subreportValue.setData(commonReportData.getAdditionalServicesData());
                 break;
             default:
                 throw new IllegalArgumentException();
