@@ -107,7 +107,8 @@ public enum CommonDataType
                 zfacade,
                 agtfacade,
                 additional,
-                plasticPatch
+                plasticPatch,
+                additionalService
         };
         return commonDataType;
     }
@@ -133,7 +134,8 @@ public enum CommonDataType
                 furniture,
                 facadeFurniture,
                 additional,
-                plasticPatch
+                plasticPatch,
+                additionalService
         };
         return commonDataType;
     }
