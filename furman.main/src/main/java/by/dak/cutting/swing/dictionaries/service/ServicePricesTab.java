@@ -71,6 +71,12 @@ public class ServicePricesTab extends AbstractPricesTab<Service>
                     case agtprofile:
                         priceAwareList = FacadeContext.getAGTTypeFacade().loadAll();
                         break;
+                    case servicePlug:
+                        priceAwareList = FacadeContext.getServicePlugTypeFacade().loadAll();
+                        break;
+                    case gluingSize:
+                        priceAwareList = FacadeContext.getMelamineGluingFacade().loadAll();
+                        break;
                     default:
                         throw new IllegalArgumentException();
                 }

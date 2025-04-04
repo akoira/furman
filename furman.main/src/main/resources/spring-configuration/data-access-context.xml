@@ -25,6 +25,8 @@
 				<value>by.dak.persistence.entities.types.FurnitureCode</value>
 				<value>by.dak.persistence.entities.types.FurnitureType</value>
 				<value>by.dak.persistence.entities.Furniture</value>
+				<value>by.dak.persistence.entities.ServicePlugType</value>
+				<value>by.dak.persistence.entities.MelamineGluing</value>
 
 				<value>by.dak.persistence.entities.DesignerEntity</value>
 				<value>by.dak.persistence.entities.Dailysheet</value>

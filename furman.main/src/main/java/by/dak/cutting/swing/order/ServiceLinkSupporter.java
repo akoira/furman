@@ -1,9 +1,13 @@
 package by.dak.cutting.swing.order;
 
+import by.dak.cutting.facade.ServicePlugTypeFacade;
 import by.dak.cutting.swing.BaseTabPanel;
 import by.dak.persistence.FacadeContext;
 import by.dak.persistence.entities.ServiceLink;
 import by.dak.persistence.entities.OrderItem;
+import by.dak.persistence.entities.ServicePlugType;
+import by.dak.persistence.entities.predefined.ServiceType;
+import by.dak.persistence.entities.predefined.Unit;
 import by.dak.utils.BindingAdapter;
 import by.dak.utils.validator.ValidationUtils;
 import by.dak.utils.validator.ValidatorAnnotationProcessor;
@@ -18,8 +22,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.ComboPopup;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ServiceLinkSupporter
 {
@@ -28,6 +31,13 @@ public class ServiceLinkSupporter
 
     private BindingAdapter clearServiceCodeListener;
     private BaseTabPanel<OrderItem> panel;
+
+    private static final List<String> SERVICE_SQUARE_METER_TYPES = Collections.singletonList(ServiceType.dspMirrorGluing.name());
+    private static final List<String> SERVICE_LINEAR_METER_TYPES = Arrays.asList(
+            ServiceType.euroCutting.name(),
+            ServiceType.compactEdgeProcessing.name(),
+            ServiceType.planeThicknessSelection.name()
+    );
 
     public ServiceLinkSupporter(BaseTabPanel<OrderItem> panel)
     {
@@ -39,8 +49,17 @@ public class ServiceLinkSupporter
             public void synced(Binding binding)
             {
                 ServiceLink serviceLink = (ServiceLink) binding.getSourceObject();
-                if (serviceLink != null)
-                    serviceLink.setPriceAware(null);
+
+                if (serviceLink != null) {
+                    final String serviceName = serviceLink.getPriced().getName();
+                    final ServicePlugTypeFacade facade = FacadeContext.getServicePlugTypeFacade();
+
+                    final ServicePlugType priceAware =
+                            SERVICE_LINEAR_METER_TYPES.contains(serviceName) ? facade.findByUnit(Unit.linearMetre) :
+                                    SERVICE_SQUARE_METER_TYPES.contains(serviceName) ? facade.findByUnit(Unit.squareMetre) :
+                                            null;
+                    serviceLink.setPriceAware(priceAware);
+                }
             }
         };
     }

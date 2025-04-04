@@ -26,7 +26,9 @@ public enum MaterialType implements Named
     border(BorderDefEntity.class, TextureEntity.class, Border.class), //Кромочный
     furniture(FurnitureType.class, FurnitureCode.class, Furniture.class), //Фурнитура
     zprofile(ZProfileType.class, ZProfileColor.class, Furniture.class), //zprofile
-    agtprofile(AGTType.class, AGTColor.class, Furniture.class); //agtprofile
+    agtprofile(AGTType.class, AGTColor.class, Furniture.class), //agtprofile
+    servicePlug(ServicePlugType.class, Service.class, null),
+    gluingSize(MelamineGluing.class, Service.class, null);
 
     private MaterialType(Class<? extends PriceAware> priceAwareClass, Class<? extends Priced> pricedClass, Class<? extends AStoreElement> storeElementClass)
     {

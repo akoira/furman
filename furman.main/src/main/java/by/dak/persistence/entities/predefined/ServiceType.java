@@ -25,7 +25,12 @@ public enum ServiceType implements Named
     drilling(MaterialType.board), //drilling
     drillingForLoop(MaterialType.board), //drillingForLoop
     drillingForHandle(MaterialType.board), //drillingForHandle
-    plasticPatch(MaterialType.board); //склейка пластиком
+    plasticPatch(MaterialType.board), //склейка пластиком
+    manualMelamineGluing(MaterialType.gluingSize),       // оклейка ручная меламин
+    dspMirrorGluing(MaterialType.servicePlug),            // склейка ДСП+зеркало
+    euroCutting(MaterialType.servicePlug),                // еврозапил
+    planeThicknessSelection(MaterialType.servicePlug),    // выборка толщины по плоскости
+    compactEdgeProcessing(MaterialType.servicePlug);      // обработка края компакт плиты
 
     private MaterialType materialType;
 

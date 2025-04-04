@@ -135,6 +135,8 @@ public class MainFacade implements ApplicationContextAware
     private TempOrderDetailFacade tempOrderDetailFacade;
     private MaterialTypeNodeFactory materialTypeNodeFactory;
     private MaterialTypePanelFactory materialTypePanelFactory;
+    private ServicePlugTypeFacade servicePlugTypeFacade;
+    private MelamineGluingFacade melamineGluingFacade;
 
 
     public final DefaultReportCreatorFactory reportCreatorFactory;
@@ -918,5 +920,21 @@ public class MainFacade implements ApplicationContextAware
     public void setMaterialTypePanelFactory(MaterialTypePanelFactory materialTypePanelFactory)
     {
         this.materialTypePanelFactory = materialTypePanelFactory;
+    }
+
+    public ServicePlugTypeFacade getServicePlugTypeFacade() {
+        return servicePlugTypeFacade;
+    }
+
+    public void setServicePlugTypeFacade(ServicePlugTypeFacade servicePlugTypeFacade) {
+        this.servicePlugTypeFacade = servicePlugTypeFacade;
+    }
+
+    public MelamineGluingFacade getMelamineGluingFacade() {
+        return melamineGluingFacade;
+    }
+
+    public void setServicePlugTypeFacade(MelamineGluingFacade melamineGluingFacade) {
+        this.melamineGluingFacade = melamineGluingFacade;
     }
 }

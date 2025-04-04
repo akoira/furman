@@ -506,6 +506,16 @@ public class FacadeContext
             throw new IllegalArgumentException(e);
         }
     }
+
+    public static ServicePlugTypeFacade getServicePlugTypeFacade()
+    {
+        return (ServicePlugTypeFacade) applicationContext.getBean("servicePlugTypeFacade");
+    }
+
+    public static MelamineGluingFacade getMelamineGluingFacade()
+    {
+        return (MelamineGluingFacade) applicationContext.getBean("melamineGluingFacade");
+    }
 }
 
 

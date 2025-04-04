@@ -17,6 +17,8 @@
                 <entry key="furniture" value="by.dak.cutting.def.swing.tree.MaterialTypeNode"/>
                 <entry key="zprofile" value="by.dak.cutting.zfacade.swing.tree.ZProfileNode"/>
                 <entry key="agtprofile" value="by.dak.cutting.agt.swing.tree.AGTProfileNode"/>
+                <entry key="servicePlug" value="by.dak.cutting.def.swing.tree.MaterialTypeNode"/>
+                <entry key="gluingSize" value="by.dak.cutting.def.swing.tree.MaterialTypeNode"/>
             </map>
         </property>
     </bean>
