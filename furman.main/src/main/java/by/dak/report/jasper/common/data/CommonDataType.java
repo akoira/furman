@@ -33,7 +33,12 @@ public enum CommonDataType
     agtfacade(MaterialType.agtprofile),
     additional(null),
     plasticPatch(ServiceType.plasticPatch),
-    additionalService(null);
+    additionalService(null),
+    manualMelamineGluing(ServiceType.manualMelamineGluing),
+    dspMirrorGluing(ServiceType.dspMirrorGluing),
+    euroCutting(ServiceType.euroCutting),
+    planeThicknessSelection(ServiceType.planeThicknessSelection),
+    compactEdgeProcessing(ServiceType.compactEdgeProcessing);
 
     private Named parentType;
 
